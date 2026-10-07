@@ -1,6 +1,6 @@
 # Store submission preparation
 
-Status: release candidate, not submitted. Publisher: Mason Earl / GitHub masonearl. MIT covers plugin files only. Keep both repositories private. A directory requiring public source needs Mason’s explicit exception for this specific repository before changing visibility. OpenAI accepts ZIP submission; do not publish source just to provide listing pages.
+Status: release candidate; Cursor publisher form prepared, not submitted. Publisher: Mason Earl / GitHub masonearl. MIT covers plugin files only. The dedicated construction-takeoff-plugins repository is public for Cursor review; the application repository remains private. Final submission awaits acceptance of Cursor Publisher Terms.
 
 ## Listing copy
 
@@ -29,7 +29,7 @@ Support: hi@masonearl.com and repository Issues. Icon: shared/assets/icon.png. P
 - [ ] Cowork: establish actual host filesystem/process access or implement a supported remote connection. Do not advertise support before this passes.
 - [ ] Fresh screenshots and publisher verification in each directory portal.
 - [ ] Codex: remote HTTPS deployment and authentication OR explicit provider approval for local MCP.
-- [ ] Submit the appropriate artifact and record receipt IDs/status. Keep repositories private unless Mason explicitly authorizes a visibility exception for that repository.
+- [ ] Submit the appropriate artifact and record receipt IDs/status. Do not change application repository visibility.
 
 ## Reviewer script
 

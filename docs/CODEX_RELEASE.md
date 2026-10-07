@@ -1,7 +1,7 @@
 # Codex release preparation — October 7, 2026
 
 This is a tested local macOS plugin candidate, not an approved public listing.
-The source repository remains private. Other client packaging is being developed
+The plugin-only repository is public for Cursor review; application source remains private. Other client packaging is being developed
 in the same repository; preserve those changes.
 
 ## Added in this pass
@@ -42,9 +42,9 @@ reviewer acceptance, or store approval. It does not contact or submit to OpenAI.
    explicit local-plugin distribution support or build a hosted authenticated
    bridge with user pairing and explicit project scope. A public tunnel to the
    current companion is not an authenticated multi-user integration.
-2. Establish public product/download, support, privacy and terms pages. Current
-   private GitHub URLs cannot serve as public listing pages. No repository needs
-   to become public for OpenAI ZIP submission.
+2. Establish public product/download, support, privacy and terms pages. The plugin repository provides public support and privacy pages.
+   A dedicated terms page remains required. OpenAI ZIP submission itself does not
+   require public source.
 3. Prepare a synthetic reviewer project and execute all scenarios. Record native
    proposal review/apply/Undo and stale-revision handling in the real Mac app.
 4. Add genuine screenshots and walkthrough URL, then complete publisher/domain

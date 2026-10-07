@@ -30,8 +30,6 @@ def check(package):
     for name in ('websiteURL', 'supportURL', 'privacyPolicyURL', 'termsOfServiceURL'):
         if not https_url(interface.get(name)):
             issues.append(f'Missing valid public HTTPS listing field: {name}.')
-        elif interface[name].startswith('https://github.com/masonearl/construction-takeoff-plugins'):
-            issues.append(f'{name} points to the private source repository; supply a publicly accessible page without changing repository visibility.')
     for kind, count in (('positive', 5), ('negative', 3)):
         cases = review.get('test_cases', {}).get(kind, [])
         required = ('description', 'prompt', 'tools_triggered', 'expected_behavior') if kind == 'positive' else ('description', 'prompt')

@@ -16,7 +16,7 @@ class CodexSubmissionTests(unittest.TestCase):
         report = preflight.check(ROOT / 'packages/codex')
         self.assertFalse(report['offline_checks_passed'])
         self.assertTrue(any('local stdio' in issue for issue in report['issues']))
-        self.assertTrue(any('private source repository' in issue for issue in report['issues']))
+        self.assertTrue(any('termsOfServiceURL' in issue for issue in report['issues']))
         self.assertFalse(report['store_approved'])
 
     def test_complete_metadata_still_requires_manual_review(self):
