@@ -29,6 +29,7 @@ def package_readme(target):
         'cursor': 'Install this package through Cursor or copy the folder into ~/.cursor/plugins/local/construction-takeoff. Reload Cursor.',
         'claude': 'Install the construction-takeoff plugin from the construction-takeoff-plugins marketplace, or upload this ZIP in Claude Customize → Plugins → Add. The tools work only where the session can launch the Mac companion. Claude chat ignores local MCP entries; the optional Desktop extension is available for local chat use. Cowork host access needs verification.',
         'codex': 'For the downloaded ZIP, unzip it and run `codex plugin marketplace add .` from its folder, then `codex plugin add construction-takeoff@construction-takeoff-download`. Keep that folder for updates. Repository users can install construction-takeoff from the construction-takeoff-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.',
+        'grok-bot': 'Install the Construction Takeoff companion first. Then install this Cursor-format plugin from packages/grok-bot or via Cursor Marketplace / Grok Bot Plugins once public. Grok Bot uses .cursor-plugin/plugin.json (no separate grok-only schema). Cloud-only Grok Bot sessions cannot reach the Mac companion without a separately supported bridge.',
         'desktop': 'Install this MCPB from Claude Desktop Settings → Extensions → Advanced settings, then select your saved project directory. This is an optional local installer, not a new directory submission: Anthropic no longer accepts Desktop extension listings.'
     }
     return f"""# Construction Takeoff
@@ -57,7 +58,7 @@ def build():
     for old in dist.glob('construction-takeoff-*'):
         if old.suffix in ('.zip', '.mcpb'):
             old.unlink()
-    for target in ('cursor', 'claude', 'codex', 'desktop'):
+    for target in ('cursor', 'claude', 'codex', 'grok-bot', 'desktop'):
         root = ROOT / 'packages' / target
         if root.exists():
             shutil.rmtree(root)
@@ -126,9 +127,11 @@ def build():
                     'review': json.loads((ROOT / 'shared/codex/review.json').read_text()),
                     'publication': {'release_notes': 'Adds guided Codex connection setup and review scenarios. Local macOS companion required.'}
                 }}
-            if target == 'cursor':
+            if target in ('cursor', 'grok-bot'):
                 manifest['logo'] = 'assets/icon.png'
-            dump(root / f'.{target}-plugin/plugin.json', manifest)
+            # Grok Bot installs Cursor-format plugins; no separate official grok-bot schema.
+            plugin_kind = 'cursor' if target == 'grok-bot' else target
+            dump(root / f'.{plugin_kind}-plugin/plugin.json', manifest)
         filename = f'construction-takeoff-{target}-{VERSION}' + ('.mcpb' if target == 'desktop' else '.zip')
         archive = dist / filename
         with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as z:

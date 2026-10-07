@@ -15,6 +15,7 @@ Support: hi@masonearl.com and repository Issues. Icon: shared/assets/icon.png. P
 ## Submission routes
 
 - Cursor: https://cursor.com/marketplace/publish — public GitHub repository, root `.cursor-plugin/marketplace.json`, plugin at `packages/cursor`. Confirm current form fields before submission. [Official reference](https://prod.cursor.com/docs/reference/plugins).
+- Grok Bot: same Cursor marketplace publish — https://cursor.com/marketplace/publish — using this Cursor-format package (`packages/grok-bot`) or `packages/cursor`. Grok Bot installs marketplace plugins through Cursor in-app Plugins; there is no separate official grok-only plugin schema for this stdio companion. [x.ai/bot/marketplace](https://x.ai/bot/marketplace) is a Bot Template marketplace and is a later, separate step if a shareable bot template is desired. Cloud-only Grok Bot sessions cannot reach the Mac companion; do not advertise cloud support until a bridge exists. RC status; the separately installed Mac companion remains required.
 - Claude Code/Cowork: https://clau.de/plugin-directory-submission — root `.claude-plugin/marketplace.json`, plugin at `packages/claude`. Validate Code and Cowork independently; a schema-valid package does not prove Cowork can reach the Mac's companion. [Official guide](https://claude.com/resources/articles/build-plugins-for-claude).
 - Claude Desktop chat: `.mcpb` is an optional local installer only. [Current Anthropic directory rules](https://claude.com/docs/directory/publish) no longer accept Desktop extension submissions. Submit the Claude plugin bundle through https://claude.ai/directory/manage instead. Local MCP entries are ignored by chat; full cross-surface tools require a remote MCP service.
 
@@ -27,6 +28,7 @@ Support: hi@masonearl.com and repository Issues. Icon: shared/assets/icon.png. P
 - [ ] In each host: install from clean user state, health, capabilities, project list, inspect quantities, create proposal, native review/apply, Undo, save and stale-revision rejection.
 - [ ] Desktop: first-run directory picker, paths with spaces, disconnect/reconnect, missing companion error, uninstall.
 - [ ] Cowork: establish actual host filesystem/process access or implement a supported remote connection. Do not advertise support before this passes.
+- [ ] Grok Bot: marketplace or in-app install from a local Mac session with the companion present. Do not claim cloud Grok Bot support without a verified bridge.
 - [ ] Fresh screenshots and publisher verification in each directory portal.
 - [ ] Codex: remote HTTPS deployment and authentication OR explicit provider approval for local MCP.
 - [ ] Submit the appropriate artifact and record receipt IDs/status. Do not change application repository visibility.
