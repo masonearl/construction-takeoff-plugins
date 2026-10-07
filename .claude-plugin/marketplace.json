@@ -1,0 +1,16 @@
+{
+  "name": "takeoff-x-plugins",
+  "owner": {
+    "name": "Mason Earl"
+  },
+  "metadata": {
+    "description": "Inspect Takeoff X projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion."
+  },
+  "plugins": [
+    {
+      "name": "takeoff-x",
+      "source": "./packages/claude",
+      "description": "Inspect Takeoff X projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "takeoff-x-plugins",
+  "interface": {
+    "displayName": "Takeoff X"
+  },
+  "plugins": [
+    {
+      "name": "takeoff-x",
+      "source": {
+        "source": "local",
+        "path": "./packages/codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

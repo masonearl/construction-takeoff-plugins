@@ -1,0 +1,54 @@
+{
+  "manifest_version": "0.3",
+  "name": "takeoff-x",
+  "display_name": "Takeoff X",
+  "version": "0.1.0",
+  "description": "Inspect Takeoff X projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
+  "author": {
+    "name": "Mason Earl",
+    "email": "hi@masonearl.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/masonearl/construction-takeoff-plugins"
+  },
+  "homepage": "https://github.com/masonearl/construction-takeoff-plugins",
+  "documentation": "https://github.com/masonearl/construction-takeoff-plugins#readme",
+  "support": "https://github.com/masonearl/construction-takeoff-plugins/issues",
+  "privacy_policies": [
+    "https://github.com/masonearl/construction-takeoff-plugins/blob/main/PRIVACY.md"
+  ],
+  "license": "MIT",
+  "icon": "assets/icon.png",
+  "tools_generated": true,
+  "compatibility": {
+    "platforms": [
+      "darwin"
+    ],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.cjs",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server/index.cjs"
+      ],
+      "env": {
+        "TAKEOFF_PROJECTS_DIR": "${user_config.projects_directory}",
+        "TAKEOFF_MCP_ENABLE_LEGACY_WRITES": "0"
+      }
+    }
+  },
+  "user_config": {
+    "projects_directory": {
+      "type": "directory",
+      "title": "Takeoff project library",
+      "description": "Select the folder containing your saved Takeoff X projects.",
+      "required": true
+    }
+  }
+}

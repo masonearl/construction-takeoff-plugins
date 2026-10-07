@@ -1,0 +1,32 @@
+{
+  "name": "takeoff-x",
+  "version": "0.1.0",
+  "description": "Inspect Takeoff X projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
+  "author": {
+    "name": "Mason Earl",
+    "email": "hi@masonearl.com"
+  },
+  "homepage": "https://github.com/masonearl/construction-takeoff-plugins",
+  "repository": "https://github.com/masonearl/construction-takeoff-plugins",
+  "license": "MIT",
+  "keywords": [
+    "construction",
+    "takeoff",
+    "estimating"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Takeoff X",
+    "shortDescription": "Construction takeoffs and estimates with native review",
+    "developerName": "Mason Earl",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "logo": "./assets/icon.png",
+    "supportURL": "https://github.com/masonearl/construction-takeoff-plugins/issues",
+    "privacyPolicyURL": "https://github.com/masonearl/construction-takeoff-plugins/blob/main/PRIVACY.md"
+  }
+}
