@@ -92,7 +92,7 @@ def main():
         compatibility = audit(ROOT / 'packages' / target)
         assert compatibility['passed'], compatibility['errors']
         with tempfile.TemporaryDirectory(prefix='takeoff synthetic ') as td:
-            directory = Path(td)
+            directory = Path(td).resolve()
             package = directory / f'{PID}.takeoffxpkg';package.mkdir()
             project = package / 'project.json';project.write_text(json.dumps(fixture()))
             before = project.read_bytes()
@@ -120,7 +120,9 @@ def main():
                         'documents':[{'path':str(pdf),'label':'Synthetic plan'}],'reason':'Plugin smoke test'})
                     bundle = Path(staged['proposal_path'])
                     assert not staged['applied'] and bundle.is_relative_to(directory/'proposals') and (bundle/'proposal.json').is_file(), staged
-                    assert staged['documents'][0]['rotated_pages']==[1], staged
+                    manifest = json.loads((bundle/'proposal.json').read_text())
+                    page_info = manifest['documents'][0]['pageInfo']
+                    assert len(page_info) == 1 and page_info[0]['page'] == 1 and page_info[0]['rotation'] == 270, manifest
                     assert sorted(directory.glob('*.takeoffxpkg'))==packages, 'Import proposal created a project package'
                     again = session.tool('propose_project_import',{'name':'Plugin synthetic review','project_number':'DEMO',
                         'documents':[{'path':str(pdf)}],'reason':'Duplicate guard'})

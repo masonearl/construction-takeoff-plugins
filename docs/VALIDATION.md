@@ -1,6 +1,23 @@
 # Release candidate validation — October 7, 2026
 
-## 0.1.6 MCP workflow compatibility (latest pass)
+## 0.1.6 source merge validation
+
+The completed local companion (`0.9.1-dev`, 40 tools) now passes the strict
+MAS-59–64 interface audit through all five packaged launchers: Cursor, Claude,
+Codex, Grok Bot and Desktop. All five synthetic smoke runs pass model inspection,
+proposal creation, stale-revision rejection, unchanged saved projects, rotated
+plan-import staging and duplicate protection. The import smoke test now resolves
+the macOS temporary-directory alias and reads rotation from the bundle's
+`pageInfo`, rather than assuming a response-summary field exists.
+
+All 19 plugin tests, Claude's strict manifest validation, and the Codex stdio
+connection check pass. Package archives remain reproducible. This establishes
+source merge readiness for conditional plugin guidance and launchers. The app
+changes are still local and require their own branch integration and QA. No
+release assets, marketplace listing or application deployment are published by
+this merge; native/provider/real-plan release checks below remain outstanding.
+
+## 0.1.6 MCP workflow compatibility (earlier pass)
 
 - Preserved the 0.1.5 reviewed plan-import update and extended shared instructions
   to MAS-60–64: scale evidence/proposals, bounded reads, metadata proposals,
