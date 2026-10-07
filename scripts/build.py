@@ -98,6 +98,7 @@ def build():
                 'env': {'TAKEOFF_MCP_ENABLE_LEGACY_WRITES': '0'}
             }}})
             if target == 'claude':
+                manifest['displayName'] = 'Construction Takeoff'
                 (root / 'server').mkdir()
                 shutil.copyfile(ROOT / 'shared/desktop.cjs', root / 'server/index.cjs')
                 dump(root / '.mcp.json', {'mcpServers': {'construction-takeoff': {
@@ -147,7 +148,7 @@ def build():
         dump(ROOT / f'.{client}-plugin/marketplace.json', {
             'name': 'construction-takeoff-plugins', 'owner': {'name': 'Mason Earl'},
             'metadata': {'description': DESCRIPTION},
-            'plugins': [{'name': 'construction-takeoff', 'source': f'./packages/{client}', 'description': DESCRIPTION}]
+            'plugins': [{'name': 'construction-takeoff', **({'displayName': 'Construction Takeoff'} if client == 'claude' else {}), 'source': f'./packages/{client}', 'description': DESCRIPTION}]
         })
     dump(ROOT / '.agents/plugins/marketplace.json', {
         'name': 'construction-takeoff-plugins', 'interface': {'displayName': 'Construction Takeoff'},

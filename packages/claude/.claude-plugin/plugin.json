@@ -15,5 +15,6 @@
     "estimating"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json"
+  "mcpServers": "./.mcp.json",
+  "displayName": "Construction Takeoff"
 }
