@@ -34,7 +34,7 @@ class Session:
             command = ['node', str(ROOT / 'packages/desktop/server/index.cjs')]
         else:
             cfg = json.loads((ROOT / f'packages/{target}/.mcp.json').read_text())['mcpServers']['construction-takeoff']
-            command = [cfg['command'], *[arg.replace('${CLAUDE_PLUGIN_ROOT}',str(ROOT / f'packages/{target}')) for arg in cfg['args']]]
+            command = [cfg['command'].replace('${CLAUDE_PLUGIN_ROOT}', str(ROOT / f'packages/{target}')), *[arg.replace('${CLAUDE_PLUGIN_ROOT}',str(ROOT / f'packages/{target}')) for arg in cfg['args']]]
         self.stderr = tempfile.TemporaryFile(mode='w+')
         self.proc = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=self.stderr, text=True,
             env=dict(os.environ, TAKEOFF_PROJECTS_DIR=str(directory), TAKEOFF_MCP_PROPOSALS_DIR=str(directory/'proposals'), TAKEOFF_MCP_ENABLE_LEGACY_WRITES='1'))

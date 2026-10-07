@@ -1,10 +1,8 @@
 {
   "mcpServers": {
     "construction-takeoff": {
-      "command": "/bin/sh",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/server/start.sh"
-      ],
+      "command": "${CLAUDE_PLUGIN_ROOT}/server/start.sh",
+      "args": [],
       "env": {
         "TAKEOFF_MCP_ENABLE_LEGACY_WRITES": "0"
       }

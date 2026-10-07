@@ -99,8 +99,8 @@ acceptance and public provider acceptance are not established by these tests.
 
 ## Claude review preparation — 2026-10-07
 
-Version 0.1.4 replaces the Claude Node wrapper with `/bin/sh` and a literal
-`${CLAUDE_PLUGIN_ROOT}/server/start.sh` argument. The shell script performs no
+Version 0.1.4 replaces the Claude Node wrapper with a directly executable shell script at
+`${CLAUDE_PLUGIN_ROOT}/server/start.sh`. The shell script performs no
 downloads or package installation and execs the separately installed companion.
 That external executable can still require manual review; this is not a claim
 that the directory policy hold is resolved.

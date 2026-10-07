@@ -20,7 +20,7 @@ class DistributionTests(unittest.TestCase):
             command = ['node', str(ROOT / 'packages/desktop/server/index.cjs')]
         else:
             config = json.loads((ROOT / f'packages/{target}/.mcp.json').read_text())['mcpServers']['construction-takeoff']
-            command = [config['command'], *[arg.replace('${CLAUDE_PLUGIN_ROOT}', str(ROOT / f'packages/{target}')) for arg in config['args']]]
+            command = [config['command'].replace('${CLAUDE_PLUGIN_ROOT}', str(ROOT / f'packages/{target}')), *[arg.replace('${CLAUDE_PLUGIN_ROOT}', str(ROOT / f'packages/{target}')) for arg in config['args']]]
         return subprocess.run(command, env=env, input=data, capture_output=True, text=True, timeout=10)
 
     def test_missing_companion_is_actionable_stderr_only(self):

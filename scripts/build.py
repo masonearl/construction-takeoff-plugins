@@ -105,8 +105,9 @@ def build():
                 manifest['termsOfServiceUrl'] = TERMS
                 (root / 'server').mkdir()
                 shutil.copyfile(ROOT / 'shared/start.sh', root / 'server/start.sh')
+                (root / 'server/start.sh').chmod(0o755)
                 dump(root / '.mcp.json', {'mcpServers': {'construction-takeoff': {
-                    'command': '/bin/sh', 'args': ['${CLAUDE_PLUGIN_ROOT}/server/start.sh'],
+                    'command': '${CLAUDE_PLUGIN_ROOT}/server/start.sh', 'args': [],
                     'env': {'TAKEOFF_MCP_ENABLE_LEGACY_WRITES': '0'}
                 }}})
             if target == 'codex':
@@ -144,7 +145,7 @@ def build():
                 if path.is_file():
                     info = zipfile.ZipInfo(path.relative_to(root).as_posix(), date_time=(2026, 1, 1, 0, 0, 0))
                     info.compress_type = zipfile.ZIP_DEFLATED
-                    info.external_attr = 0o100644 << 16
+                    info.external_attr = (0o100755 if path.stat().st_mode & 0o111 else 0o100644) << 16
                     z.writestr(info, path.read_bytes())
         hashes.append(f'{hashlib.sha256(archive.read_bytes()).hexdigest()}  {filename}')
     (dist / 'SHA256SUMS').write_text('\n'.join(hashes) + '\n')
