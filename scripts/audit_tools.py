@@ -18,10 +18,14 @@ REQUIRED = {
     'estimates': ['read_estimate_context', 'propose_estimate_change', 'export_estimate_bid_sheet'],
     'renderings': ['get_rendering_context', 'validate_rendering', 'prepare_rendering_revision', 'propose_rendering_review', 'propose_rendering_visibility', 'export_rendering'],
 }
-FILE_WRITERS = {'propose_model_edit', 'save_traced_measurement', 'propose_calculation_change', 'propose_estimate_change', 'prepare_rendering_revision', 'propose_rendering_review', 'propose_rendering_visibility', 'export_rendering', 'render_sheet_region'}
+# Workflows the plugin skill uses when the companion provides them; older companions lack them.
+EXPECTED = {
+    'plan_import': ['propose_project_import'],
+}
+FILE_WRITERS = {'propose_project_import', 'propose_model_edit', 'save_traced_measurement', 'propose_calculation_change', 'propose_estimate_change', 'prepare_rendering_revision', 'propose_rendering_review', 'propose_rendering_visibility', 'export_rendering', 'render_sheet_region'}
 
 
-def audit(plugin):
+def audit(plugin, require_expected=False):
     config = json.loads((plugin / '.mcp.json').read_text())['mcpServers']['construction-takeoff']
     with tempfile.TemporaryDirectory(prefix='construction-tool-audit-') as folder:
         env = {**os.environ, **config.get('env', {}), 'TAKEOFF_PROJECTS_DIR': folder, 'TAKEOFF_MCP_PROPOSALS_DIR': folder}
@@ -31,7 +35,8 @@ def audit(plugin):
             {'jsonrpc':'2.0', 'id':2, 'method':'tools/list'},
             {'jsonrpc':'2.0', 'id':3, 'method':'tools/call', 'params':{'name':'get_capabilities','arguments':{}}},
         ]
-        result = subprocess.run([config['command'], *config.get('args', [])], input=''.join(json.dumps(r)+'\n' for r in requests), env=env, capture_output=True, text=True, timeout=30, check=True)
+        command = [part.replace('${CLAUDE_PLUGIN_ROOT}', str(plugin.resolve())) for part in [config['command'], *config.get('args', [])]]
+        result = subprocess.run(command, input=''.join(json.dumps(r)+'\n' for r in requests), env=env, capture_output=True, text=True, timeout=30, check=True)
         replies = {r['id']:r for r in map(json.loads, result.stdout.splitlines())}
         if any('error' in r or r.get('result', {}).get('isError') for r in replies.values()):
             raise ValueError('MCP returned an error during capability audit')
@@ -40,20 +45,30 @@ def audit(plugin):
         missing = {domain:[name for name in names if name not in tools] for domain,names in REQUIRED.items()}
         missing = {domain:names for domain,names in missing.items() if names}
         errors = [f'Missing workflow tools: {missing}'] if missing else []
+        absent = {domain:[name for name in names if name not in tools] for domain,names in EXPECTED.items()}
+        absent = {domain:names for domain,names in absent.items() if names}
+        warnings = [f'Companion predates expected workflows {absent}; the skill falls back to native-app steps. Update the companion.'] if absent else []
+        if absent and require_expected:
+            errors += warnings
         for name in FILE_WRITERS & tools.keys():
             if tools[name].get('annotations',{}).get('readOnlyHint') is not False:
                 errors.append(f'{name} creates files but is marked read-only; update the companion.')
         if list(Path(folder).iterdir()):
             errors.append('Read-only discovery modified its isolated project root.')
-        return {'passed':not errors, 'errors':errors, 'tool_count':len(tools), 'required_workflows':REQUIRED,
+        native = ['Sheet calibration', 'Hardhat job linking', 'Review/apply/Undo and fresh native exports']
+        if 'plan_import' in absent:
+            native.insert(0, 'Plan import (companion lacks propose_project_import)')
+        return {'passed':not errors, 'errors':errors, 'warnings':warnings, 'tool_count':len(tools), 'required_workflows':REQUIRED, 'expected_workflows':EXPECTED,
                 'transport':caps.get('transport'), 'remaining_gaps':caps.get('gaps'),
-                'native_app_required':['Sheet import and calibration', 'Project creation and Hardhat job linking', 'Review/apply/Undo and fresh native exports'],
+                'native_app_required':native,
                 'acceptance_tests_executed':False}
 
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plugin', type=Path, default=ROOT/'packages/codex')
-    report=audit(parser.parse_args().plugin)
+    parser.add_argument('--require-plan-import', action='store_true', help='fail when the companion lacks expected workflows such as propose_project_import (use for releases)')
+    options=parser.parse_args()
+    report=audit(options.plugin, options.require_plan_import)
     print(json.dumps(report,indent=2))
     raise SystemExit(0 if report['passed'] else 1)

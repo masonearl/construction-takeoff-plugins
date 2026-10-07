@@ -26,3 +26,16 @@ Rebuild and revalidate if files change. Tests do not establish estimating comple
 Mason requested Construction Takeoff (not the prior product name). Updated plugin IDs, display names, marketplace IDs, artifact filenames, prompts and documentation. The companion executable remains ~/.local/bin/takeoff-mcp for installation compatibility. Older local marketplace references remain only in migration guidance.
 
 Seven distribution/submission tests passed; all four synthetic proposal workflows passed. Codex connection check exposed 32 tools with legacy writes disabled. The user installed the prior 0.1.1 Desktop preview; it remains unconfigured, and the renamed build still needs host installation/configuration.
+
+## 0.1.5 plan import (October 7, 2026)
+
+Natural gas stress test (Enbridge La Hacienda 25-260144, Draper/Sandy Canal Bridge 25-260160) found no way to load plan PDFs through the plugin: `create_project` is a disabled legacy write that never attaches a PDF. Tracked as MAS-59…64 in Linear (label MCP).
+
+- Skill: new "Load plans into a new project" workflow. It searches for an existing project first, stages with `propose_project_import` when the companion provides it, and otherwise falls back to File → New Document… in the app. It never enables legacy writes, and warns that imported pages start uncalibrated and that the scale bar wins over conflicting notes.
+- Audit: `EXPECTED` workflows report a warning when the companion predates plan import; `--require-plan-import` makes that a release failure. Fixed `${CLAUDE_PLUGIN_ROOT}` expansion so the Claude package can be audited.
+- Smoke: when the tool exists, each package stages a generated rotated PDF, checks that the bundle stays in the temporary proposals folder, that no project package is created, and that the duplicate guard works.
+- Results against the installed companion (32 tools): all four packages pass; plan import is reported as not in the companion; the default audit passes with a warning; the strict audit fails as intended.
+- Results against companion branch `feature/mcp-project-import` (33 tools, via a temporary HOME): all four packages pass, including plan import; the strict audit passes. The companion's own 70 unit tests pass. Real-plan dry run: La Hacienda staged 8 pages in 0.7 s; Canal Bridge staged 4 files / 21 pages in 2.8 s.
+- Claude strict validation and MCPB 2.1.2 validation pass; 9 distribution tests pass.
+
+Not yet available: the app's File → Review AI Project Import… sheet that applies the bundle (MAS-59 part B). Until it ships, a staged bundle cannot be applied, so do not ship 0.1.5 publicly before that app build.

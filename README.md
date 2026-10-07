@@ -24,7 +24,7 @@ Avoid enabling the existing `takeoff-x-local` plugin and this preview simultaneo
 
 ## Workflow
 
-Inspect saved projects, sheets, calibration and quantities; trace plan linework; prepare model, calculation and estimate proposals. Construction Takeoff's native review applies changes and supplies Undo. The launcher forces legacy direct writes off. A staged proposal is not an applied project change or submitted bid. Use native exported quantities when available and report calibration and coverage gaps.
+Load plan PDFs into a new project (`propose_project_import` stages a checksummed bundle the user applies in **File → Review AI Project Import…**; companions without it fall back to importing in the app). Inspect saved projects, sheets, calibration and quantities; trace plan linework; prepare model, calculation and estimate proposals. Construction Takeoff's native review applies changes and supplies Undo. The launcher forces legacy direct writes off. A staged proposal is not an applied project change or submitted bid. Use native exported quantities when available and report calibration and coverage gaps.
 
 ## Build and verify
 
@@ -32,7 +32,8 @@ Requires Python 3 for packaging/tests; Node 18+ for Desktop launcher tests (the 
 
 ```sh
 python3 scripts/build.py
-python3 scripts/audit_tools.py
+python3 scripts/audit_tools.py                       # warns when the companion predates plan import
+python3 scripts/audit_tools.py --require-plan-import # release gate
 python3 -m unittest discover -s tests -v
 python3 scripts/smoke.py  # requires the separately installed companion
 npx --yes @anthropic-ai/mcpb@2.1.2 validate packages/desktop/manifest.json
@@ -45,5 +46,5 @@ See [submission checklist](docs/SUBMISSION.md) and [privacy](PRIVACY.md). Report
 
 Public local-preview setup and download: https://www.masonearl.com/pages/construction-takeoff/plugin.html
 
-Version 0.1.3 includes a self-contained Codex marketplace catalog for ZIP installs.
+Version 0.1.5 adds the plan-import workflow (needs a companion with `propose_project_import` plus the app's review sheet, MAS-59); older companions get native-app import guidance. Version 0.1.3 includes a self-contained Codex marketplace catalog for ZIP installs.
 Store submission is blocked at the publisher-identity gate; see docs/SUBMISSION.md.

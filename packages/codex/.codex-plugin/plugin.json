@@ -1,7 +1,7 @@
 {
   "name": "construction-takeoff",
-  "version": "0.1.4",
-  "description": "Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
+  "version": "0.1.5",
+  "description": "Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
   "author": {
     "name": "Mason Earl",
     "email": "hi@masonearl.com"
@@ -22,15 +22,17 @@
     "developerName": "Mason Earl",
     "category": "Productivity",
     "capabilities": [
+      "Load plan sets for review",
       "Inspect saved takeoffs",
       "Trace plan linework",
       "Prepare reviewed changes"
     ],
     "logo": "./assets/icon.png",
     "composerIcon": "./assets/icon.png",
-    "longDescription": "Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion. Changes use native review and Undo. Reads reflect saved project state.",
+    "longDescription": "Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion. Changes use native review and Undo. Reads reflect saved project state.",
     "defaultPrompt": [
       "Check my Construction Takeoff connection.",
+      "Load these plan PDFs into a new takeoff project.",
       "Inspect calibration and quantities in my saved takeoff.",
       "Prepare a takeoff change for native review."
     ],

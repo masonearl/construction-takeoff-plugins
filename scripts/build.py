@@ -15,7 +15,7 @@ TERMS = 'https://www.masonearl.com/pages/construction-takeoff/terms.html'
 SETUP = 'https://www.masonearl.com/pages/construction-takeoff/plugin.html'
 APP_URL = 'https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12'
 VERSION = (ROOT / 'VERSION').read_text().strip()
-DESCRIPTION = 'Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.'
+DESCRIPTION = 'Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.'
 
 def dump(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -34,7 +34,7 @@ def package_readme(target):
     }
     return f"""# Construction Takeoff
 
-Inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside Construction Takeoff with Undo. Proposal creation does not submit a bid or modify the saved project.
+Load plan PDFs into new projects through native review, inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside Construction Takeoff with Undo. Proposal creation does not submit a bid or modify the saved project.
 
 ## Setup
 
@@ -120,10 +120,10 @@ def build():
                 manifest['interface'] = {
                     'displayName': 'Construction Takeoff', 'shortDescription': 'Construction takeoffs and estimates with native review',
                     'developerName': 'Mason Earl', 'category': 'Productivity',
-                    'capabilities': ['Inspect saved takeoffs', 'Trace plan linework', 'Prepare reviewed changes'],
+                    'capabilities': ['Load plan sets for review', 'Inspect saved takeoffs', 'Trace plan linework', 'Prepare reviewed changes'],
                     'logo': './assets/icon.png', 'composerIcon': './assets/icon.png',
                     'longDescription': DESCRIPTION + ' Changes use native review and Undo. Reads reflect saved project state.',
-                    'defaultPrompt': ['Check my Construction Takeoff connection.', 'Inspect calibration and quantities in my saved takeoff.', 'Prepare a takeoff change for native review.'],
+                    'defaultPrompt': ['Check my Construction Takeoff connection.', 'Load these plan PDFs into a new takeoff project.', 'Inspect calibration and quantities in my saved takeoff.', 'Prepare a takeoff change for native review.'],
                     'websiteURL': APP_URL,
                     'supportURL': SUPPORT, 'privacyPolicyURL': PRIVACY, 'termsOfServiceURL': TERMS
                 }

@@ -92,5 +92,17 @@ class DistributionTests(unittest.TestCase):
                 self.assertIn(required, names)
             self.assertNotIn('.grok-bot-plugin/plugin.json', names)
 
+
+
+class SkillContentTests(unittest.TestCase):
+    def test_every_skill_package_teaches_reviewed_plan_import_with_fallback(self):
+        for target in ('cursor', 'claude', 'codex', 'grok-bot'):
+            with self.subTest(target=target):
+                skill = (ROOT / f'packages/{target}/skills/takeoff-workflow/SKILL.md').read_text()
+                self.assertIn('propose_project_import', skill)
+                self.assertIn('Review AI Project Import', skill)
+                self.assertIn('New Document', skill)
+                self.assertIn('Never enable legacy writes', skill)
+
 if __name__ == '__main__':
     unittest.main()

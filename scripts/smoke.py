@@ -28,6 +28,21 @@ def fixture():
         'unit': 'ft', 'material': 'Concrete', 'sourcePointsPerFoot': 72}}]
     return data
 
+def synthetic_pdf(path):
+    """Write a one-page vector PDF with a valid xref; no PDF library needed."""
+    stream = b'0 0 0 RG 2 w ' + b' '.join(b'%d 100 m %d 600 l S' % (50 + 10 * i, 50 + 10 * i) for i in range(60))
+    objects = [b'<< /Type /Catalog /Pages 2 0 R >>', b'<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+               b'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 1224 792] /Rotate 270 /Contents 4 0 R >>',
+               b'<< /Length %d >>\nstream\n' % len(stream) + stream + b'\nendstream']
+    out, offsets = bytearray(b'%PDF-1.7\n'), []
+    for number, body in enumerate(objects, 1):
+        offsets.append(len(out))
+        out += b'%d 0 obj\n' % number + body + b'\nendobj\n'
+    xref = len(out)
+    out += b'xref\n0 %d\n0000000000 65535 f \n' % (len(objects) + 1) + b''.join(b'%010d 00000 n \n' % o for o in offsets)
+    out += b'trailer\n<< /Size %d /Root 1 0 R >>\nstartxref\n%d\n%%%%EOF\n' % (len(objects) + 1, xref)
+    path.write_bytes(bytes(out))
+
 class Session:
     def __init__(self, target, directory):
         if target == 'desktop':
@@ -94,7 +109,21 @@ def main():
                 assert proposal_path.is_relative_to(directory) and proposal_path.is_file()
                 session.tool('propose_model_edit',{**args,'expected_revision':'0'*64},error=True)
                 assert project.read_bytes()==before, 'Project changed before native review'
-                print(f'{target}: {len(tools)} tools; health, capabilities, model inspection, proposal, stale rejection and unchanged project PASS')
+                imported = 'not in companion'
+                if any(t['name']=='propose_project_import' for t in tools):
+                    pdf = directory / 'synthetic plan.pdf'; synthetic_pdf(pdf)
+                    packages = sorted(directory.glob('*.takeoffxpkg'))
+                    staged = session.tool('propose_project_import',{'name':'Synthetic import','project_number':'DEMO-IMPORT',
+                        'documents':[{'path':str(pdf),'label':'Synthetic plan'}],'reason':'Plugin smoke test'})
+                    bundle = Path(staged['proposal_path'])
+                    assert not staged['applied'] and bundle.is_relative_to(directory/'proposals') and (bundle/'proposal.json').is_file(), staged
+                    assert staged['documents'][0]['rotated_pages']==[1], staged
+                    assert sorted(directory.glob('*.takeoffxpkg'))==packages, 'Import proposal created a project package'
+                    again = session.tool('propose_project_import',{'name':'Plugin synthetic review','project_number':'DEMO',
+                        'documents':[{'path':str(pdf)}],'reason':'Duplicate guard'})
+                    assert again['proposal_path'] is None and again['existing_project']['id']==PID, again
+                    imported = 'staged + duplicate guard'
+                print(f'{target}: {len(tools)} tools; health, capabilities, model inspection, proposal, stale rejection and unchanged project PASS; plan import: {imported}')
             finally:
                 session.close()
 

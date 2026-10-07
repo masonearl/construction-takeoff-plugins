@@ -19,7 +19,9 @@ description: Connect and troubleshoot the Construction Takeoff macOS companion i
    create, move, reset, or delete project storage to repair discovery.
 4. For a connection-only request, stop after reporting the result and any missing
    prerequisites. When the user asks to inspect projects, call `list_projects`,
-   resolve the requested project, and follow the takeoff-workflow skill.
+   resolve the requested project, and follow the takeoff-workflow skill. To load
+   new plan PDFs, follow its plan-import section; if `propose_project_import` is
+   missing, the companion is older than plan import and should be re-exported.
 
 Local stdio does not provide cloud access. Do not claim cloud compatibility,
 store approval, live unsaved state, or complete estimating coverage from health.
