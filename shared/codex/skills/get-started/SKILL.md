@@ -26,3 +26,5 @@ store approval, live unsaved state, or complete estimating coverage from health.
 Proposals require native review; connection setup does not authorize project edits.
 Never include project names, drawing content, credentials, or full local paths in
 public support reports unless the user explicitly requests those details.
+
+Official Mac application: [Construction Takeoff on the Mac App Store](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12). Documentation: https://www.masonearl.com/pages/documentation.html. If the installed version lacks AI setup export, report the compatibility gap instead of claiming installation is complete.

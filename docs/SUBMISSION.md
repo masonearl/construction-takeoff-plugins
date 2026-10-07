@@ -61,3 +61,9 @@ use this page. It currently describes core takeoff features; plugin installation
 and companion setup details will need to be added for store onboarding. Dedicated
 public plugin privacy, terms and support URLs remain to be verified. The website
 domain alone does not establish an MCP hosting endpoint.
+
+## Mac application link
+
+Verified Construction Takeoff by Mason Earl (Mac-only), App Store ID 6751007895: https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12
+
+Package homepages and Codex websiteURL link directly to the app. Desktop documentation and README documentation links retain the canonical masonearl.com page. The current App Store binary has not yet been tested for companion export compatibility.

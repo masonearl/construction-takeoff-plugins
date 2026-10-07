@@ -9,6 +9,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 URL = 'https://github.com/masonearl/construction-takeoff-plugins'
 WEBSITE = 'https://www.masonearl.com/pages/documentation.html'
+APP_URL = 'https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12'
 VERSION = (ROOT / 'VERSION').read_text().strip()
 DESCRIPTION = 'Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.'
 
@@ -32,7 +33,7 @@ Inspect saved construction projects, review quantities and calibration, trace pl
 
 ## Setup
 
-{requirements} In Construction Takeoff, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. A public app download is not included in this preview.
+{requirements} In Construction Takeoff, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. [Get Construction Takeoff for Mac]({APP_URL}) · [Documentation]({WEBSITE}). Plugin workflows require a build that includes AI setup/companion export; compatibility with the current App Store release has not yet been verified.
 
 {notes[target]}
 
@@ -63,7 +64,7 @@ def build():
         (root / 'README.md').write_text(package_readme(target))
         manifest = dict(name='construction-takeoff', version=VERSION, description=DESCRIPTION,
                         author={'name': 'Mason Earl', 'email': 'hi@masonearl.com'},
-                        homepage=WEBSITE, repository=URL, license='MIT',
+                        homepage=APP_URL, repository=URL, license='MIT',
                         keywords=['construction', 'takeoff', 'estimating'],
                         skills='./skills/', mcpServers='./.mcp.json')
         if target == 'desktop':
@@ -73,7 +74,7 @@ def build():
             dump(root / 'manifest.json', {
                 'manifest_version': '0.3', 'name': 'construction-takeoff', 'display_name': 'Construction Takeoff',
                 'version': VERSION, 'description': DESCRIPTION, 'author': manifest['author'],
-                'repository': {'type': 'git', 'url': URL}, 'homepage': WEBSITE,
+                'repository': {'type': 'git', 'url': URL}, 'homepage': APP_URL,
                 'documentation': WEBSITE, 'support': URL + '/issues',
                 'privacy_policies': [URL + '/blob/main/PRIVACY.md'], 'license': 'MIT',
                 'icon': 'assets/icon.png', 'tools_generated': True,
@@ -106,7 +107,7 @@ def build():
                     'logo': './assets/icon.png', 'composerIcon': './assets/icon.png',
                     'longDescription': DESCRIPTION + ' Changes use native review and Undo. Reads reflect saved project state.',
                     'defaultPrompt': ['Check my Construction Takeoff connection.', 'Inspect calibration and quantities in my saved takeoff.', 'Prepare a takeoff change for native review.'],
-                    'websiteURL': WEBSITE,
+                    'websiteURL': APP_URL,
                     'supportURL': URL + '/issues', 'privacyPolicyURL': URL + '/blob/main/PRIVACY.md'
                 }
                 shutil.copytree(ROOT / 'shared/codex/skills/get-started', root / 'skills/get-started')

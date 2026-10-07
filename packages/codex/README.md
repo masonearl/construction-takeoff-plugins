@@ -4,7 +4,7 @@ Inspect saved construction projects, review quantities and calibration, trace pl
 
 ## Setup
 
-Construction Takeoff for macOS and its separately installed MCP companion are required. In Construction Takeoff, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. A public app download is not included in this preview.
+Construction Takeoff for macOS and its separately installed MCP companion are required. In Construction Takeoff, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. [Get Construction Takeoff for Mac](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12) · [Documentation](https://www.masonearl.com/pages/documentation.html). Plugin workflows require a build that includes AI setup/companion export; compatibility with the current App Store release has not yet been verified.
 
 Install construction-takeoff from the construction-takeoff-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.
 

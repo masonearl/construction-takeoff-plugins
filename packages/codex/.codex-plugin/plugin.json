@@ -6,7 +6,7 @@
     "name": "Mason Earl",
     "email": "hi@masonearl.com"
   },
-  "homepage": "https://www.masonearl.com/pages/documentation.html",
+  "homepage": "https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12",
   "repository": "https://github.com/masonearl/construction-takeoff-plugins",
   "license": "MIT",
   "keywords": [
@@ -34,7 +34,7 @@
       "Inspect calibration and quantities in my saved takeoff.",
       "Prepare a takeoff change for native review."
     ],
-    "websiteURL": "https://www.masonearl.com/pages/documentation.html",
+    "websiteURL": "https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12",
     "supportURL": "https://github.com/masonearl/construction-takeoff-plugins/issues",
     "privacyPolicyURL": "https://github.com/masonearl/construction-takeoff-plugins/blob/main/PRIVACY.md"
   },

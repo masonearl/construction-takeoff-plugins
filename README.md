@@ -6,7 +6,7 @@ Plugin distribution source for construction takeoffs and estimating in Cursor, C
 
 ## Requirements and setup
 
-1. Install Construction Takeoff. Open **3D Model → AI tools**, export AI setup, and follow its companion installation instructions. This installs `~/.local/bin/takeoff-mcp` with its runtime. The app is currently a prerequisite supplied separately; a public download/onboarding route must be established before store submission.
+1. Install [Construction Takeoff for Mac](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12). Open **3D Model → AI tools**, export AI setup, and follow its companion installation instructions. This installs `~/.local/bin/takeoff-mcp` with its runtime. The app is a separately licensed prerequisite. Plugin workflows require a build with AI setup/companion export; compatibility with the current App Store release still needs verification.
 2. Save a project in the Takeoff project library. Unsaved changes are not visible to the companion.
 3. Install the client package below. For Desktop, choose the saved project library directory when prompted. Other clients use the companion's configured/default library (`TAKEOFF_PROJECTS_DIR` can override it in a local launch environment).
 4. Reload the client. Ask: “Use Construction Takeoff health and capabilities, then list my saved projects. Do not make changes.”
