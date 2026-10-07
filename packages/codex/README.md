@@ -16,6 +16,6 @@ Guidance covers reviewed PDF import, scale proposals, paged results, project met
 
 ## What runs and what is shared
 
-The package starts the separately installed companion. The launcher does not download code, send network requests or collect analytics. MCP results are sent to your chosen AI client and may be processed by its provider. The companion reads saved projects and creates local proposals/outputs. The launcher disables legacy direct writes; native review owns project changes and Undo. See [privacy](PRIVACY.md).
+The package starts the separately installed companion. The launcher does not download code, send network requests or collect analytics. MCP results are sent to your chosen AI client and may be processed by its provider. The companion reads saved projects and creates local proposals/outputs. An updated app may additionally advertise local live reads and project-detail changes with approval choice, history and Undo; inspect capabilities first. The launcher disables legacy direct writes. Native app transactions or review own project changes and Undo. See [privacy](PRIVACY.md).
 
 This preview has not been approved by any store. Disable any older takeoff-x-local installation before enabling this package to avoid duplicate tools. Website: https://www.masonearl.com/pages/documentation.html#construction-takeoff. Source and release status: https://github.com/masonearl/construction-takeoff-plugins. Contact: hi@masonearl.com. MIT applies to plugin files only; the app and companion remain separately licensed.

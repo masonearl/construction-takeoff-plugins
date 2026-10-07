@@ -74,3 +74,11 @@ Natural gas stress test (Enbridge La Hacienda 25-260144, Draper/Sandy Canal Brid
 - Claude strict validation and MCPB 2.1.2 validation pass; 9 distribution tests pass.
 
 Not yet available: the app's File → Review AI Project Import… sheet that applies the bundle (MAS-59 part B). Until it ships, a staged bundle cannot be applied, so do not ship 0.1.5 publicly before that app build.
+
+## Live bridge follow-through (MAS-70)
+
+The workflow now explains optional live project reads, metadata transactions,
+approval policy, history and conflict-aware Undo. These depend on a newer running
+app and companion and are separate from the six-ticket compatibility gate. No
+full CRUD, automatic takeoff, signed sandbox or actual client verification is
+implied by this instruction update.
