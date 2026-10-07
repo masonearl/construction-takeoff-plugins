@@ -17,7 +17,7 @@ Plugin distribution source for construction takeoffs and estimating in Cursor, C
 | Claude Code | `packages/claude` | From the repository: `claude plugin marketplace add .` then `claude plugin install takeoff-x@takeoff-x-plugins`. |
 | Claude Cowork | Same Claude plugin | Intended for the plugin directory; host access to the separately installed Mac companion still needs verification. |
 | Codex | `packages/codex` | From the repository: `codex plugin marketplace add .` then `codex plugin add takeoff-x@takeoff-x-plugins`. Public directory submission is blocked on remote MCP or approved local support. |
-| Claude Desktop chat | `dist/takeoff-x-desktop-0.1.0.mcpb` | Open Desktop Settings → Extensions and install the bundle; set the project directory. The Desktop extension exposes tools; it does not install the Code/Cowork skill. |
+| Claude Desktop chat | `dist/takeoff-x-desktop-0.1.1.mcpb` | Open Desktop Settings → Extensions and install the bundle; set the project directory. Optional local installer only; new Desktop extension directory listings are deprecated. It exposes tools but does not install the Code/Cowork skill. |
 
 Avoid enabling the existing `takeoff-x-local` plugin and this preview simultaneously; both register the same companion. Do not overwrite custom settings during migration.
 
@@ -32,10 +32,11 @@ Requires Python 3 for packaging/tests; Node 18+ for Desktop launcher tests (the 
 ```sh
 python3 scripts/build.py
 python3 -m unittest discover -s tests -v
+python3 scripts/smoke.py  # requires the separately installed companion
 npx --yes @anthropic-ai/mcpb@2.1.2 validate packages/desktop/manifest.json
 claude plugin validate packages/claude --strict
 ```
 
-`dist/` contains three ZIPs, a Desktop MCPB ZIP, and SHA256SUMS. Archives use deterministic timestamps and include only generated package files. Edit `shared/` and rebuild; do not edit `packages/` directly. No private application source, sample customer projects or credentials belong here.
+`dist/` contains three ZIPs, a Desktop MCPB ZIP, and SHA256SUMS. Archives use deterministic timestamps and include only generated package files. Edit `shared/` and rebuild; do not edit `packages/` directly. No private application source, sample customer projects or credentials belong here. The synthetic smoke test creates isolated temporary projects, checks proposal and stale-revision behavior, and removes only its own temporary data. It does not exercise native review/Undo.
 
 See [submission checklist](docs/SUBMISSION.md) and [privacy](PRIVACY.md). Report issues at https://github.com/masonearl/construction-takeoff-plugins/issues or hi@masonearl.com. MIT applies to plugin code and instructions only; see NOTICE.

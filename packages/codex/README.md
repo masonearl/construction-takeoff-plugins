@@ -1,41 +1,17 @@
-# Takeoff X plugins
+# Takeoff X
 
-Plugin distribution source for construction takeoffs and estimating in Cursor, Codex, Claude Code/Cowork, and Claude Desktop. This repository contains workflow instructions, client manifests and launchers. The Takeoff X app and MCP companion are separately installed and licensed.
+Inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside Takeoff X with Undo. Proposal creation does not submit a bid or modify the saved project.
 
-**Release candidate: packages prepared; no public directory listing or host certification yet.** macOS local sessions only. Installing a plugin does not install Takeoff X. Cloud agents and Cowork sandbox access to the Mac companion have not been verified.
+## Setup
 
-## Requirements and setup
+Takeoff X for macOS and its separately installed MCP companion are required. In Takeoff X, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. A public app download is not included in this preview.
 
-1. Install Takeoff X. Open **3D Model → AI tools**, export AI setup, and follow its companion installation instructions. This installs `~/.local/bin/takeoff-mcp` with its runtime. The app is currently a prerequisite supplied separately; a public download/onboarding route must be established before store submission.
-2. Save a project in the Takeoff project library. Unsaved changes are not visible to the companion.
-3. Install the client package below. For Desktop, choose the saved project library directory when prompted. Other clients use the companion's configured/default library (`TAKEOFF_PROJECTS_DIR` can override it in a local launch environment).
-4. Reload the client. Ask: “Use Takeoff X health and capabilities, then list my saved projects. Do not make changes.”
+Install takeoff-x from the takeoff-x-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.
 
-| Client | Package | Preview installation |
-|---|---|---|
-| Cursor | `packages/cursor` | Copy this directory into `~/.cursor/plugins/local/takeoff-x` after backing up any existing plugin; reload Cursor. Public marketplace submission uses this repository's catalog. |
-| Claude Code | `packages/claude` | From the repository: `claude plugin marketplace add .` then `claude plugin install takeoff-x@takeoff-x-plugins`. |
-| Claude Cowork | Same Claude plugin | Intended for the plugin directory; host access to the separately installed Mac companion still needs verification. |
-| Codex | `packages/codex` | From the repository: `codex plugin marketplace add .` then `codex plugin add takeoff-x@takeoff-x-plugins`. Public directory submission is blocked on remote MCP or approved local support. |
-| Claude Desktop chat | `dist/takeoff-x-desktop-0.1.0.mcpb` | Open Desktop Settings → Extensions and install the bundle; set the project directory. The Desktop extension exposes tools; it does not install the Code/Cowork skill. |
+Save your project before asking the AI to inspect it. Start with: “Use Takeoff X health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
 
-Avoid enabling the existing `takeoff-x-local` plugin and this preview simultaneously; both register the same companion. Do not overwrite custom settings during migration.
+## What runs and what is shared
 
-## Workflow
+The package starts the separately installed companion. The launcher does not download code, send network requests or collect analytics. MCP results are sent to your chosen AI client and may be processed by its provider. The companion reads saved projects and creates local proposals/outputs. The launcher disables legacy direct writes; native review owns project changes and Undo. See [privacy](PRIVACY.md).
 
-Inspect saved projects, sheets, calibration and quantities; trace plan linework; prepare model, calculation and estimate proposals. Takeoff X's native review applies changes and supplies Undo. The launcher forces legacy direct writes off. A staged proposal is not an applied project change or submitted bid. Use native exported quantities when available and report calibration and coverage gaps.
-
-## Build and verify
-
-Requires Python 3 for packaging/tests; Node 18+ for Desktop launcher tests (the Desktop host provides its runtime).
-
-```sh
-python3 scripts/build.py
-python3 -m unittest discover -s tests -v
-npx --yes @anthropic-ai/mcpb@2.1.2 validate packages/desktop/manifest.json
-claude plugin validate packages/claude --strict
-```
-
-`dist/` contains three ZIPs, a Desktop MCPB ZIP, and SHA256SUMS. Archives use deterministic timestamps and include only generated package files. Edit `shared/` and rebuild; do not edit `packages/` directly. No private application source, sample customer projects or credentials belong here.
-
-See [submission checklist](docs/SUBMISSION.md) and [privacy](PRIVACY.md). Report issues at https://github.com/masonearl/construction-takeoff-plugins/issues or hi@masonearl.com. MIT applies to plugin code and instructions only; see NOTICE.
+This preview has not been approved by any store. Disable any older takeoff-x-local installation before enabling this package to avoid duplicate tools. Source, support and current status: https://github.com/masonearl/construction-takeoff-plugins. Contact: hi@masonearl.com. MIT applies to plugin files only; the app and companion remain separately licensed.

@@ -15,18 +15,51 @@ def dump(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=2) + '\n')
 
+def package_readme(target):
+    requirements = 'Takeoff X for macOS and its separately installed MCP companion are required.'
+    if target in ('claude', 'desktop'):
+        requirements += ' The launcher uses Node.js 18 or newer (Claude Desktop supplies Node for extensions).'
+    notes = {
+        'cursor': 'Install this package through Cursor or copy the folder into ~/.cursor/plugins/local/takeoff-x. Reload Cursor.',
+        'claude': 'Install the takeoff-x plugin from the takeoff-x-plugins marketplace, or upload this ZIP in Claude Customize → Plugins → Add. The tools work only where the session can launch the Mac companion. Claude chat ignores local MCP entries; the optional Desktop extension is available for local chat use. Cowork host access needs verification.',
+        'codex': 'Install takeoff-x from the takeoff-x-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.',
+        'desktop': 'Install this MCPB from Claude Desktop Settings → Extensions → Advanced settings, then select your saved project directory. This is an optional local installer, not a new directory submission: Anthropic no longer accepts Desktop extension listings.'
+    }
+    return f"""# Takeoff X
+
+Inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside Takeoff X with Undo. Proposal creation does not submit a bid or modify the saved project.
+
+## Setup
+
+{requirements} In Takeoff X, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. A public app download is not included in this preview.
+
+{notes[target]}
+
+Save your project before asking the AI to inspect it. Start with: “Use Takeoff X health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
+
+## What runs and what is shared
+
+The package starts the separately installed companion. The launcher does not download code, send network requests or collect analytics. MCP results are sent to your chosen AI client and may be processed by its provider. The companion reads saved projects and creates local proposals/outputs. The launcher disables legacy direct writes; native review owns project changes and Undo. See [privacy](PRIVACY.md).
+
+This preview has not been approved by any store. Disable any older takeoff-x-local installation before enabling this package to avoid duplicate tools. Source, support and current status: {URL}. Contact: hi@masonearl.com. MIT applies to plugin files only; the app and companion remain separately licensed.
+"""
+
 def build():
     dist = ROOT / 'dist'
     dist.mkdir(exist_ok=True)
     hashes = []
+    for old in dist.glob('takeoff-x-*'):
+        if old.suffix in ('.zip', '.mcpb'):
+            old.unlink()
     for target in ('cursor', 'claude', 'codex', 'desktop'):
         root = ROOT / 'packages' / target
         if root.exists():
             shutil.rmtree(root)
         root.mkdir(parents=True)
-        for name in ('LICENSE', 'NOTICE', 'README.md', 'PRIVACY.md'):
+        for name in ('LICENSE', 'NOTICE', 'PRIVACY.md'):
             shutil.copyfile(ROOT / name, root / name)
         shutil.copytree(ROOT / 'shared/assets', root / 'assets')
+        (root / 'README.md').write_text(package_readme(target))
         manifest = dict(name='takeoff-x', version=VERSION, description=DESCRIPTION,
                         author={'name': 'Mason Earl', 'email': 'hi@masonearl.com'},
                         homepage=URL, repository=URL, license='MIT',
@@ -57,13 +90,29 @@ def build():
                 'command': '/bin/sh', 'args': ['-c', (ROOT / 'shared/start.sh').read_text()],
                 'env': {'TAKEOFF_MCP_ENABLE_LEGACY_WRITES': '0'}
             }}})
+            if target == 'claude':
+                (root / 'server').mkdir()
+                shutil.copyfile(ROOT / 'shared/desktop.cjs', root / 'server/index.cjs')
+                dump(root / '.mcp.json', {'mcpServers': {'takeoff-x': {
+                    'command': 'node', 'args': ['${CLAUDE_PLUGIN_ROOT}/server/index.cjs'],
+                    'env': {'TAKEOFF_MCP_ENABLE_LEGACY_WRITES': '0'}
+                }}})
             if target == 'codex':
                 manifest['interface'] = {
                     'displayName': 'Takeoff X', 'shortDescription': 'Construction takeoffs and estimates with native review',
                     'developerName': 'Mason Earl', 'category': 'Productivity',
-                    'capabilities': ['Read', 'Write'], 'logo': './assets/icon.png',
+                    'capabilities': ['Inspect saved takeoffs', 'Trace plan linework', 'Prepare reviewed changes'],
+                    'logo': './assets/icon.png', 'composerIcon': './assets/icon.png',
+                    'longDescription': DESCRIPTION + ' Changes use native review and Undo. Reads reflect saved project state.',
+                    'defaultPrompt': ['Check my Takeoff X connection.', 'Inspect calibration and quantities in my saved takeoff.', 'Prepare a takeoff change for native review.'],
                     'supportURL': URL + '/issues', 'privacyPolicyURL': URL + '/blob/main/PRIVACY.md'
                 }
+                shutil.copytree(ROOT / 'shared/codex/skills/get-started', root / 'skills/get-started')
+                manifest['extensions'] = {'com.openai': {
+                    'onboardingSkill': './skills/get-started/SKILL.md',
+                    'review': json.loads((ROOT / 'shared/codex/review.json').read_text()),
+                    'publication': {'release_notes': 'Adds guided Codex connection setup and review scenarios. Local macOS companion required.'}
+                }}
             if target == 'cursor':
                 manifest['logo'] = 'assets/icon.png'
             dump(root / f'.{target}-plugin/plugin.json', manifest)
