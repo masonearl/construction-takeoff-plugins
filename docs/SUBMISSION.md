@@ -1,6 +1,6 @@
 # Store submission preparation
 
-Status: release candidate; Cursor publisher form prepared, not submitted. Publisher: Mason Earl / GitHub masonearl. MIT covers plugin files only. The dedicated construction-takeoff-plugins repository is public for Cursor review; the application repository remains private. Final submission awaits acceptance of Cursor Publisher Terms.
+Status: Cursor publisher application submitted October 7, 2026; awaiting review. Publisher: Mason Earl / @masonearl. MIT covers plugin files only. The dedicated plugin repository is public; application source remains private. Claude and Codex submissions remain outstanding.
 
 ## Listing copy
 
@@ -67,3 +67,7 @@ domain alone does not establish an MCP hosting endpoint.
 Verified Construction Takeoff by Mason Earl (Mac-only), App Store ID 6751007895: https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12
 
 Package homepages and Codex websiteURL link directly to the app. Desktop documentation and README documentation links retain the canonical masonearl.com page. The current App Store binary has not yet been tested for companion export compatibility.
+
+## Cursor receipt
+
+Submitted after Mason approved Publisher Terms. The signed-in page at https://cursor.com/marketplace/publish confirmed “Thanks for applying” and “We have received your submission” (displayed with a contraction). No receipt ID was displayed. Approval and live marketplace listing remain pending. Website URL links directly to the Mac App Store application; description also includes documentation.
