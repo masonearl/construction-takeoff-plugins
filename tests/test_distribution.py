@@ -2,6 +2,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import platform
 import subprocess
 import tempfile
 import unittest
@@ -10,6 +11,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = (ROOT / 'VERSION').read_text().strip()
 LAUNCHERS = ('cursor', 'claude', 'codex', 'grok-bot', 'desktop')
+DARWIN = platform.system() == 'Darwin'
 
 class DistributionTests(unittest.TestCase):
     def launch(self, target, home, data=''):
@@ -29,7 +31,10 @@ class DistributionTests(unittest.TestCase):
                     self.assertEqual(p.returncode, 69)
                     self.assertEqual(p.stdout, '')
                     self.assertIn('companion', p.stderr)
-                    self.assertIn('AI setup', p.stderr)
+                    if DARWIN:
+                        self.assertIn('AI setup', p.stderr)
+                    else:
+                        self.assertIn('macOS', p.stderr)
 
     def test_transparent_stdio_environment_and_exit_status(self):
         with tempfile.TemporaryDirectory(prefix='takeoff home ') as d:
@@ -42,6 +47,11 @@ class DistributionTests(unittest.TestCase):
             for target in LAUNCHERS:
                 with self.subTest(target=target):
                     p = self.launch(target, home, message)
+                    if not DARWIN:
+                        self.assertEqual(p.returncode, 69, p.stderr)
+                        self.assertEqual(p.stdout, '')
+                        self.assertIn('macOS', p.stderr)
+                        continue
                     self.assertEqual(p.returncode, 17, p.stderr)
                     self.assertEqual(p.stdout, message)
                     self.assertEqual(p.stderr, '')
