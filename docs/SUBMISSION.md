@@ -49,3 +49,15 @@ Claude permits validation/submission from a private GitHub repo but requires pub
 The Claude package now starts a readable Node launcher through `${CLAUDE_PLUGIN_ROOT}` rather than an inline shell command, addressing a blocking subfolder command rule. External companion execution still requires transparent disclosure and reviewer acceptance. CLI schema validation cannot replace portal validation.
 
 Sources: https://claude.com/docs/plugins/pre-submission-checklist and https://claude.com/docs/plugins/platform-support.
+
+## Public website
+
+Mason confirmed the canonical documentation page:
+https://www.masonearl.com/pages/documentation.html
+
+Verified HTTP 200 and the native macOS Construction Takeoff section on October 7,
+2026. Package homepages, the Codex websiteURL, and the Desktop documentation field
+use this page. It currently describes core takeoff features; plugin installation
+and companion setup details will need to be added for store onboarding. Dedicated
+public plugin privacy, terms and support URLs remain to be verified. The website
+domain alone does not establish an MCP hosting endpoint.
