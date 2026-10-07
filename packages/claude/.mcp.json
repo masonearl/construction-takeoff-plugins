@@ -1,10 +1,9 @@
 {
   "mcpServers": {
-    "takeoff-x": {
-      "command": "/bin/sh",
+    "construction-takeoff": {
+      "command": "node",
       "args": [
-        "-c",
-        "#!/bin/sh\nset -eu\nif [ \"$(uname -s)\" != Darwin ]; then\n  echo 'Takeoff X requires a local macOS session with the Takeoff X companion installed.' >&2\n  exit 69\nfi\ncompanion=\"$HOME/.local/bin/takeoff-mcp\"\nif [ ! -x \"$companion\" ]; then\n  echo 'Takeoff X companion is missing. In Takeoff X open 3D Model > AI tools, export AI setup, and follow its installation instructions. Expected ~/.local/bin/takeoff-mcp.' >&2\n  exit 69\nfi\nexport TAKEOFF_MCP_ENABLE_LEGACY_WRITES=0\nexec \"$companion\"\n"
+        "${CLAUDE_PLUGIN_ROOT}/server/index.cjs"
       ],
       "env": {
         "TAKEOFF_MCP_ENABLE_LEGACY_WRITES": "0"

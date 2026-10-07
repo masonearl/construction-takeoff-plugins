@@ -1,14 +1,14 @@
 {
-  "name": "construction-takeoff-plugins",
+  "name": "construction-takeoff-download",
   "interface": {
-    "displayName": "Construction Takeoff"
+    "displayName": "Construction Takeoff download"
   },
   "plugins": [
     {
       "name": "construction-takeoff",
       "source": {
         "source": "local",
-        "path": "./packages/codex"
+        "path": "./"
       },
       "policy": {
         "installation": "AVAILABLE",

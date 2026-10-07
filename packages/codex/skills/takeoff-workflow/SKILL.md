@@ -1,9 +1,9 @@
 ---
 name: takeoff-workflow
-description: Inspect saved Takeoff X projects, trace plan linework, review quantities, and prepare model, calculation, rendering or estimate proposals through the Takeoff X MCP companion. Use for operating Takeoff X; not for unrelated construction apps or general code changes.
+description: Inspect saved Construction Takeoff projects, trace plan linework, review quantities, and prepare model, calculation, rendering or estimate proposals through the Construction Takeoff MCP companion. Use for operating Construction Takeoff; not for unrelated construction apps or general code changes.
 ---
 
-# Takeoff X workflow
+# Construction Takeoff workflow
 
 Call `health` and `get_capabilities` when establishing a connection. If tools are
 missing, report that the local companion/plugin needs installation or a client
@@ -53,3 +53,17 @@ changes, and identify the native review action. App review owns validation,
 persistence and Undo. Do not enable legacy writes or modify open project packages.
 After application/save, reread to verify when requested. Never describe a staged
 proposal, checklist flag or exported CSV as an applied change or submitted bid.
+
+## Available workflows and boundaries
+
+The plugin exposes the companion's complete tool inventory. Consult capabilities
+before acting: listing a tool is not proof its prerequisites are satisfied.
+Import source sheets and calibrate scales in the native app. Project creation and
+Hardhat job linking via legacy direct writes are disabled by this plugin; do not
+enable writes to make those tools work. Native plan analysis is an optional
+development helper. Use `measure_geometry` for supplied calibrated geometry and
+`render_sheet_region` for plan evidence; image and rendering exports create local
+files. Explain any gap instead of inventing a measurement or claiming completion.
+
+Setup and troubleshooting: https://www.masonearl.com/pages/construction-takeoff/plugin.html
+Support: https://www.masonearl.com/pages/construction-takeoff/support.html
