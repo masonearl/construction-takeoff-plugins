@@ -99,6 +99,10 @@ def build():
             }}})
             if target == 'claude':
                 manifest['displayName'] = 'Construction Takeoff'
+                manifest['privacyPolicyUrl'] = PRIVACY
+                manifest['supportUrl'] = SUPPORT
+                manifest['documentationUrl'] = SETUP
+                manifest['termsOfServiceUrl'] = TERMS
                 (root / 'server').mkdir()
                 shutil.copyfile(ROOT / 'shared/desktop.cjs', root / 'server/index.cjs')
                 dump(root / '.mcp.json', {'mcpServers': {'construction-takeoff': {

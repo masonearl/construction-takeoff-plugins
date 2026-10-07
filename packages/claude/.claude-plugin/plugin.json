@@ -16,5 +16,9 @@
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
-  "displayName": "Construction Takeoff"
+  "displayName": "Construction Takeoff",
+  "privacyPolicyUrl": "https://www.masonearl.com/pages/construction-takeoff/privacy.html",
+  "supportUrl": "https://www.masonearl.com/pages/construction-takeoff/support.html",
+  "documentationUrl": "https://www.masonearl.com/pages/construction-takeoff/plugin.html",
+  "termsOfServiceUrl": "https://www.masonearl.com/pages/construction-takeoff/terms.html"
 }
