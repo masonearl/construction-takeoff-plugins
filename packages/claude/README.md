@@ -4,7 +4,7 @@ Inspect saved construction projects, review quantities and calibration, trace pl
 
 ## Setup
 
-Construction Takeoff for macOS and its separately installed MCP companion are required. The launcher uses Node.js 18 or newer (Claude Desktop supplies Node for extensions). In Construction Takeoff, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. [Get Construction Takeoff for Mac](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12) · [Documentation](https://www.masonearl.com/pages/documentation.html#construction-takeoff). Plugin workflows require a build that includes AI setup/companion export; compatibility with the current App Store release has not yet been verified.
+Construction Takeoff for macOS and its separately installed MCP companion are required. In Construction Takeoff, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. [Get Construction Takeoff for Mac](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12) · [Documentation](https://www.masonearl.com/pages/documentation.html#construction-takeoff). Plugin workflows require a build that includes AI setup/companion export; compatibility with the current App Store release has not yet been verified.
 
 Install the construction-takeoff plugin from the construction-takeoff-plugins marketplace, or upload this ZIP in Claude Customize → Plugins → Add. The tools work only where the session can launch the Mac companion. Claude chat ignores local MCP entries; the optional Desktop extension is available for local chat use. Cowork host access needs verification.
 

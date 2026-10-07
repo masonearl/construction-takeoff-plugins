@@ -23,7 +23,7 @@ def dump(path, data):
 
 def package_readme(target):
     requirements = 'Construction Takeoff for macOS and its separately installed MCP companion are required.'
-    if target in ('claude', 'desktop'):
+    if target == 'desktop':
         requirements += ' The launcher uses Node.js 18 or newer (Claude Desktop supplies Node for extensions).'
     notes = {
         'cursor': 'Install this package through Cursor or copy the folder into ~/.cursor/plugins/local/construction-takeoff. Reload Cursor.',
@@ -104,9 +104,9 @@ def build():
                 manifest['documentationUrl'] = SETUP
                 manifest['termsOfServiceUrl'] = TERMS
                 (root / 'server').mkdir()
-                shutil.copyfile(ROOT / 'shared/desktop.cjs', root / 'server/index.cjs')
+                shutil.copyfile(ROOT / 'shared/start.sh', root / 'server/start.sh')
                 dump(root / '.mcp.json', {'mcpServers': {'construction-takeoff': {
-                    'command': 'node', 'args': ['${CLAUDE_PLUGIN_ROOT}/server/index.cjs'],
+                    'command': '/bin/sh', 'args': ['${CLAUDE_PLUGIN_ROOT}/server/start.sh'],
                     'env': {'TAKEOFF_MCP_ENABLE_LEGACY_WRITES': '0'}
                 }}})
             if target == 'codex':

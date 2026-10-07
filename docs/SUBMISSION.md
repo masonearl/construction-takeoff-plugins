@@ -95,3 +95,22 @@ fixed false read-only annotations for rendering proposals/exports and sheet imag
 rendering in the companion source. This Mac's companion was backed up and updated;
 those changes still need inclusion in the next signed app release. Full native
 acceptance and public provider acceptance are not established by these tests.
+
+
+## Claude review preparation — 2026-10-07
+
+Version 0.1.4 replaces the Claude Node wrapper with `/bin/sh` and a literal
+`${CLAUDE_PLUGIN_ROOT}/server/start.sh` argument. The shell script performs no
+downloads or package installation and execs the separately installed companion.
+That external executable can still require manual review; this is not a claim
+that the directory policy hold is resolved.
+
+The directory explains that documentationUrl, privacyPolicyUrl, supportUrl and
+termsOfServiceUrl are listing-only fields and need no action. Keep all four.
+
+Data disclosure: reads and stores (local proposals/outputs can retain personal
+information from projects); no additional service called by skills; no
+developer-operated service retains data; local outputs remain until deleted.
+Explain local retention in reviewer notes rather than implying all data is
+ephemeral. Intended for professional use, not specifically for under-18 users.
+Continue the existing draft; do not create a duplicate submission.

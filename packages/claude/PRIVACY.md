@@ -4,7 +4,7 @@ These plugin launchers start the separately installed Construction Takeoff MCP c
 
 When your AI client calls a tool, requested project information and tool results enter that client's conversation and may be processed by its AI provider under that provider's settings and policies. Information can include project names, quantities, model data, drawings or file paths depending on the tool used. Share only information you intend that client to process.
 
-The companion reads saved projects and writes proposal/output files locally. Construction Takeoff native review applies supported project changes. Plugin launchers disable legacy direct project writes. The app and companion have their own distribution and privacy terms; this document describes the plugin launchers only.
+The companion reads saved projects and writes proposal/output files locally. Project content can include personal information such as client names, contact details or site addresses. Requested content may enter the AI conversation, and generated proposals or outputs may preserve that information on the user’s Mac. Local files have no automatic retention limit and remain until the user deletes them; disabling or uninstalling the plugin does not remove them. Construction Takeoff native review applies supported project changes. Plugin launchers disable legacy direct project writes. The app and companion have their own distribution and privacy terms; this document describes the plugin launchers only.
 
 No developer-operated data service is included in this package. Remove or disable the plugin in your client to stop launching the companion. Uninstalling the plugin does not delete your projects, generated proposals or the separately installed app/companion.
 
