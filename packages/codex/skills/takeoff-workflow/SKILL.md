@@ -1,9 +1,9 @@
 ---
 name: takeoff-workflow
-description: Inspect saved Takeoff X projects, trace plan linework, review quantities, and prepare model, calculation, rendering or estimate proposals through the Takeoff X MCP companion. Use for operating Takeoff X; not for unrelated construction apps or general code changes.
+description: Inspect saved Construction Takeoff projects, trace plan linework, review quantities, and prepare model, calculation, rendering or estimate proposals through the Construction Takeoff MCP companion. Use for operating Construction Takeoff; not for unrelated construction apps or general code changes.
 ---
 
-# Takeoff X workflow
+# Construction Takeoff workflow
 
 Call `health` and `get_capabilities` when establishing a connection. If tools are
 missing, report that the local companion/plugin needs installation or a client

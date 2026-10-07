@@ -9,33 +9,33 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 URL = 'https://github.com/masonearl/construction-takeoff-plugins'
 VERSION = (ROOT / 'VERSION').read_text().strip()
-DESCRIPTION = 'Inspect Takeoff X projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.'
+DESCRIPTION = 'Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.'
 
 def dump(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=2) + '\n')
 
 def package_readme(target):
-    requirements = 'Takeoff X for macOS and its separately installed MCP companion are required.'
+    requirements = 'Construction Takeoff for macOS and its separately installed MCP companion are required.'
     if target in ('claude', 'desktop'):
         requirements += ' The launcher uses Node.js 18 or newer (Claude Desktop supplies Node for extensions).'
     notes = {
-        'cursor': 'Install this package through Cursor or copy the folder into ~/.cursor/plugins/local/takeoff-x. Reload Cursor.',
-        'claude': 'Install the takeoff-x plugin from the takeoff-x-plugins marketplace, or upload this ZIP in Claude Customize → Plugins → Add. The tools work only where the session can launch the Mac companion. Claude chat ignores local MCP entries; the optional Desktop extension is available for local chat use. Cowork host access needs verification.',
-        'codex': 'Install takeoff-x from the takeoff-x-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.',
+        'cursor': 'Install this package through Cursor or copy the folder into ~/.cursor/plugins/local/construction-takeoff. Reload Cursor.',
+        'claude': 'Install the construction-takeoff plugin from the construction-takeoff-plugins marketplace, or upload this ZIP in Claude Customize → Plugins → Add. The tools work only where the session can launch the Mac companion. Claude chat ignores local MCP entries; the optional Desktop extension is available for local chat use. Cowork host access needs verification.',
+        'codex': 'Install construction-takeoff from the construction-takeoff-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.',
         'desktop': 'Install this MCPB from Claude Desktop Settings → Extensions → Advanced settings, then select your saved project directory. This is an optional local installer, not a new directory submission: Anthropic no longer accepts Desktop extension listings.'
     }
-    return f"""# Takeoff X
+    return f"""# Construction Takeoff
 
-Inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside Takeoff X with Undo. Proposal creation does not submit a bid or modify the saved project.
+Inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside Construction Takeoff with Undo. Proposal creation does not submit a bid or modify the saved project.
 
 ## Setup
 
-{requirements} In Takeoff X, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. A public app download is not included in this preview.
+{requirements} In Construction Takeoff, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. A public app download is not included in this preview.
 
 {notes[target]}
 
-Save your project before asking the AI to inspect it. Start with: “Use Takeoff X health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
+Save your project before asking the AI to inspect it. Start with: “Use Construction Takeoff health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
 
 ## What runs and what is shared
 
@@ -48,7 +48,7 @@ def build():
     dist = ROOT / 'dist'
     dist.mkdir(exist_ok=True)
     hashes = []
-    for old in dist.glob('takeoff-x-*'):
+    for old in dist.glob('construction-takeoff-*'):
         if old.suffix in ('.zip', '.mcpb'):
             old.unlink()
     for target in ('cursor', 'claude', 'codex', 'desktop'):
@@ -60,7 +60,7 @@ def build():
             shutil.copyfile(ROOT / name, root / name)
         shutil.copytree(ROOT / 'shared/assets', root / 'assets')
         (root / 'README.md').write_text(package_readme(target))
-        manifest = dict(name='takeoff-x', version=VERSION, description=DESCRIPTION,
+        manifest = dict(name='construction-takeoff', version=VERSION, description=DESCRIPTION,
                         author={'name': 'Mason Earl', 'email': 'hi@masonearl.com'},
                         homepage=URL, repository=URL, license='MIT',
                         keywords=['construction', 'takeoff', 'estimating'],
@@ -68,9 +68,9 @@ def build():
         if target == 'desktop':
             (root / 'server').mkdir()
             shutil.copyfile(ROOT / 'shared/desktop.cjs', root / 'server/index.cjs')
-            dump(root / 'package.json', {'name': 'takeoff-x-desktop', 'version': VERSION, 'private': True, 'license': 'MIT'})
+            dump(root / 'package.json', {'name': 'construction-takeoff-desktop', 'version': VERSION, 'private': True, 'license': 'MIT'})
             dump(root / 'manifest.json', {
-                'manifest_version': '0.3', 'name': 'takeoff-x', 'display_name': 'Takeoff X',
+                'manifest_version': '0.3', 'name': 'construction-takeoff', 'display_name': 'Construction Takeoff',
                 'version': VERSION, 'description': DESCRIPTION, 'author': manifest['author'],
                 'repository': {'type': 'git', 'url': URL}, 'homepage': URL,
                 'documentation': URL + '#readme', 'support': URL + '/issues',
@@ -81,30 +81,30 @@ def build():
                            'mcp_config': {'command': 'node', 'args': ['${__dirname}/server/index.cjs'],
                                           'env': {'TAKEOFF_PROJECTS_DIR': '${user_config.projects_directory}', 'TAKEOFF_MCP_ENABLE_LEGACY_WRITES': '0'}}},
                 'user_config': {'projects_directory': {'type': 'directory', 'title': 'Takeoff project library',
-                               'description': 'Select the folder containing your saved Takeoff X projects.', 'required': True}}
+                               'description': 'Select the folder containing your saved Construction Takeoff projects.', 'required': True}}
             })
         else:
             shutil.copytree(ROOT / 'shared/skills', root / 'skills')
             # Inline the same shell source so hosts need no incompatible plugin-root expansion.
-            dump(root / '.mcp.json', {'mcpServers': {'takeoff-x': {
+            dump(root / '.mcp.json', {'mcpServers': {'construction-takeoff': {
                 'command': '/bin/sh', 'args': ['-c', (ROOT / 'shared/start.sh').read_text()],
                 'env': {'TAKEOFF_MCP_ENABLE_LEGACY_WRITES': '0'}
             }}})
             if target == 'claude':
                 (root / 'server').mkdir()
                 shutil.copyfile(ROOT / 'shared/desktop.cjs', root / 'server/index.cjs')
-                dump(root / '.mcp.json', {'mcpServers': {'takeoff-x': {
+                dump(root / '.mcp.json', {'mcpServers': {'construction-takeoff': {
                     'command': 'node', 'args': ['${CLAUDE_PLUGIN_ROOT}/server/index.cjs'],
                     'env': {'TAKEOFF_MCP_ENABLE_LEGACY_WRITES': '0'}
                 }}})
             if target == 'codex':
                 manifest['interface'] = {
-                    'displayName': 'Takeoff X', 'shortDescription': 'Construction takeoffs and estimates with native review',
+                    'displayName': 'Construction Takeoff', 'shortDescription': 'Construction takeoffs and estimates with native review',
                     'developerName': 'Mason Earl', 'category': 'Productivity',
                     'capabilities': ['Inspect saved takeoffs', 'Trace plan linework', 'Prepare reviewed changes'],
                     'logo': './assets/icon.png', 'composerIcon': './assets/icon.png',
                     'longDescription': DESCRIPTION + ' Changes use native review and Undo. Reads reflect saved project state.',
-                    'defaultPrompt': ['Check my Takeoff X connection.', 'Inspect calibration and quantities in my saved takeoff.', 'Prepare a takeoff change for native review.'],
+                    'defaultPrompt': ['Check my Construction Takeoff connection.', 'Inspect calibration and quantities in my saved takeoff.', 'Prepare a takeoff change for native review.'],
                     'supportURL': URL + '/issues', 'privacyPolicyURL': URL + '/blob/main/PRIVACY.md'
                 }
                 shutil.copytree(ROOT / 'shared/codex/skills/get-started', root / 'skills/get-started')
@@ -116,7 +116,7 @@ def build():
             if target == 'cursor':
                 manifest['logo'] = 'assets/icon.png'
             dump(root / f'.{target}-plugin/plugin.json', manifest)
-        filename = f'takeoff-x-{target}-{VERSION}' + ('.mcpb' if target == 'desktop' else '.zip')
+        filename = f'construction-takeoff-{target}-{VERSION}' + ('.mcpb' if target == 'desktop' else '.zip')
         archive = dist / filename
         with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as z:
             for path in sorted(root.rglob('*')):
@@ -129,13 +129,13 @@ def build():
     (dist / 'SHA256SUMS').write_text('\n'.join(hashes) + '\n')
     for client in ('cursor', 'claude'):
         dump(ROOT / f'.{client}-plugin/marketplace.json', {
-            'name': 'takeoff-x-plugins', 'owner': {'name': 'Mason Earl'},
+            'name': 'construction-takeoff-plugins', 'owner': {'name': 'Mason Earl'},
             'metadata': {'description': DESCRIPTION},
-            'plugins': [{'name': 'takeoff-x', 'source': f'./packages/{client}', 'description': DESCRIPTION}]
+            'plugins': [{'name': 'construction-takeoff', 'source': f'./packages/{client}', 'description': DESCRIPTION}]
         })
     dump(ROOT / '.agents/plugins/marketplace.json', {
-        'name': 'takeoff-x-plugins', 'interface': {'displayName': 'Takeoff X'},
-        'plugins': [{'name': 'takeoff-x', 'source': {'source': 'local', 'path': './packages/codex'},
+        'name': 'construction-takeoff-plugins', 'interface': {'displayName': 'Construction Takeoff'},
+        'plugins': [{'name': 'construction-takeoff', 'source': {'source': 'local', 'path': './packages/codex'},
                      'policy': {'installation': 'AVAILABLE', 'authentication': 'ON_INSTALL'}, 'category': 'Productivity'}]
     })
     print('\n'.join(hashes))

@@ -15,7 +15,7 @@ class DistributionTests(unittest.TestCase):
         if target == 'desktop':
             command = ['node', str(ROOT / 'packages/desktop/server/index.cjs')]
         else:
-            config = json.loads((ROOT / f'packages/{target}/.mcp.json').read_text())['mcpServers']['takeoff-x']
+            config = json.loads((ROOT / f'packages/{target}/.mcp.json').read_text())['mcpServers']['construction-takeoff']
             command = [config['command'], *[arg.replace('${CLAUDE_PLUGIN_ROOT}', str(ROOT / f'packages/{target}')) for arg in config['args']]]
         return subprocess.run(command, env=env, input=data, capture_output=True, text=True, timeout=10)
 
@@ -45,7 +45,7 @@ class DistributionTests(unittest.TestCase):
                     self.assertEqual(p.stderr, '')
 
     def test_archive_contents_and_reproducibility(self):
-        archives = sorted((ROOT / 'dist').glob('takeoff-x-*'))
+        archives = sorted((ROOT / 'dist').glob('construction-takeoff-*'))
         self.assertEqual(len(archives), 4)
         before = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in archives}
         subprocess.run(['python3', str(ROOT / 'scripts/build.py')], check=True, capture_output=True)

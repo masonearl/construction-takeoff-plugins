@@ -4,11 +4,11 @@ Status: release candidate, not submitted. Publisher: Mason Earl / GitHub masonea
 
 ## Listing copy
 
-Name: Takeoff X
+Name: Construction Takeoff
 
 Short description: Construction takeoffs and estimates with native review.
 
-Description: Inspect saved Takeoff X projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Apply supported changes through Takeoff X's native review with Undo. Requires macOS, the separately installed Takeoff X app, and its MCP companion. Saved project state only; no automatic bid submission.
+Description: Inspect saved Construction Takeoff projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Apply supported changes through Construction Takeoff's native review with Undo. Requires macOS, the separately installed Construction Takeoff app, and its MCP companion. Saved project state only; no automatic bid submission.
 
 Support: hi@masonearl.com and repository Issues. Icon: shared/assets/icon.png. Privacy: repository PRIVACY.md. Screenshots must come from a synthetic demonstration project, never customer drawings.
 
@@ -22,7 +22,7 @@ Support: hi@masonearl.com and repository Issues. Icon: shared/assets/icon.png. P
 
 ## Required before submission
 
-- [ ] Stable Takeoff X app/companion release, public onboarding/download URL and minimum compatible version.
+- [ ] Stable Construction Takeoff app/companion release, public onboarding/download URL and minimum compatible version.
 - [ ] Reviewer access to the app plus a synthetic sample project.
 - [ ] In each host: install from clean user state, health, capabilities, project list, inspect quantities, create proposal, native review/apply, Undo, save and stale-revision rejection.
 - [ ] Desktop: first-run directory picker, paths with spaces, disconnect/reconnect, missing companion error, uninstall.
@@ -33,11 +33,11 @@ Support: hi@masonearl.com and repository Issues. Icon: shared/assets/icon.png. P
 
 ## Reviewer script
 
-1. Install the separately supplied Takeoff X app/companion and save a synthetic project.
+1. Install the separately supplied Construction Takeoff app/companion and save a synthetic project.
 2. Install this plugin. Ask to run health, capabilities and list_projects. Confirm missing prerequisites produce actionable errors without corrupting the protocol stream.
 3. Ask to inspect a sheet and explain its calibration and missing quantities.
 4. Ask to prepare one supported edit using the inspected revision. Confirm the project remains unchanged before native review.
-5. Review/apply in Takeoff X, Undo, save and reread. Try a stale proposal and confirm rejection.
+5. Review/apply in Construction Takeoff, Undo, save and reread. Try a stale proposal and confirm rejection.
 6. Inspect generated outputs for correct units and source evidence. Confirm no action submits a bid externally.
 
 Do not mark the Linear work complete until Mason confirms QA. Package preparation and public store availability are separate milestones.

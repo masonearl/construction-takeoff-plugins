@@ -1,11 +1,11 @@
 {
-  "name": "takeoff-x-plugins",
+  "name": "construction-takeoff-plugins",
   "interface": {
-    "displayName": "Takeoff X"
+    "displayName": "Construction Takeoff"
   },
   "plugins": [
     {
-      "name": "takeoff-x",
+      "name": "construction-takeoff",
       "source": {
         "source": "local",
         "path": "./packages/codex"

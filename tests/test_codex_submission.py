@@ -30,7 +30,7 @@ class CodexSubmissionTests(unittest.TestCase):
             manifest['interface']['screenshots'] = ['./assets/icon.png']
             manifest['extensions']['com.openai']['review']['demo_recording_url'] = 'https://takeoff.test/demo'
             path.write_text(json.dumps(manifest))
-            (package / '.mcp.json').write_text(json.dumps({'mcpServers': {'takeoff-x': {'url': 'https://takeoff.test/mcp'}}}))
+            (package / '.mcp.json').write_text(json.dumps({'mcpServers': {'construction-takeoff': {'url': 'https://takeoff.test/mcp'}}}))
             report = preflight.check(package)
             self.assertTrue(report['offline_checks_passed'], report['issues'])
             self.assertFalse(report['store_approved'])

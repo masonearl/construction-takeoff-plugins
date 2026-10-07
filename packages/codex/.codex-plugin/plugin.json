@@ -1,7 +1,7 @@
 {
-  "name": "takeoff-x",
-  "version": "0.1.1",
-  "description": "Inspect Takeoff X projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
+  "name": "construction-takeoff",
+  "version": "0.1.2",
+  "description": "Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
   "author": {
     "name": "Mason Earl",
     "email": "hi@masonearl.com"
@@ -17,7 +17,7 @@
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "Takeoff X",
+    "displayName": "Construction Takeoff",
     "shortDescription": "Construction takeoffs and estimates with native review",
     "developerName": "Mason Earl",
     "category": "Productivity",
@@ -28,9 +28,9 @@
     ],
     "logo": "./assets/icon.png",
     "composerIcon": "./assets/icon.png",
-    "longDescription": "Inspect Takeoff X projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion. Changes use native review and Undo. Reads reflect saved project state.",
+    "longDescription": "Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion. Changes use native review and Undo. Reads reflect saved project state.",
     "defaultPrompt": [
-      "Check my Takeoff X connection.",
+      "Check my Construction Takeoff connection.",
       "Inspect calibration and quantities in my saved takeoff.",
       "Prepare a takeoff change for native review."
     ],
@@ -45,13 +45,13 @@
           "positive": [
             {
               "description": "Verify a local Mac connection",
-              "prompt": "Check my Takeoff X connection without changing anything.",
+              "prompt": "Check my Construction Takeoff connection without changing anything.",
               "tools_triggered": "health, get_capabilities",
               "expected_behavior": "Report actual connectivity, saved-state semantics and capability gaps. Do not create proposals or change projects."
             },
             {
               "description": "Find a saved synthetic project",
-              "prompt": "Find the Takeoff X Reviewer Demo project and list its sheets.",
+              "prompt": "Find the Construction Takeoff Reviewer Demo project and list its sheets.",
               "tools_triggered": "health, get_capabilities, list_projects, list_sheets",
               "expected_behavior": "Resolve the project UUID and list only its saved sheets. Clarify if missing or ambiguous."
             },
@@ -63,13 +63,13 @@
             },
             {
               "description": "Prepare a reviewed model edit",
-              "prompt": "In Takeoff X Reviewer Demo, propose changing the demo wall height to 10 feet.",
+              "prompt": "In Construction Takeoff Reviewer Demo, propose changing the demo wall height to 10 feet.",
               "tools_triggered": "get_model_context, search_model_elements, get_model_element, propose_model_edit",
               "expected_behavior": "Inspect the element and revision, stage an explicit-unit proposal, and identify native Review AI changes. Do not claim it was applied."
             },
             {
               "description": "Read authoritative quantities",
-              "prompt": "Summarize the native quantity export from Takeoff X Reviewer Demo, including units and omissions.",
+              "prompt": "Summarize the native quantity export from Construction Takeoff Reviewer Demo, including units and omissions.",
               "tools_triggered": "read_native_quantity_export",
               "expected_behavior": "Read the app-exported snapshot, report provenance and exclusions, and request a fresh export if needed. Do not silently substitute approximate quantities."
             }
@@ -90,7 +90,7 @@
           ]
         },
         "commerce": false,
-        "commerce_description": "The plugin does not sell products, process payments or submit bids. The separately installed Takeoff X app is licensed independently."
+        "commerce_description": "The plugin does not sell products, process payments or submit bids. The separately installed Construction Takeoff app is licensed independently."
       },
       "publication": {
         "release_notes": "Adds guided Codex connection setup and review scenarios. Local macOS companion required."

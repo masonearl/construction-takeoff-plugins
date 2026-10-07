@@ -1,14 +1,14 @@
-# Takeoff X
+# Construction Takeoff
 
-Inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside Takeoff X with Undo. Proposal creation does not submit a bid or modify the saved project.
+Inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside Construction Takeoff with Undo. Proposal creation does not submit a bid or modify the saved project.
 
 ## Setup
 
-Takeoff X for macOS and its separately installed MCP companion are required. In Takeoff X, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. A public app download is not included in this preview.
+Construction Takeoff for macOS and its separately installed MCP companion are required. In Construction Takeoff, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. A public app download is not included in this preview.
 
-Install takeoff-x from the takeoff-x-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.
+Install construction-takeoff from the construction-takeoff-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.
 
-Save your project before asking the AI to inspect it. Start with: “Use Takeoff X health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
+Save your project before asking the AI to inspect it. Start with: “Use Construction Takeoff health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
 
 ## What runs and what is shared
 
