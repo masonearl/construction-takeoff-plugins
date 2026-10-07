@@ -1,8 +1,8 @@
 # Takeoff X plugins
 
-Plugin distribution source for construction takeoffs and estimating in Cursor, Codex, Claude Code/Cowork, and Claude Desktop. This repository contains workflow instructions, client manifests and launchers. The Takeoff X app and MCP companion are separately installed and licensed.
+Plugin distribution source for construction takeoffs and estimating in Cursor, Grok Bot, Codex, Claude Code/Cowork, and Claude Desktop. This repository contains workflow instructions, client manifests and launchers. The Takeoff X app and MCP companion are separately installed and licensed.
 
-**Release candidate: packages prepared; no public directory listing or host certification yet.** macOS local sessions only. Installing a plugin does not install Takeoff X. Cloud agents and Cowork sandbox access to the Mac companion have not been verified.
+**Release candidate: packages prepared; no public directory listing or host certification yet.** macOS local sessions only. Installing a plugin does not install Takeoff X. Cloud agents, Grok Bot cloud sessions, and Cowork sandbox access to the Mac companion have not been verified.
 
 ## Requirements and setup
 
@@ -14,6 +14,7 @@ Plugin distribution source for construction takeoffs and estimating in Cursor, C
 | Client | Package | Preview installation |
 |---|---|---|
 | Cursor | `packages/cursor` | Copy this directory into `~/.cursor/plugins/local/takeoff-x` after backing up any existing plugin; reload Cursor. Public marketplace submission uses this repository's catalog. |
+| Grok Bot | `packages/grok-bot` | Install the Takeoff X companion first. Then install this Cursor-format plugin from `packages/grok-bot` or via Cursor Marketplace / Grok Bot Plugins once public. Grok Bot uses `.cursor-plugin/plugin.json` (no separate grok-only schema). Cloud-only Grok Bot sessions cannot reach the Mac companion without a separately supported bridge. |
 | Claude Code | `packages/claude` | From the repository: `claude plugin marketplace add .` then `claude plugin install takeoff-x@takeoff-x-plugins`. |
 | Claude Cowork | Same Claude plugin | Intended for the plugin directory; host access to the separately installed Mac companion still needs verification. |
 | Codex | `packages/codex` | From the repository: `codex plugin marketplace add .` then `codex plugin add takeoff-x@takeoff-x-plugins`. Public directory submission is blocked on remote MCP or approved local support. |
@@ -36,6 +37,6 @@ npx --yes @anthropic-ai/mcpb@2.1.2 validate packages/desktop/manifest.json
 claude plugin validate packages/claude --strict
 ```
 
-`dist/` contains three ZIPs, a Desktop MCPB ZIP, and SHA256SUMS. Archives use deterministic timestamps and include only generated package files. Edit `shared/` and rebuild; do not edit `packages/` directly. No private application source, sample customer projects or credentials belong here.
+`dist/` contains four ZIPs, a Desktop MCPB ZIP, and SHA256SUMS. Archives use deterministic timestamps and include only generated package files. Edit `shared/` and rebuild; do not edit `packages/` directly. No private application source, sample customer projects or credentials belong here.
 
 See [submission checklist](docs/SUBMISSION.md) and [privacy](PRIVACY.md). Report issues at https://github.com/masonearl/construction-takeoff-plugins/issues or hi@masonearl.com. MIT applies to plugin code and instructions only; see NOTICE.

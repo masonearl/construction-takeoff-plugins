@@ -8,6 +8,8 @@ import unittest
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
+VERSION = (ROOT / 'VERSION').read_text().strip()
+LAUNCHERS = ('cursor', 'claude', 'codex', 'grok-bot', 'desktop')
 
 class DistributionTests(unittest.TestCase):
     def launch(self, target, home, data=''):
@@ -21,7 +23,7 @@ class DistributionTests(unittest.TestCase):
 
     def test_missing_companion_is_actionable_stderr_only(self):
         with tempfile.TemporaryDirectory(prefix='takeoff absent ') as d:
-            for target in ('cursor','claude','codex','desktop'):
+            for target in LAUNCHERS:
                 with self.subTest(target=target):
                     p = self.launch(target, Path(d))
                     self.assertEqual(p.returncode, 69)
@@ -37,7 +39,7 @@ class DistributionTests(unittest.TestCase):
             companion.write_text('#!/bin/sh\n[ "$TAKEOFF_MCP_ENABLE_LEGACY_WRITES" = 0 ] || exit 91\n[ "$TAKEOFF_PROJECTS_DIR" = "$HOME/Library with spaces" ] || exit 92\ncat\nexit 17\n')
             companion.chmod(0o755)
             message = '{"jsonrpc":"2.0","id":1,"method":"initialize"}\n'
-            for target in ('cursor','claude','codex','desktop'):
+            for target in LAUNCHERS:
                 with self.subTest(target=target):
                     p = self.launch(target, home, message)
                     self.assertEqual(p.returncode, 17, p.stderr)
@@ -46,7 +48,8 @@ class DistributionTests(unittest.TestCase):
 
     def test_archive_contents_and_reproducibility(self):
         archives = sorted((ROOT / 'dist').glob('takeoff-x-*'))
-        self.assertEqual(len(archives), 4)
+        self.assertEqual(len(archives), 5)
+        self.assertIn(f'takeoff-x-grok-bot-{VERSION}.zip', {p.name for p in archives})
         before = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in archives}
         subprocess.run(['python3', str(ROOT / 'scripts/build.py')], check=True, capture_output=True)
         self.assertEqual(before, {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in archives})
@@ -59,6 +62,25 @@ class DistributionTests(unittest.TestCase):
                     self.assertFalse(name.startswith('/') or '..' in Path(name).parts)
                     self.assertNotIn('.DS_Store', name)
                     self.assertFalse(name.endswith(('.swift','.pdf','.takeoff','.pyc')))
+
+    def test_grok_bot_uses_cursor_plugin_format(self):
+        root = ROOT / 'packages/grok-bot'
+        cursor_manifest = json.loads((ROOT / 'packages/cursor/.cursor-plugin/plugin.json').read_text())
+        grok_manifest = json.loads((root / '.cursor-plugin/plugin.json').read_text())
+        self.assertEqual(cursor_manifest, grok_manifest)
+        self.assertEqual(grok_manifest['name'], 'takeoff-x')
+        for rel in ('.mcp.json', 'skills/takeoff-workflow/SKILL.md', 'LICENSE', 'NOTICE', 'README.md', 'PRIVACY.md', 'assets/icon.png'):
+            self.assertTrue((root / rel).is_file(), rel)
+        self.assertFalse((root / '.grok-bot-plugin').exists())
+        marketplace = json.loads((ROOT / '.cursor-plugin/marketplace.json').read_text())
+        self.assertEqual(marketplace['plugins'][0]['name'], 'takeoff-x')
+        self.assertEqual(marketplace['plugins'][0]['source'], './packages/cursor')
+        grok_zip = ROOT / 'dist' / f'takeoff-x-grok-bot-{VERSION}.zip'
+        with zipfile.ZipFile(grok_zip) as z:
+            names = z.namelist()
+            for required in ('.cursor-plugin/plugin.json', '.mcp.json', 'skills/takeoff-workflow/SKILL.md', 'assets/icon.png'):
+                self.assertIn(required, names)
+            self.assertNotIn('.grok-bot-plugin/plugin.json', names)
 
 if __name__ == '__main__':
     unittest.main()

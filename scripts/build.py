@@ -19,7 +19,7 @@ def build():
     dist = ROOT / 'dist'
     dist.mkdir(exist_ok=True)
     hashes = []
-    for target in ('cursor', 'claude', 'codex', 'desktop'):
+    for target in ('cursor', 'claude', 'codex', 'grok-bot', 'desktop'):
         root = ROOT / 'packages' / target
         if root.exists():
             shutil.rmtree(root)
@@ -64,9 +64,11 @@ def build():
                     'capabilities': ['Read', 'Write'], 'logo': './assets/icon.png',
                     'supportURL': URL + '/issues', 'privacyPolicyURL': URL + '/blob/main/PRIVACY.md'
                 }
-            if target == 'cursor':
+            if target in ('cursor', 'grok-bot'):
                 manifest['logo'] = 'assets/icon.png'
-            dump(root / f'.{target}-plugin/plugin.json', manifest)
+            # Grok Bot installs Cursor-format plugins; no separate official grok-bot schema.
+            plugin_kind = 'cursor' if target == 'grok-bot' else target
+            dump(root / f'.{plugin_kind}-plugin/plugin.json', manifest)
         filename = f'takeoff-x-{target}-{VERSION}' + ('.mcpb' if target == 'desktop' else '.zip')
         archive = dist / filename
         with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as z:
