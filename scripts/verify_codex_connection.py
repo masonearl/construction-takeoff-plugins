@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+from audit_tools import audit
 
 
 def verify(plugin):
@@ -34,7 +35,12 @@ def verify(plugin):
         health=json.loads(responses[3]['result']['content'][0]['text'])
         assert health['project_count']==0 and health['writes_allowed'] is False, health
         assert list(Path(temporary).iterdir())==[], 'Smoke test modified isolated projects directory'
-        print(json.dumps({'plugin':str(plugin),'tools':len(tools),'version':health['helper_version'],'stdio':'passed','legacy_writes':False,'client_ui_verified':False,'store_approved':False}))
+        compatibility = audit(plugin)
+        assert compatibility['passed'], compatibility['errors']
+        print(json.dumps({'plugin':str(plugin),'tools':len(tools),'version':health['helper_version'],'stdio':'passed','legacy_writes':False,
+            'mcp_workflow_interfaces_ready':compatibility['mcp_workflow_interfaces_ready'],
+            'missing_workflows':[ticket for ticket,result in compatibility['workflows'].items() if not result['interface_ready']],
+            'client_ui_verified':False,'store_approved':False}))
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)

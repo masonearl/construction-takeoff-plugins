@@ -10,6 +10,10 @@ Install this MCPB from Claude Desktop Settings → Extensions → Advanced setti
 
 Save your project before asking the AI to inspect it. Start with: “Use Construction Takeoff health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
 
+## Reviewed gas workflows
+
+Guidance covers reviewed PDF import, scale proposals, paged results, project metadata proposals, gas-line tracing and the natural-gas calculation library (MAS-59–64). Availability depends on the tools and argument schemas returned by the installed companion. If a workflow is missing, update the app, reinstall its exported companion, update this plugin and reload the client. `companion-requirements.json` records the expected interfaces for release checks. Native Apply/Undo and plan accuracy require separate testing.
+
 ## What runs and what is shared
 
 The package starts the separately installed companion. The launcher does not download code, send network requests or collect analytics. MCP results are sent to your chosen AI client and may be processed by its provider. The companion reads saved projects and creates local proposals/outputs. The launcher disables legacy direct writes; native review owns project changes and Undo. See [privacy](PRIVACY.md).

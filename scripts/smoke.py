@@ -7,6 +7,7 @@ import queue
 import subprocess
 import tempfile
 import threading
+from audit_tools import audit
 
 ROOT = Path(__file__).resolve().parents[1]
 PID = '10000000-0000-4000-8000-000000000001'
@@ -87,7 +88,9 @@ class Session:
         self.proc.stdout.close();self.stderr.close()
 
 def main():
-    for target in ('cursor','claude','codex','desktop'):
+    for target in ('cursor','claude','codex','grok-bot','desktop'):
+        compatibility = audit(ROOT / 'packages' / target)
+        assert compatibility['passed'], compatibility['errors']
         with tempfile.TemporaryDirectory(prefix='takeoff synthetic ') as td:
             directory = Path(td)
             package = directory / f'{PID}.takeoffxpkg';package.mkdir()
@@ -124,6 +127,8 @@ def main():
                     assert again['proposal_path'] is None and again['existing_project']['id']==PID, again
                     imported = 'staged + duplicate guard'
                 print(f'{target}: {len(tools)} tools; health, capabilities, model inspection, proposal, stale rejection and unchanged project PASS; plan import: {imported}')
+                pending = [ticket for ticket, result in compatibility['workflows'].items() if not result['interface_ready']]
+                print(f'{target}: MCP interface gaps: {", ".join(pending) or "none"}; native Apply/Undo not tested')
             finally:
                 session.close()
 

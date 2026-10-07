@@ -28,10 +28,15 @@ Run from this repository:
 python3 scripts/build.py
 python3 -m unittest discover -s tests -v
 python3 scripts/verify_codex_connection.py
+python3 scripts/audit_tools.py --require-mcp-workflows
 python3 scripts/check_codex_submission.py
 ```
 
 The last command currently fails intentionally with concrete submission blockers.
+The MCP workflow audit separately requires the MAS-59–64 companion interfaces.
+A working connection with an older companion does not pass that feature gate;
+see `docs/VALIDATION.md` for the installed-companion result. Update the app and
+companion before retrying it; changing only the plugin cannot add missing tools.
 Its offline success would not prove endpoint reachability, publisher identity,
 reviewer acceptance, or store approval. It does not contact or submit to OpenAI.
 

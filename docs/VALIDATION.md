@@ -1,5 +1,40 @@
 # Release candidate validation — October 7, 2026
 
+## 0.1.6 MCP workflow compatibility (latest pass)
+
+- Preserved the 0.1.5 reviewed plan-import update and extended shared instructions
+  to MAS-60–64: scale evidence/proposals, bounded reads, metadata proposals,
+  gas-line tracing and the natural-gas library. All new calls are conditional on
+  advertised tools, schemas and runtime availability.
+- Rebuilt all five client packages from shared sources. Each includes the same
+  companion requirements contract; Desktop still exposes tools without installing
+  the Code/Cowork workflow skill.
+- Nineteen tests passed, including ten new compatibility regressions. Tests cover
+  old companions, missing paging arguments, disabled capabilities, proposal write
+  annotations, disabled legacy tools, helper-health disagreement, failed discovery,
+  isolated project roots and packaged launch paths. Synthetic future-tool fixtures
+  test the checker itself; they are not evidence that those tools are implemented.
+- All five packaged launchers passed existing synthetic model inspection/proposal,
+  stale-revision rejection and saved-project preservation through the installed
+  companion. Codex's connection check passed. Both skill validators and Claude's
+  strict manifest validation passed. Archive reproducibility passed.
+- The installed companion identified itself as **0.9.0-dev**, with **32 tools**.
+  It lacked `propose_project_import`, `suggest_page_scales`, `propose_page_scales`,
+  `propose_project_metadata` and `propose_calculation_library`, plus the new read
+  paging and gas-tracing arguments. It still advertised disabled legacy tools and
+  an unconfigured native helper. `--require-mcp-workflows` correctly failed and
+  named the gaps for all six tickets. Baseline smoke success is not new-feature
+  acceptance.
+
+Before releasing these as a complete gas workflow: install the completed app/MCP
+build, run the strict audit against each package, then verify generated PDF import,
+scale evidence/review/Undo, complete pagination, metadata review, rotated/layered
+gas tracing and library seeding in the native app and actual AI clients. No client
+was reconfigured or installed by this pass. No marketplace release was published.
+
+Earlier results below describe their specific builds and installed companions;
+they do not override the current compatibility result.
+
 - Claude Code strict plugin and marketplace validation passed.
 - Anthropic MCPB 2.1.2 manifest validation passed. Icon accepted; validator emitted a recommended-size notice.
 - Codex CLI installed and enabled construction-takeoff@construction-takeoff-plugins using an isolated temporary configuration; existing user installation unchanged.
