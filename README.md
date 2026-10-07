@@ -31,6 +31,7 @@ Requires Python 3 for packaging/tests; Node 18+ for Desktop launcher tests (the 
 
 ```sh
 python3 scripts/build.py
+python3 scripts/audit_tools.py
 python3 -m unittest discover -s tests -v
 python3 scripts/smoke.py  # requires the separately installed companion
 npx --yes @anthropic-ai/mcpb@2.1.2 validate packages/desktop/manifest.json
@@ -40,3 +41,8 @@ claude plugin validate packages/claude --strict
 `dist/` contains three ZIPs, a Desktop MCPB ZIP, and SHA256SUMS. Archives use deterministic timestamps and include only generated package files. Edit `shared/` and rebuild; do not edit `packages/` directly. No private application source, sample customer projects or credentials belong here. The synthetic smoke test creates isolated temporary projects, checks proposal and stale-revision behavior, and removes only its own temporary data. It does not exercise native review/Undo.
 
 See [submission checklist](docs/SUBMISSION.md) and [privacy](PRIVACY.md). Report issues at https://github.com/masonearl/construction-takeoff-plugins/issues or hi@masonearl.com. MIT applies to plugin code and instructions only; see NOTICE.
+
+Public local-preview setup and download: https://www.masonearl.com/pages/construction-takeoff/plugin.html
+
+Version 0.1.3 includes a self-contained Codex marketplace catalog for ZIP installs.
+Store submission is blocked at the publisher-identity gate; see docs/SUBMISSION.md.

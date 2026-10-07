@@ -1,0 +1,20 @@
+{
+  "name": "construction-takeoff-download",
+  "interface": {
+    "displayName": "Construction Takeoff download"
+  },
+  "plugins": [
+    {
+      "name": "construction-takeoff",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

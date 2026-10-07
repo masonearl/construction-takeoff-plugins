@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "construction-takeoff",
   "display_name": "Construction Takeoff",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
   "author": {
     "name": "Mason Earl",
@@ -13,10 +13,10 @@
     "url": "https://github.com/masonearl/construction-takeoff-plugins"
   },
   "homepage": "https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12",
-  "documentation": "https://www.masonearl.com/pages/documentation.html",
-  "support": "https://github.com/masonearl/construction-takeoff-plugins/issues",
+  "documentation": "https://www.masonearl.com/pages/construction-takeoff/plugin.html",
+  "support": "https://www.masonearl.com/pages/construction-takeoff/support.html",
   "privacy_policies": [
-    "https://github.com/masonearl/construction-takeoff-plugins/blob/main/PRIVACY.md"
+    "https://www.masonearl.com/pages/construction-takeoff/privacy.html"
   ],
   "license": "MIT",
   "icon": "assets/icon.png",

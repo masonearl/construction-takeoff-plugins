@@ -8,7 +8,11 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 URL = 'https://github.com/masonearl/construction-takeoff-plugins'
-WEBSITE = 'https://www.masonearl.com/pages/documentation.html'
+WEBSITE = 'https://www.masonearl.com/pages/documentation.html#construction-takeoff'
+SUPPORT = 'https://www.masonearl.com/pages/construction-takeoff/support.html'
+PRIVACY = 'https://www.masonearl.com/pages/construction-takeoff/privacy.html'
+TERMS = 'https://www.masonearl.com/pages/construction-takeoff/terms.html'
+SETUP = 'https://www.masonearl.com/pages/construction-takeoff/plugin.html'
 APP_URL = 'https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12'
 VERSION = (ROOT / 'VERSION').read_text().strip()
 DESCRIPTION = 'Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.'
@@ -24,7 +28,7 @@ def package_readme(target):
     notes = {
         'cursor': 'Install this package through Cursor or copy the folder into ~/.cursor/plugins/local/construction-takeoff. Reload Cursor.',
         'claude': 'Install the construction-takeoff plugin from the construction-takeoff-plugins marketplace, or upload this ZIP in Claude Customize → Plugins → Add. The tools work only where the session can launch the Mac companion. Claude chat ignores local MCP entries; the optional Desktop extension is available for local chat use. Cowork host access needs verification.',
-        'codex': 'Install construction-takeoff from the construction-takeoff-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.',
+        'codex': 'For the downloaded ZIP, unzip it and run `codex plugin marketplace add .` from its folder, then `codex plugin add construction-takeoff@construction-takeoff-download`. Keep that folder for updates. Repository users can install construction-takeoff from the construction-takeoff-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.',
         'desktop': 'Install this MCPB from Claude Desktop Settings → Extensions → Advanced settings, then select your saved project directory. This is an optional local installer, not a new directory submission: Anthropic no longer accepts Desktop extension listings.'
     }
     return f"""# Construction Takeoff
@@ -75,8 +79,8 @@ def build():
                 'manifest_version': '0.3', 'name': 'construction-takeoff', 'display_name': 'Construction Takeoff',
                 'version': VERSION, 'description': DESCRIPTION, 'author': manifest['author'],
                 'repository': {'type': 'git', 'url': URL}, 'homepage': APP_URL,
-                'documentation': WEBSITE, 'support': URL + '/issues',
-                'privacy_policies': [URL + '/blob/main/PRIVACY.md'], 'license': 'MIT',
+                'documentation': SETUP, 'support': SUPPORT,
+                'privacy_policies': [PRIVACY], 'license': 'MIT',
                 'icon': 'assets/icon.png', 'tools_generated': True,
                 'compatibility': {'platforms': ['darwin'], 'runtimes': {'node': '>=18.0.0'}},
                 'server': {'type': 'node', 'entry_point': 'server/index.cjs',
@@ -100,6 +104,12 @@ def build():
                     'env': {'TAKEOFF_MCP_ENABLE_LEGACY_WRITES': '0'}
                 }}})
             if target == 'codex':
+                dump(root / '.agents/plugins/marketplace.json', {
+                    'name': 'construction-takeoff-download',
+                    'interface': {'displayName': 'Construction Takeoff download'},
+                    'plugins': [{'name': 'construction-takeoff', 'source': {'source': 'local', 'path': './'},
+                        'policy': {'installation': 'AVAILABLE', 'authentication': 'ON_INSTALL'}, 'category': 'Productivity'}]
+                })
                 manifest['interface'] = {
                     'displayName': 'Construction Takeoff', 'shortDescription': 'Construction takeoffs and estimates with native review',
                     'developerName': 'Mason Earl', 'category': 'Productivity',
@@ -108,7 +118,7 @@ def build():
                     'longDescription': DESCRIPTION + ' Changes use native review and Undo. Reads reflect saved project state.',
                     'defaultPrompt': ['Check my Construction Takeoff connection.', 'Inspect calibration and quantities in my saved takeoff.', 'Prepare a takeoff change for native review.'],
                     'websiteURL': APP_URL,
-                    'supportURL': URL + '/issues', 'privacyPolicyURL': URL + '/blob/main/PRIVACY.md'
+                    'supportURL': SUPPORT, 'privacyPolicyURL': PRIVACY, 'termsOfServiceURL': TERMS
                 }
                 shutil.copytree(ROOT / 'shared/codex/skills/get-started', root / 'skills/get-started')
                 manifest['extensions'] = {'com.openai': {

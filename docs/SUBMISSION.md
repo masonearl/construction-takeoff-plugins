@@ -52,22 +52,44 @@ Sources: https://claude.com/docs/plugins/pre-submission-checklist and https://cl
 
 ## Public website
 
-Mason confirmed the canonical documentation page:
-https://www.masonearl.com/pages/documentation.html
+Published October 7, 2026:
+- Documentation: https://www.masonearl.com/pages/documentation.html#construction-takeoff
+- Setup: https://www.masonearl.com/pages/construction-takeoff/plugin.html
+- Support: https://www.masonearl.com/pages/construction-takeoff/support.html
+- Privacy: https://www.masonearl.com/pages/construction-takeoff/privacy.html
+- Plugin license/terms: https://www.masonearl.com/pages/construction-takeoff/terms.html
+- Local Codex preview: https://www.masonearl.com/assets/construction-takeoff-plugin/construction-takeoff-codex-0.1.3.zip
 
-Verified HTTP 200 and the native macOS Construction Takeoff section on October 7,
-2026. Package homepages, the Codex websiteURL, and the Desktop documentation field
-use this page. It currently describes core takeoff features; plugin installation
-and companion setup details will need to be added for store onboarding. Dedicated
-public plugin privacy, terms and support URLs remain to be verified. The website
-domain alone does not establish an MCP hosting endpoint.
+These describe local stdio honestly; no hosted service is advertised. The download
+contains a local marketplace catalog so it can be installed without source-repo access.
 
-## Mac application link
+## Submission attempt, October 7, 2026
 
-Verified Construction Takeoff by Mason Earl (Mac-only), App Store ID 6751007895: https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12
+Opened https://platform.openai.com/plugins under Mason Earl / Default project.
+Upload was blocked before file selection with “You need a verified developer
+identity before you can create or upload a plugin.” Organization settings showed
+Individual verification Approved, but returning to the portal produced the same
+block. No ZIP was uploaded, no submission ID exists, and no approval is claimed.
+The publisher identity discrepancy needs resolution in OpenAI Platform. Do not
+bypass the gate or submit as skills-only to hide the MCP dependency.
 
-Package homepages and Codex websiteURL link directly to the app. Desktop documentation and README documentation links retain the canonical masonearl.com page. The current App Store binary has not yet been tested for companion export compatibility.
+Remaining technical requirements: supported public MCP transport/connection,
+synthetic native app review/apply/Undo acceptance, screenshots and video walkthrough.
+The current local companion is not a cloud endpoint. A hosted bridge needs
+user authentication, device pairing and explicit project scope before deployment.
 
-## Cursor receipt
+## Tool coverage verification
 
-Submitted after Mason approved Publisher Terms. The signed-in page at https://cursor.com/marketplace/publish confirmed “Thanks for applying” and “We have received your submission” (displayed with a contraction). No receipt ID was displayed. Approval and live marketplace listing remain pending. Website URL links directly to the Mac App Store application; description also includes documentation.
+`python3 scripts/audit_tools.py` checks the actual packaged launcher's inventory
+against eight workflow groups: connection, projects, plans, models, quantities,
+calculations, estimates and renderings. The current companion exposes 32 tools.
+Sheet import/calibration and proposal application are native-app operations.
+Legacy project creation/job linking are disabled by the plugin. Do not describe
+the inventory as complete native UI parity or automatic full-plan takeoff.
+
+66 companion unit tests, seven packaging tests, and official MCP SDK 2.2.0
+negotiation/discovery/proposal/native-snapshot tests passed. The audit caught and
+fixed false read-only annotations for rendering proposals/exports and sheet image
+rendering in the companion source. This Mac's companion was backed up and updated;
+those changes still need inclusion in the next signed app release. Full native
+acceptance and public provider acceptance are not established by these tests.
