@@ -18,21 +18,42 @@ Plugin distribution source for construction takeoffs and estimating in Cursor, G
 | Claude Code | `packages/claude` | From the repository: `claude plugin marketplace add .` then `claude plugin install construction-takeoff@construction-takeoff-plugins`. |
 | Claude Cowork | Same Claude plugin | Intended for the plugin directory; host access to the separately installed Mac companion still needs verification. |
 | Codex | `packages/codex` | From the repository: `codex plugin marketplace add .` then `codex plugin add construction-takeoff@construction-takeoff-plugins`. Public directory submission is blocked on remote MCP or approved local support. |
-| Claude Desktop chat | `dist/construction-takeoff-desktop-0.1.2.mcpb` | Open Desktop Settings → Extensions and install the bundle; set the project directory. Optional local installer only; new Desktop extension directory listings are deprecated. It exposes tools but does not install the Code/Cowork skill. |
+| Claude Desktop chat | `dist/construction-takeoff-desktop-0.1.6.mcpb` | Open Desktop Settings → Extensions and install the bundle; set the project directory. Optional local installer only; new Desktop extension directory listings are deprecated. It exposes tools but does not install the Code/Cowork skill. |
 
 Avoid enabling the existing `takeoff-x-local` plugin and this preview simultaneously; both register the same companion. Do not overwrite custom settings during migration.
 
 ## Workflow
 
-Inspect saved projects, sheets, calibration and quantities; trace plan linework; prepare model, calculation and estimate proposals. Construction Takeoff's native review applies changes and supplies Undo. The launcher forces legacy direct writes off. A staged proposal is not an applied project change or submitted bid. Use native exported quantities when available and report calibration and coverage gaps.
+Load plan PDFs into a new project (`propose_project_import` stages a checksummed bundle the user applies in **File → Review AI Project Import…**; companions without it fall back to importing in the app). Inspect saved projects, sheets, calibration and quantities; trace plan linework; prepare model, calculation and estimate proposals. Construction Takeoff's native review applies changes and supplies Undo. The launcher forces legacy direct writes off. A staged proposal is not an applied project change or submitted bid. Use native exported quantities when available and report calibration and coverage gaps.
 
 ## Build and verify
+
+Version 0.1.6 adds companion-aware instructions and interface checks for all six
+MCP tickets. The source of the expected interfaces is
+`shared/companion-requirements.json`, copied into every generated package:
+
+| Ticket | Workflow |
+|---|---|
+| MAS-59 | Reviewed multi-PDF project import |
+| MAS-60 | Page-scale evidence, suggestions and reviewed proposals |
+| MAS-61 | Paged sheet/calculation/quantity reads and bounded linework results |
+| MAS-62 | Runtime tool availability and reviewed project metadata |
+| MAS-63 | Layer/style/region gas tracing, rotation and text-gap guidance |
+| MAS-64 | Reviewed natural-gas calculation library |
+
+Tools are discovered from the separately installed companion. Updating this
+repository or plugin does not install new MCP code. Update the app, reinstall its
+exported companion, update the client plugin, then reload the client. Missing
+interfaces are reported as compatibility gaps; existing supported workflows stay
+usable. Native review/apply/Undo and plan accuracy still require their own QA.
 
 Requires Python 3 for packaging/tests; Node 18+ for Desktop launcher tests (the Desktop host provides its runtime).
 
 ```sh
 python3 scripts/build.py
-python3 scripts/audit_tools.py
+python3 scripts/audit_tools.py                         # connection plus per-ticket compatibility
+python3 scripts/audit_tools.py --require-mcp-workflows  # release interface gate for all six tickets
+python3 scripts/audit_tools.py --require-plan-import    # narrower MAS-59 check, retained for compatibility
 python3 -m unittest discover -s tests -v
 python3 scripts/smoke.py  # requires the separately installed companion
 npx --yes @anthropic-ai/mcpb@2.1.2 validate packages/desktop/manifest.json
@@ -41,9 +62,17 @@ claude plugin validate packages/claude --strict
 
 `dist/` contains four ZIPs, a Desktop MCPB ZIP, and SHA256SUMS. Archives use deterministic timestamps and include only generated package files. Edit `shared/` and rebuild; do not edit `packages/` directly. No private application source, sample customer projects or credentials belong here. The synthetic smoke test creates isolated temporary projects, checks proposal and stale-revision behavior, and removes only its own temporary data. It does not exercise native review/Undo.
 
+Audit any client with `--plugin packages/<client>` (including `desktop`). A default
+audit can pass baseline connectivity while `mcp_workflow_interfaces_ready` is false;
+use `--require-mcp-workflows` before claiming the new workflows are supported. That
+gate checks tool names, argument presence, proposal annotations and runtime
+availability. It does not execute the new workflows or establish result accuracy.
+Current installed-companion results and remaining native checks are in
+[validation notes](docs/VALIDATION.md).
+
 See [submission checklist](docs/SUBMISSION.md) and [privacy](PRIVACY.md). Report issues at https://github.com/masonearl/construction-takeoff-plugins/issues or hi@masonearl.com. MIT applies to plugin code and instructions only; see NOTICE.
 
 Public local-preview setup and download: https://www.masonearl.com/pages/construction-takeoff/plugin.html
 
-Version 0.1.3 includes a self-contained Codex marketplace catalog for ZIP installs.
+Version 0.1.6 extends the 0.1.5 plan-import guidance to all six workflows. These packages are prepared for companion integration; they do not imply that the app/MCP changes have shipped. Version 0.1.3 includes a self-contained Codex marketplace catalog for ZIP installs.
 Store submission is blocked at the publisher-identity gate; see docs/SUBMISSION.md.

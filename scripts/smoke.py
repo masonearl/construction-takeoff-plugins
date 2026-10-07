@@ -7,6 +7,7 @@ import queue
 import subprocess
 import tempfile
 import threading
+from audit_tools import audit
 
 ROOT = Path(__file__).resolve().parents[1]
 PID = '10000000-0000-4000-8000-000000000001'
@@ -27,6 +28,21 @@ def fixture():
         'areaDepth': 1, 'model3D': {'kind': 'slab', 'height': 1, 'width': 1, 'elevation': 0,
         'unit': 'ft', 'material': 'Concrete', 'sourcePointsPerFoot': 72}}]
     return data
+
+def synthetic_pdf(path):
+    """Write a one-page vector PDF with a valid xref; no PDF library needed."""
+    stream = b'0 0 0 RG 2 w ' + b' '.join(b'%d 100 m %d 600 l S' % (50 + 10 * i, 50 + 10 * i) for i in range(60))
+    objects = [b'<< /Type /Catalog /Pages 2 0 R >>', b'<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+               b'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 1224 792] /Rotate 270 /Contents 4 0 R >>',
+               b'<< /Length %d >>\nstream\n' % len(stream) + stream + b'\nendstream']
+    out, offsets = bytearray(b'%PDF-1.7\n'), []
+    for number, body in enumerate(objects, 1):
+        offsets.append(len(out))
+        out += b'%d 0 obj\n' % number + body + b'\nendobj\n'
+    xref = len(out)
+    out += b'xref\n0 %d\n0000000000 65535 f \n' % (len(objects) + 1) + b''.join(b'%010d 00000 n \n' % o for o in offsets)
+    out += b'trailer\n<< /Size %d /Root 1 0 R >>\nstartxref\n%d\n%%%%EOF\n' % (len(objects) + 1, xref)
+    path.write_bytes(bytes(out))
 
 class Session:
     def __init__(self, target, directory):
@@ -72,9 +88,11 @@ class Session:
         self.proc.stdout.close();self.stderr.close()
 
 def main():
-    for target in ('cursor','claude','codex','desktop'):
+    for target in ('cursor','claude','codex','grok-bot','desktop'):
+        compatibility = audit(ROOT / 'packages' / target)
+        assert compatibility['passed'], compatibility['errors']
         with tempfile.TemporaryDirectory(prefix='takeoff synthetic ') as td:
-            directory = Path(td)
+            directory = Path(td).resolve()
             package = directory / f'{PID}.takeoffxpkg';package.mkdir()
             project = package / 'project.json';project.write_text(json.dumps(fixture()))
             before = project.read_bytes()
@@ -94,7 +112,25 @@ def main():
                 assert proposal_path.is_relative_to(directory) and proposal_path.is_file()
                 session.tool('propose_model_edit',{**args,'expected_revision':'0'*64},error=True)
                 assert project.read_bytes()==before, 'Project changed before native review'
-                print(f'{target}: {len(tools)} tools; health, capabilities, model inspection, proposal, stale rejection and unchanged project PASS')
+                imported = 'not in companion'
+                if any(t['name']=='propose_project_import' for t in tools):
+                    pdf = directory / 'synthetic plan.pdf'; synthetic_pdf(pdf)
+                    packages = sorted(directory.glob('*.takeoffxpkg'))
+                    staged = session.tool('propose_project_import',{'name':'Synthetic import','project_number':'DEMO-IMPORT',
+                        'documents':[{'path':str(pdf),'label':'Synthetic plan'}],'reason':'Plugin smoke test'})
+                    bundle = Path(staged['proposal_path'])
+                    assert not staged['applied'] and bundle.is_relative_to(directory/'proposals') and (bundle/'proposal.json').is_file(), staged
+                    manifest = json.loads((bundle/'proposal.json').read_text())
+                    page_info = manifest['documents'][0]['pageInfo']
+                    assert len(page_info) == 1 and page_info[0]['page'] == 1 and page_info[0]['rotation'] == 270, manifest
+                    assert sorted(directory.glob('*.takeoffxpkg'))==packages, 'Import proposal created a project package'
+                    again = session.tool('propose_project_import',{'name':'Plugin synthetic review','project_number':'DEMO',
+                        'documents':[{'path':str(pdf)}],'reason':'Duplicate guard'})
+                    assert again['proposal_path'] is None and again['existing_project']['id']==PID, again
+                    imported = 'staged + duplicate guard'
+                print(f'{target}: {len(tools)} tools; health, capabilities, model inspection, proposal, stale rejection and unchanged project PASS; plan import: {imported}')
+                pending = [ticket for ticket, result in compatibility['workflows'].items() if not result['interface_ready']]
+                print(f'{target}: MCP interface gaps: {", ".join(pending) or "none"}; native Apply/Undo not tested')
             finally:
                 session.close()
 

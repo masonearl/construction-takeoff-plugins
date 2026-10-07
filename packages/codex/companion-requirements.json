@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "description": "MCP interface requirements for MAS-59–64. Discovery does not verify native Apply/Undo or quantity accuracy.",
+  "workflows": {
+    "MAS-59": {
+      "name": "Reviewed plan import",
+      "tools": {"propose_project_import": ["name", "client_name", "project_number", "workspace", "documents", "reason"]},
+      "proposal_tools": ["propose_project_import"]
+    },
+    "MAS-60": {
+      "name": "Page scale suggestions and review",
+      "tools": {
+        "suggest_page_scales": ["project_id", "pages", "limit", "offset"],
+        "propose_page_scales": ["project_id", "expected_revision", "pages"]
+      },
+      "proposal_tools": ["propose_page_scales"]
+    },
+    "MAS-61": {
+      "name": "Bounded saved-project reads",
+      "tools": {
+        "export_quantities": ["section", "limit", "offset", "expected_revision"],
+        "list_sheets": ["pages", "limit", "offset", "summary_only"],
+        "list_calculation_types": ["include_measurements", "limit", "offset"],
+        "summarize_linework": ["region", "max_segments"]
+      },
+      "proposal_tools": []
+    },
+    "MAS-62": {
+      "name": "Available tools and reviewed project metadata",
+      "tools": {"propose_project_metadata": ["project_id", "expected_revision", "project_number", "client_name", "name"]},
+      "proposal_tools": ["propose_project_metadata"]
+    },
+    "MAS-63": {
+      "name": "Gas linework selection and tracing",
+      "tools": {
+        "summarize_linework": ["region", "grid"],
+        "trace_linework": ["region", "layer_regex", "stroke_width_pt", "dash_pattern", "color_hex", "top_n", "offset", "bridge_text_gaps", "gap_points"]
+      },
+      "proposal_tools": []
+    },
+    "MAS-64": {
+      "name": "Natural gas calculation library",
+      "tools": {"propose_calculation_library": ["project_id", "expected_revision", "library"]},
+      "proposal_tools": ["propose_calculation_library"]
+    }
+  }
+}

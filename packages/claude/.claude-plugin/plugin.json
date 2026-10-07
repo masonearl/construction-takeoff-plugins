@@ -1,7 +1,7 @@
 {
   "name": "construction-takeoff",
-  "version": "0.1.4",
-  "description": "Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
+  "version": "0.1.6",
+  "description": "Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
   "author": {
     "name": "Mason Earl",
     "email": "hi@masonearl.com"

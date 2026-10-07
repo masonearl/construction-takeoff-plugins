@@ -4,14 +4,14 @@
     "name": "Mason Earl"
   },
   "metadata": {
-    "description": "Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion."
+    "description": "Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion."
   },
   "plugins": [
     {
       "name": "construction-takeoff",
       "displayName": "Construction Takeoff",
       "source": "./packages/claude",
-      "description": "Inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion."
+      "description": "Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion."
     }
   ]
 }
