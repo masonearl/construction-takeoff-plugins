@@ -30,7 +30,7 @@ class CodexSubmissionTests(unittest.TestCase):
             manifest['interface']['screenshots'] = ['./assets/icon.png']
             manifest['extensions']['com.openai']['review']['demo_recording_url'] = 'https://takeoff.test/demo'
             path.write_text(json.dumps(manifest))
-            (package / '.mcp.json').write_text(json.dumps({'mcpServers': {'construction-takeoff': {'url': 'https://takeoff.test/mcp'}}}))
+            (package / '.mcp.json').write_text(json.dumps({'mcpServers': {'takeoff.bid': {'url': 'https://takeoff.test/mcp'}}}))
             report = preflight.check(package)
             self.assertTrue(report['offline_checks_passed'], report['issues'])
             self.assertFalse(report['store_approved'])
@@ -50,6 +50,17 @@ class CodexSubmissionTests(unittest.TestCase):
         self.assertEqual(len(review['test_cases']['negative']), 3)
         manifest = json.loads((ROOT / 'packages/codex/.codex-plugin/plugin.json').read_text())
         self.assertEqual(manifest['extensions']['com.openai']['review'], review)
+
+    def test_listing_fields_meet_openai_limits(self):
+        manifest = json.loads((ROOT / 'packages/codex/.codex-plugin/plugin.json').read_text())
+        interface = manifest['interface']
+        self.assertLessEqual(len(interface['displayName']), 30)
+        self.assertLessEqual(len(interface['shortDescription']), 30)
+        prompts = interface['defaultPrompt']
+        self.assertIsInstance(prompts, list)
+        self.assertLessEqual(len(prompts), 3)
+        for prompt in prompts:
+            self.assertLessEqual(len(prompt), 128)
 
 
 if __name__ == '__main__':

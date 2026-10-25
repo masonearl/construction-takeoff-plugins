@@ -49,7 +49,8 @@ class Session:
         if target == 'desktop':
             command = ['node', str(ROOT / 'packages/desktop/server/index.cjs')]
         else:
-            cfg = json.loads((ROOT / f'packages/{target}/.mcp.json').read_text())['mcpServers']['construction-takeoff']
+            servers = json.loads((ROOT / f'packages/{target}/.mcp.json').read_text())['mcpServers']
+            cfg = servers.get('takeoff.bid') or next(iter(servers.values()))
             command = [cfg['command'].replace('${CLAUDE_PLUGIN_ROOT}', str(ROOT / f'packages/{target}')), *[arg.replace('${CLAUDE_PLUGIN_ROOT}',str(ROOT / f'packages/{target}')) for arg in cfg['args']]]
         self.stderr = tempfile.TemporaryFile(mode='w+')
         self.proc = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=self.stderr, text=True,

@@ -30,6 +30,17 @@ def check(package):
     for name in ('websiteURL', 'supportURL', 'privacyPolicyURL', 'termsOfServiceURL'):
         if not https_url(interface.get(name)):
             issues.append(f'Missing valid public HTTPS listing field: {name}.')
+    display_name = interface.get('displayName') or ''
+    short_description = interface.get('shortDescription') or ''
+    if not display_name or len(display_name) > 30:
+        issues.append('interface.displayName must be 1 to 30 characters.')
+    if not short_description or len(short_description) > 30:
+        issues.append('interface.shortDescription must be 1 to 30 characters.')
+    prompts = interface.get('defaultPrompt') or []
+    if isinstance(prompts, str):
+        prompts = [prompts]
+    if len(prompts) > 3 or any(not prompt or len(prompt) > 128 for prompt in prompts):
+        issues.append('interface.defaultPrompt allows at most 3 prompts of 128 characters each.')
     for kind, count in (('positive', 5), ('negative', 3)):
         cases = review.get('test_cases', {}).get(kind, [])
         required = ('description', 'prompt', 'tools_triggered', 'expected_behavior') if kind == 'positive' else ('description', 'prompt')

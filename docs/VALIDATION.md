@@ -1,9 +1,13 @@
-# Release candidate validation — October 7, 2026
+# Release candidate validation, October 7, 2026
+
+## 0.1.7 listing rename and companion contract
+
+Packages rebuilt as takeoff.bid. Claude and Codex machine ids are takeoff-bid because those validators reject dots. Cursor, Grok Bot, and the desktop MCPB name use takeoff.bid. Archives use the takeoff-bid- prefix. The companion executable remains ~/.local/bin/takeoff-mcp. Minimum companion version is 0.9.1-dev. Public site pages still describe the older listing; see docs/SITE-FOLLOWUPS.md.
 
 ## 0.1.6 source merge validation
 
 The completed local companion (`0.9.1-dev`, 40 tools) now passes the strict
-MAS-59–64 interface audit through all five packaged launchers: Cursor, Claude,
+reviewed-workflow interface audit through all five packaged launchers: Cursor, Claude,
 Codex, Grok Bot and Desktop. All five synthetic smoke runs pass model inspection,
 proposal creation, stale-revision rejection, unchanged saved projects, rotated
 plan-import staging and duplicate protection. The import smoke test now resolves
@@ -20,7 +24,7 @@ this merge; native/provider/real-plan release checks below remain outstanding.
 ## 0.1.6 MCP workflow compatibility (earlier pass)
 
 - Preserved the 0.1.5 reviewed plan-import update and extended shared instructions
-  to MAS-60–64: scale evidence/proposals, bounded reads, metadata proposals,
+  to page scales, paged reads, metadata, gas tracing and the calculation library:
   gas-line tracing and the natural-gas library. All new calls are conditional on
   advertised tools, schemas and runtime availability.
 - Rebuilt all five client packages from shared sources. Each includes the same
@@ -54,11 +58,11 @@ they do not override the current compatibility result.
 
 - Claude Code strict plugin and marketplace validation passed.
 - Anthropic MCPB 2.1.2 manifest validation passed. Icon accepted; validator emitted a recommended-size notice.
-- Codex CLI installed and enabled construction-takeoff@construction-takeoff-plugins using an isolated temporary configuration; existing user installation unchanged.
+- Codex CLI installed and enabled construction-takeoff@construction-takeoff-plugins using an isolated temporary configuration; existing user installation unchanged. 0.1.7 uses takeoff-bid@takeoff-bid-plugins.
 - All four generated launchers completed MCP initialize and tools/list against the installed companion: 32 tools. Temporary empty project root remained unchanged.
 - Three distribution tests passed, covering all four launchers' missing-companion diagnostics, stdio forwarding, forced legacy-write disablement, paths with spaces, exit-code propagation, archive integrity and reproducible builds.
 - Workflow skill validator passed. Shared AI guidance library refresh indexed active sources with no conflicts; repository workflow instruction content is unchanged from the previously installed Construction Takeoff skill.
-- Repository created under masonearl and GitHub private=true verified.
+- Plugin repository is public under the Mason Earl GitHub account.
 
 Not yet verified: actual Desktop extension installation/directory picker, Cowork host access, fresh Cursor UI installation of this package, complete proposal/review/apply/Undo in each host, store review and public download/onboarding. The prior local plugin installation is not evidence of directory approval.
 
@@ -75,27 +79,27 @@ Rebuild and revalidate if files change. Tests do not establish estimating comple
 
 ## 0.1.2 naming correction
 
-Mason requested Construction Takeoff (not the prior product name). Updated plugin IDs, display names, marketplace IDs, artifact filenames, prompts and documentation. The companion executable remains ~/.local/bin/takeoff-mcp for installation compatibility. Older local marketplace references remain only in migration guidance.
+Mason requested Construction Takeoff (not the prior product name). Updated plugin IDs, display names, marketplace IDs, artifact filenames, prompts and documentation. The companion executable remains ~/.local/bin/takeoff-mcp for installation compatibility.
 
 Seven distribution/submission tests passed; all four synthetic proposal workflows passed. Codex connection check exposed 32 tools with legacy writes disabled. The user installed the prior 0.1.1 Desktop preview; it remains unconfigured, and the renamed build still needs host installation/configuration.
 
 ## 0.1.5 plan import (October 7, 2026)
 
-Natural gas stress test (Enbridge La Hacienda 25-260144, Draper/Sandy Canal Bridge 25-260160) found no way to load plan PDFs through the plugin: `create_project` is a disabled legacy write that never attaches a PDF. Tracked as MAS-59…64 in Linear (label MCP).
+Natural gas stress test (Cedar Ridge Pump Station 25-100001, Willow Creek Canal Crossing 25-100002) found no way to load plan PDFs through the plugin: `create_project` is a disabled legacy write that never attaches a PDF. Tracked as the six reviewed workflow interfaces.
 
 - Skill: new "Load plans into a new project" workflow. It searches for an existing project first, stages with `propose_project_import` when the companion provides it, and otherwise falls back to File → New Document… in the app. It never enables legacy writes, and warns that imported pages start uncalibrated and that the scale bar wins over conflicting notes.
 - Audit: `EXPECTED` workflows report a warning when the companion predates plan import; `--require-plan-import` makes that a release failure. Fixed `${CLAUDE_PLUGIN_ROOT}` expansion so the Claude package can be audited.
 - Smoke: when the tool exists, each package stages a generated rotated PDF, checks that the bundle stays in the temporary proposals folder, that no project package is created, and that the duplicate guard works.
 - Results against the installed companion (32 tools): all four packages pass; plan import is reported as not in the companion; the default audit passes with a warning; the strict audit fails as intended.
-- Results against companion branch `feature/mcp-project-import` (33 tools, via a temporary HOME): all four packages pass, including plan import; the strict audit passes. The companion's own 70 unit tests pass. Real-plan dry run: La Hacienda staged 8 pages in 0.7 s; Canal Bridge staged 4 files / 21 pages in 2.8 s.
+- Results against companion branch `feature/mcp-project-import` (33 tools, via a temporary HOME): all four packages pass, including plan import; the strict audit passes. The companion's own 70 unit tests pass. Demo-plan dry run: Cedar Ridge Pump Station staged 8 pages in 0.7 s; Willow Creek Canal Crossing staged 4 files / 21 pages in 2.8 s.
 - Claude strict validation and MCPB 2.1.2 validation pass; 9 distribution tests pass.
 
-Not yet available: the app's File → Review AI Project Import… sheet that applies the bundle (MAS-59 part B). Until it ships, a staged bundle cannot be applied, so do not ship 0.1.5 publicly before that app build.
+Not yet available: the app's File → Review AI Project Import… sheet that applies the bundle (plan-import apply step). Until it ships, a staged bundle cannot be applied, so do not ship 0.1.5 publicly before that app build.
 
-## Live bridge follow-through (MAS-70)
+## Live bridge follow-through
 
 The workflow now explains optional live project reads, metadata transactions,
 approval policy, history and conflict-aware Undo. These depend on a newer running
-app and companion and are separate from the six-ticket compatibility gate. No
+app and companion and are separate from the six-workflow compatibility gate. No
 full CRUD, automatic takeoff, signed sandbox or actual client verification is
 implied by this instruction update.

@@ -1,29 +1,29 @@
 # Store submission preparation
 
-Status: Cursor publisher application submitted October 7, 2026; awaiting review. Publisher: Mason Earl / @masonearl. MIT covers plugin files only. The dedicated plugin repository is public; application source remains private. Claude and Codex submissions remain outstanding.
+Status: Cursor publisher application submitted October 7, 2026; awaiting review. Publisher: Mason Earl / @masonearl. MIT covers plugin files only. The dedicated plugin repository is public; application source remains private. Claude and Codex submissions remain outstanding. Portal-ready listing text now lives in docs/submission-packets/.
 
 ## Listing copy
 
-Name: Construction Takeoff
+Name: takeoff.bid
 
-Short description: Construction takeoffs and estimates with native review.
+Short description: Takeoffs with native review
 
-Description: Inspect saved Construction Takeoff projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Apply supported changes through Construction Takeoff's native review with Undo. Requires macOS, the separately installed Construction Takeoff app, and its MCP companion. Saved project state only; no automatic bid submission.
+Description: Inspect saved takeoff.bid projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Apply supported changes through takeoff.bid's native review with Undo. Requires macOS, the separately installed takeoff.bid app, and its MCP companion. Saved project state only; no automatic bid submission.
 
 Support: hi@masonearl.com and repository Issues. Icon: shared/assets/icon.png. Privacy: repository PRIVACY.md. Screenshots must come from a synthetic demonstration project, never customer drawings.
 
 ## Submission routes
 
-- Cursor: https://cursor.com/marketplace/publish — public GitHub repository, root `.cursor-plugin/marketplace.json`, plugin at `packages/cursor`. Confirm current form fields before submission. [Official reference](https://prod.cursor.com/docs/reference/plugins).
-- Grok Bot: same Cursor marketplace publish — https://cursor.com/marketplace/publish — using this Cursor-format package (`packages/grok-bot`) or `packages/cursor`. Grok Bot installs marketplace plugins through Cursor in-app Plugins; there is no separate official grok-only plugin schema for this stdio companion. [x.ai/bot/marketplace](https://x.ai/bot/marketplace) is a Bot Template marketplace and is a later, separate step if a shareable bot template is desired. Cloud-only Grok Bot sessions cannot reach the Mac companion; do not advertise cloud support until a bridge exists. RC status; the separately installed Mac companion remains required.
-- Claude Code/Cowork: https://clau.de/plugin-directory-submission — root `.claude-plugin/marketplace.json`, plugin at `packages/claude`. Validate Code and Cowork independently; a schema-valid package does not prove Cowork can reach the Mac's companion. [Official guide](https://claude.com/resources/articles/build-plugins-for-claude).
+- Cursor: https://cursor.com/marketplace/publish. Public GitHub repository, root `.cursor-plugin/marketplace.json`, plugin at `packages/cursor`. Confirm current form fields before submission. [Official reference](https://prod.cursor.com/docs/reference/plugins).
+- Grok Bot: same Cursor marketplace publish (https://cursor.com/marketplace/publish) using this Cursor-format package (`packages/grok-bot`) or `packages/cursor`. Grok Bot installs marketplace plugins through Cursor in-app Plugins; there is no separate official grok-only plugin schema for this stdio companion. [x.ai/bot/marketplace](https://x.ai/bot/marketplace) is a Bot Template marketplace and is a later, separate step if a shareable bot template is desired. Cloud-only Grok Bot sessions cannot reach the Mac companion; do not advertise cloud support until a bridge exists. RC status; the separately installed Mac companion remains required.
+- Claude Code/Cowork: https://clau.de/plugin-directory-submission. Root `.claude-plugin/marketplace.json`, plugin at `packages/claude`. Validate Code and Cowork independently; a schema-valid package does not prove Cowork can reach the Mac's companion. [Official guide](https://claude.com/resources/articles/build-plugins-for-claude).
 - Claude Desktop chat: `.mcpb` is an optional local installer only. [Current Anthropic directory rules](https://claude.com/docs/directory/publish) no longer accept Desktop extension submissions. Submit the Claude plugin bundle through https://claude.ai/directory/manage instead. Local MCP entries are ignored by chat; full cross-surface tools require a remote MCP service.
 
 - Codex: [OpenAI plugin submission](https://developers.openai.com/plugins/deploy/submission). The current package is local stdio. Public directory requirements currently call for a remote HTTPS endpoint or contact with OpenAI for local MCP support. Do not submit this as skills-only: that would omit its core dependency. A hosted endpoint requires a separate authenticated service design and verified developer/domain identity. [Packaging rules](https://developers.openai.com/plugins/build/plugins).
 
 ## Required before submission
 
-- [ ] Stable Construction Takeoff app/companion release, public onboarding/download URL and minimum compatible version.
+- [ ] Stable takeoff.bid app/companion release, public onboarding/download URL and minimum compatible version.
 - [ ] Reviewer access to the app plus a synthetic sample project.
 - [ ] In each host: install from clean user state, health, capabilities, project list, inspect quantities, create proposal, native review/apply, Undo, save and stale-revision rejection.
 - [ ] Desktop: first-run directory picker, paths with spaces, disconnect/reconnect, missing companion error, uninstall.
@@ -35,14 +35,14 @@ Support: hi@masonearl.com and repository Issues. Icon: shared/assets/icon.png. P
 
 ## Reviewer script
 
-1. Install the separately supplied Construction Takeoff app/companion and save a synthetic project.
+1. Install the separately supplied takeoff.bid app/companion and save a synthetic project.
 2. Install this plugin. Ask to run health, capabilities and list_projects. Confirm missing prerequisites produce actionable errors without corrupting the protocol stream.
 3. Ask to inspect a sheet and explain its calibration and missing quantities.
 4. Ask to prepare one supported edit using the inspected revision. Confirm the project remains unchanged before native review.
-5. Review/apply in Construction Takeoff, Undo, save and reread. Try a stale proposal and confirm rejection.
+5. Review/apply in takeoff.bid, Undo, save and reread. Try a stale proposal and confirm rejection.
 6. Inspect generated outputs for correct units and source evidence. Confirm no action submits a bid externally.
 
-Do not mark the Linear work complete until Mason confirms QA. Package preparation and public store availability are separate milestones.
+Do not mark this work complete until Mason confirms QA. Package preparation and public store availability are separate milestones.
 
 ## Updated portal findings
 
@@ -97,7 +97,7 @@ those changes still need inclusion in the next signed app release. Full native
 acceptance and public provider acceptance are not established by these tests.
 
 
-## Claude review preparation — 2026-10-07
+## Claude review preparation, 2026-10-07
 
 Version 0.1.4 replaces the Claude Node wrapper with a directly executable shell script at
 `${CLAUDE_PLUGIN_ROOT}/server/start.sh`. The shell script performs no

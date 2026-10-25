@@ -1,17 +1,17 @@
 {
-  "name": "construction-takeoff-plugins",
+  "name": "takeoff-bid-plugins",
   "owner": {
     "name": "Mason Earl"
   },
   "metadata": {
-    "description": "Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion."
+    "description": "Load plan sets, inspect takeoff.bid projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion."
   },
   "plugins": [
     {
-      "name": "construction-takeoff",
-      "displayName": "Construction Takeoff",
+      "name": "takeoff-bid",
+      "displayName": "takeoff.bid",
       "source": "./packages/claude",
-      "description": "Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion."
+      "description": "Load plan sets, inspect takeoff.bid projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion."
     }
   ]
 }

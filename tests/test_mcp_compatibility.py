@@ -9,7 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('audit_tools', ROOT / 'scripts/audit_tools.py')
 audit = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(audit)
-CONTRACT = json.loads((ROOT / 'shared/companion-requirements.json').read_text())
+REQUIREMENTS = json.loads((ROOT / 'shared/companion-requirements.json').read_text())
+CONTRACT = {'workflows': REQUIREMENTS['profiles']['local']['workflows']}
 
 
 def discovery():
@@ -58,24 +59,24 @@ class CompatibilityTests(unittest.TestCase):
             import_only = audit.audit(ROOT / 'packages/codex', require_expected=True)
         self.assertTrue(diagnostic['passed'])
         self.assertFalse(diagnostic['mcp_workflow_interfaces_ready'])
-        self.assertIn('MAS-64', diagnostic['warnings'][0])
+        self.assertIn('calculation-library', diagnostic['warnings'][0])
         self.assertFalse(strict['passed'])
         self.assertTrue(import_only['passed'])
 
     def test_tool_name_alone_does_not_establish_new_paging_support(self):
         tools, caps, health = discovery()
         del tools['list_sheets']['inputSchema']['properties']['summary_only']
-        report = audit.inspect_workflows(tools, caps, health, CONTRACT)
-        self.assertFalse(report['MAS-61']['interface_ready'])
-        self.assertIn('summary_only', ' '.join(report['MAS-61']['issues']))
+        report = audit.inspect_workflows(tools, caps, health, REQUIREMENTS)
+        self.assertFalse(report['paged-reads']['interface_ready'])
+        self.assertIn('summary_only', ' '.join(report['paged-reads']['issues']))
 
     def test_disabled_capability_reports_reason_even_if_tool_is_listed(self):
         tools, caps, health = discovery()
         caps['capabilities']['fixture']['available'] = False
         caps['capabilities']['fixture']['unavailable_reason'] = 'PDF dependency missing'
-        report = audit.inspect_workflows(tools, caps, health, CONTRACT)
-        self.assertFalse(report['MAS-59']['interface_ready'])
-        self.assertIn('PDF dependency missing', ' '.join(report['MAS-59']['issues']))
+        report = audit.inspect_workflows(tools, caps, health, REQUIREMENTS)
+        self.assertFalse(report['plan-import']['interface_ready'])
+        self.assertIn('PDF dependency missing', ' '.join(report['plan-import']['issues']))
 
     def test_proposal_writers_must_be_marked_as_mutating(self):
         for name in ('propose_project_import', 'propose_page_scales', 'propose_project_metadata', 'propose_calculation_library'):
@@ -91,21 +92,21 @@ class CompatibilityTests(unittest.TestCase):
         tools, caps, health = discovery()
         for name in ('create_project', 'link_hardhat_job', 'analyze_plan_page'):
             tools[name] = {'name': name}
-        report = audit.inspect_workflows(tools, caps, health, CONTRACT)
-        errors = ' '.join(report['MAS-62']['issues'])
+        report = audit.inspect_workflows(tools, caps, health, REQUIREMENTS)
+        errors = ' '.join(report['project-metadata']['issues'])
         for name in ('create_project', 'link_hardhat_job', 'analyze_plan_page'):
             self.assertIn(name, errors)
-        self.assertFalse(report['MAS-62']['interface_ready'])
+        self.assertFalse(report['project-metadata']['interface_ready'])
 
     def test_native_helper_health_and_registry_must_agree(self):
         tools, caps, health = discovery()
         caps['capabilities']['native_plan_analysis']['available'] = True
-        report = audit.inspect_workflows(tools, caps, health, CONTRACT)
-        self.assertIn('disagrees', ' '.join(report['MAS-62']['issues']))
+        report = audit.inspect_workflows(tools, caps, health, REQUIREMENTS)
+        self.assertIn('disagrees', ' '.join(report['project-metadata']['issues']))
         tools['analyze_plan_page'] = {'name': 'analyze_plan_page'}
         health['capabilities']['native_plan_analysis'] = 'configured_development_helper'
-        report = audit.inspect_workflows(tools, caps, health, CONTRACT)
-        self.assertTrue(report['MAS-62']['interface_ready'], report)
+        report = audit.inspect_workflows(tools, caps, health, REQUIREMENTS)
+        self.assertTrue(report['project-metadata']['interface_ready'], report)
 
     def test_failed_health_or_incomplete_responses_are_not_success(self):
         result = wire_result(*discovery())
@@ -124,6 +125,30 @@ class CompatibilityTests(unittest.TestCase):
             with self.subTest(key=key, value=value):
                 with patch.object(audit.subprocess, 'run', return_value=wire_result(tools, caps, health)):
                     self.assertFalse(audit.audit(ROOT / 'packages/codex')['passed'])
+
+    def test_unknown_tools_are_reported_instead_of_ignored(self):
+        tools, caps, health = discovery()
+        tools['brand_new_helper_tool'] = {'name': 'brand_new_helper_tool', 'inputSchema': {'properties': {}}}
+        caps['capabilities']['fixture']['tools'].append('brand_new_helper_tool')
+        with patch.object(audit.subprocess, 'run', return_value=wire_result(tools, caps, health)):
+            report = audit.audit(ROOT / 'packages/codex')
+        self.assertTrue(report['passed'], report)
+        self.assertIn('brand_new_helper_tool', report['unknown_tools'])
+        self.assertTrue(any('Unknown tools' in warning for warning in report['warnings']))
+
+    def test_remote_profile_is_planned_and_does_not_treat_create_project_as_legacy(self):
+        report = audit.audit(ROOT / 'packages/codex', profile='remote')
+        self.assertTrue(report['passed'])
+        self.assertTrue(report['planned'])
+        self.assertFalse(report['ship_remote_manifest'])
+        self.assertIn('create_project', report['known_tools'])
+        self.assertIn('live project create', report['collisions']['create_project'])
+
+    def test_companion_version_compare(self):
+        self.assertTrue(audit.version_at_least('0.9.1-dev', '0.9.1-dev'))
+        self.assertTrue(audit.version_at_least('0.9.2', '0.9.1-dev'))
+        self.assertFalse(audit.version_at_least('0.9.0-dev', '0.9.1-dev'))
+        self.assertIsNone(audit.version_at_least('synthetic-test-only', '0.9.1-dev'))
 
     def test_all_packages_include_contract_and_resolve_launchers(self):
         source = (ROOT / 'shared/companion-requirements.json').read_bytes()

@@ -1,11 +1,11 @@
 {
-  "name": "construction-takeoff-download",
+  "name": "takeoff-bid-download",
   "interface": {
-    "displayName": "Construction Takeoff download"
+    "displayName": "takeoff.bid download"
   },
   "plugins": [
     {
-      "name": "construction-takeoff",
+      "name": "takeoff-bid",
       "source": {
         "source": "local",
         "path": "./"

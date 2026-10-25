@@ -1,45 +1,44 @@
-# Construction Takeoff plugins
+# takeoff.bid plugins
 
-Plugin distribution source for construction takeoffs and estimating in Cursor, Grok Bot, Codex, Claude Code/Cowork, and Claude Desktop. This repository contains workflow instructions, client manifests and launchers. The Construction Takeoff app and MCP companion are separately installed and licensed.
+Plugin distribution source for construction takeoffs and estimating in Cursor, Grok Bot, Codex, Claude Code/Cowork, and Claude Desktop. This repository contains workflow instructions, client manifests and launchers. The takeoff.bid app and MCP companion are separately installed and licensed.
 
-**Release candidate: packages prepared; no public directory listing or host certification yet.** macOS local sessions only. Installing a plugin does not install Construction Takeoff. Cloud agents, Grok Bot cloud sessions, and Cowork sandbox access to the Mac companion have not been verified.
+**Release candidate: packages prepared; no public directory listing or host certification yet.** macOS local sessions only. Installing a plugin does not install takeoff.bid. Cloud agents, Grok Bot cloud sessions, and Cowork sandbox access to the Mac companion have not been verified.
 
 ## Requirements and setup
 
-1. Install [Construction Takeoff for Mac](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12). Open **3D Model → AI tools**, export AI setup, and follow its companion installation instructions. This installs `~/.local/bin/takeoff-mcp` with its runtime. The app is a separately licensed prerequisite. Plugin workflows require a build with AI setup/companion export; compatibility with the current App Store release still needs verification.
+1. Install [takeoff.bid for Mac](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12). Open **3D Model → AI tools**, export AI setup, and follow its companion installation instructions. This installs `~/.local/bin/takeoff-mcp` with its runtime. The app is a separately licensed prerequisite. Plugin workflows require a build with AI setup/companion export; compatibility with the current App Store release still needs verification.
 2. Save a project in the Takeoff project library. Unsaved changes are not visible to the companion.
 3. Install the client package below. For Desktop, choose the saved project library directory when prompted. Other clients use the companion's configured/default library (`TAKEOFF_PROJECTS_DIR` can override it in a local launch environment).
-4. Reload the client. Ask: “Use Construction Takeoff health and capabilities, then list my saved projects. Do not make changes.”
+4. Reload the client. Ask: “Use takeoff.bid health and capabilities, then list my saved projects. Do not make changes.”
 
 | Client | Package | Preview installation |
 |---|---|---|
-| Cursor | `packages/cursor` | Copy this directory into `~/.cursor/plugins/local/construction-takeoff` after backing up any existing plugin; reload Cursor. Public marketplace submission uses this repository's catalog. |
-| Grok Bot | `packages/grok-bot` | Install the Construction Takeoff companion first. Then install this Cursor-format plugin from `packages/grok-bot` or via Cursor Marketplace / Grok Bot Plugins once public. Grok Bot uses `.cursor-plugin/plugin.json` (no separate grok-only schema). Cloud-only Grok Bot sessions cannot reach the Mac companion without a separately supported bridge. |
-| Claude Code | `packages/claude` | From the repository: `claude plugin marketplace add .` then `claude plugin install construction-takeoff@construction-takeoff-plugins`. |
+| Cursor | `packages/cursor` | Copy this directory into `~/.cursor/plugins/local/takeoff.bid` after backing up any existing plugin; reload Cursor. Public marketplace submission uses this repository's catalog. |
+| Grok Bot | `packages/grok-bot` | Install the takeoff.bid companion first. Then install this Cursor-format plugin from `packages/grok-bot` or via Cursor Marketplace / Grok Bot Plugins once public. Grok Bot uses `.cursor-plugin/plugin.json` (no separate grok-only schema). Cloud-only Grok Bot sessions cannot reach the Mac companion without a separately supported bridge. |
+| Claude Code | `packages/claude` | From the repository: `claude plugin marketplace add .` then `claude plugin install takeoff-bid@takeoff-bid-plugins`. |
 | Claude Cowork | Same Claude plugin | Intended for the plugin directory; host access to the separately installed Mac companion still needs verification. |
-| Codex | `packages/codex` | From the repository: `codex plugin marketplace add .` then `codex plugin add construction-takeoff@construction-takeoff-plugins`. Public directory submission is blocked on remote MCP or approved local support. |
-| Claude Desktop chat | `dist/construction-takeoff-desktop-0.1.6.mcpb` | Open Desktop Settings → Extensions and install the bundle; set the project directory. Optional local installer only; new Desktop extension directory listings are deprecated. It exposes tools but does not install the Code/Cowork skill. |
+| Codex | `packages/codex` | From the repository: `codex plugin marketplace add .` then `codex plugin add takeoff-bid@takeoff-bid-plugins`. Public directory submission is blocked on remote MCP or approved local support. |
+| Claude Desktop chat | `dist/takeoff-bid-desktop-0.1.7.mcpb` | Open Desktop Settings → Extensions and install the bundle; set the project directory. Optional local installer only; new Desktop extension directory listings are deprecated. It exposes tools but does not install the Code/Cowork skill. |
 
-Avoid enabling the existing `takeoff-x-local` plugin and this preview simultaneously; both register the same companion. Do not overwrite custom settings during migration.
+Disable any older local plugin that registers the same companion before enabling this package, so tools are not duplicated.
 
 ## Workflow
 
-Load plan PDFs into a new project (`propose_project_import` stages a checksummed bundle the user applies in **File → Review AI Project Import…**; companions without it fall back to importing in the app). Inspect saved projects, sheets, calibration and quantities; trace plan linework; prepare model, calculation and estimate proposals. Construction Takeoff's native review applies changes and supplies Undo. The launcher forces legacy direct writes off. A staged proposal is not an applied project change or submitted bid. Use native exported quantities when available and report calibration and coverage gaps.
+Load plan PDFs into a new project (`propose_project_import` stages a checksummed bundle the user applies in **File → Review AI Project Import…**; companions without it fall back to importing in the app). Inspect saved projects, sheets, calibration and quantities; trace plan linework; assign takeoff groups to pay items; refresh the estimate; prepare model, calculation and estimate proposals. takeoff.bid's native review applies proposal-file changes and supplies Undo. Live companions may apply a previewed estimate batch through native save and Undo. The launcher forces legacy direct writes off. A staged proposal is not an applied project change or submitted bid. Use native exported quantities when available and report calibration and coverage gaps.
 
 ## Build and verify
 
-Version 0.1.6 adds companion-aware instructions and interface checks for all six
-MCP tickets. The source of the expected interfaces is
+Version 0.1.7 renames the listing to takeoff.bid, records local versus remote tool names, and requires companion **0.9.1-dev** or later for the newer live helpers. The source of the expected interfaces is
 `shared/companion-requirements.json`, copied into every generated package:
 
-| Ticket | Workflow |
+| Workflow | Description |
 |---|---|
-| MAS-59 | Reviewed multi-PDF project import |
-| MAS-60 | Page-scale evidence, suggestions and reviewed proposals |
-| MAS-61 | Paged sheet/calculation/quantity reads and bounded linework results |
-| MAS-62 | Runtime tool availability and reviewed project metadata |
-| MAS-63 | Layer/style/region gas tracing, rotation and text-gap guidance |
-| MAS-64 | Reviewed natural-gas calculation library |
+| plan-import | Reviewed multi-PDF project import |
+| page-scales | Page-scale evidence, suggestions and reviewed proposals |
+| paged-reads | Paged sheet/calculation/quantity reads and bounded linework results |
+| project-metadata | Runtime tool availability and reviewed project metadata |
+| gas-tracing | Layer/style/region gas tracing, rotation and text-gap guidance |
+| calculation-library | Reviewed natural-gas calculation library |
 
 Tools are discovered from the separately installed companion. Updating this
 repository or plugin does not install new MCP code. Update the app, reinstall its
@@ -53,7 +52,7 @@ Requires Python 3 for packaging/tests; Node 18+ for Desktop launcher tests (the 
 python3 scripts/build.py
 python3 scripts/audit_tools.py                         # connection plus per-ticket compatibility
 python3 scripts/audit_tools.py --require-mcp-workflows  # release interface gate for all six tickets
-python3 scripts/audit_tools.py --require-plan-import    # narrower MAS-59 check, retained for compatibility
+python3 scripts/audit_tools.py --require-plan-import    # narrower plan-import check, retained for compatibility
 python3 -m unittest discover -s tests -v
 python3 scripts/smoke.py  # requires the separately installed companion
 npx --yes @anthropic-ai/mcpb@2.1.2 validate packages/desktop/manifest.json
@@ -74,5 +73,5 @@ See [submission checklist](docs/SUBMISSION.md) and [privacy](PRIVACY.md). Report
 
 Public local-preview setup and download: https://www.masonearl.com/pages/construction-takeoff/plugin.html
 
-Version 0.1.6 extends the 0.1.5 plan-import guidance to all six workflows. These packages are prepared for companion integration; they do not imply that the app/MCP changes have shipped. Version 0.1.3 includes a self-contained Codex marketplace catalog for ZIP installs.
+Version 0.1.7 extends the 0.1.6 workflow contract with a local/remote profile, newer live helpers from the 0.9.1-dev dump, and the takeoff.bid listing name. These packages are prepared for companion integration; they do not imply that the app/MCP changes have shipped. Version 0.1.3 includes a self-contained Codex marketplace catalog for ZIP installs.
 Store submission is blocked at the publisher-identity gate; see docs/SUBMISSION.md.

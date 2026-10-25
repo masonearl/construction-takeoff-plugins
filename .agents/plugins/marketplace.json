@@ -1,11 +1,11 @@
 {
-  "name": "construction-takeoff-plugins",
+  "name": "takeoff-bid-plugins",
   "interface": {
-    "displayName": "Construction Takeoff"
+    "displayName": "takeoff.bid"
   },
   "plugins": [
     {
-      "name": "construction-takeoff",
+      "name": "takeoff-bid",
       "source": {
         "source": "local",
         "path": "./packages/codex"

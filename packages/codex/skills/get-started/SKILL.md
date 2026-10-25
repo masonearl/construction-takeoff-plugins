@@ -1,16 +1,16 @@
 ---
 name: get-started
-description: Connect and troubleshoot the Construction Takeoff macOS companion in Codex. Use on first installation or when the user asks to connect Construction Takeoff, verify its connection, or fix unavailable Construction Takeoff tools.
+description: Connect and troubleshoot the takeoff.bid macOS companion in Codex. Use on first installation or when the user asks to connect takeoff.bid, verify its connection, or fix unavailable takeoff.bid tools.
 ---
 
-# Connect Construction Takeoff
+# Connect takeoff.bid
 
 1. Call `health` and `get_capabilities`. These are read-only. Check the reported
    transport, companion version, capability `available`/`unavailable_reason` values,
    and gaps. Tools come from the installed companion, not the plugin version.
    An installed plugin or successful file export alone does not verify a connection.
 2. If tools are unavailable, explain that this package requires a local macOS
-   session and the separately installed Construction Takeoff companion. In Construction Takeoff open
+   session and the separately installed takeoff.bid companion. In takeoff.bid open
    **AI → Connect your AI tools → Export AI setup**, run the exported Codex
    installation command, then start a new Codex chat. Updating the plugin alone
    cannot add tools to an older companion; update the app and companion too.
@@ -38,4 +38,4 @@ Proposals require native review; connection setup does not authorize project edi
 Never include project names, drawing content, credentials, or full local paths in
 public support reports unless the user explicitly requests those details.
 
-Official Mac application: [Construction Takeoff on the Mac App Store](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12). Documentation: https://www.masonearl.com/pages/documentation.html. If the installed version lacks AI setup export, report the compatibility gap instead of claiming installation is complete.
+Official Mac application: [takeoff.bid on the Mac App Store](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12). Documentation: https://www.masonearl.com/pages/documentation.html. If the installed version lacks AI setup export, report the compatibility gap instead of claiming installation is complete.
