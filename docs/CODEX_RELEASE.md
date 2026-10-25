@@ -1,4 +1,4 @@
-# Codex release preparation — October 7, 2026
+# Codex release preparation, October 7, 2026
 
 This is a tested local macOS plugin candidate, not an approved public listing.
 The plugin-only repository is public for Cursor review; application source remains private. Other client packaging is being developed
@@ -33,7 +33,7 @@ python3 scripts/check_codex_submission.py
 ```
 
 The last command currently fails intentionally with concrete submission blockers.
-The MCP workflow audit separately requires the MAS-59–64 companion interfaces.
+The MCP workflow audit separately requires the six reviewed companion interfaces.
 A working connection with an older companion does not pass that feature gate;
 see `docs/VALIDATION.md` for the installed-companion result. Update the app and
 companion before retrying it; changing only the plugin cannot add missing tools.

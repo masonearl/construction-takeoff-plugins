@@ -58,7 +58,7 @@ class CompatibilityTests(unittest.TestCase):
             import_only = audit.audit(ROOT / 'packages/codex', require_expected=True)
         self.assertTrue(diagnostic['passed'])
         self.assertFalse(diagnostic['mcp_workflow_interfaces_ready'])
-        self.assertIn('MAS-64', diagnostic['warnings'][0])
+        self.assertIn('calculation-library', diagnostic['warnings'][0])
         self.assertFalse(strict['passed'])
         self.assertTrue(import_only['passed'])
 
@@ -66,16 +66,16 @@ class CompatibilityTests(unittest.TestCase):
         tools, caps, health = discovery()
         del tools['list_sheets']['inputSchema']['properties']['summary_only']
         report = audit.inspect_workflows(tools, caps, health, CONTRACT)
-        self.assertFalse(report['MAS-61']['interface_ready'])
-        self.assertIn('summary_only', ' '.join(report['MAS-61']['issues']))
+        self.assertFalse(report['paged-reads']['interface_ready'])
+        self.assertIn('summary_only', ' '.join(report['paged-reads']['issues']))
 
     def test_disabled_capability_reports_reason_even_if_tool_is_listed(self):
         tools, caps, health = discovery()
         caps['capabilities']['fixture']['available'] = False
         caps['capabilities']['fixture']['unavailable_reason'] = 'PDF dependency missing'
         report = audit.inspect_workflows(tools, caps, health, CONTRACT)
-        self.assertFalse(report['MAS-59']['interface_ready'])
-        self.assertIn('PDF dependency missing', ' '.join(report['MAS-59']['issues']))
+        self.assertFalse(report['plan-import']['interface_ready'])
+        self.assertIn('PDF dependency missing', ' '.join(report['plan-import']['issues']))
 
     def test_proposal_writers_must_be_marked_as_mutating(self):
         for name in ('propose_project_import', 'propose_page_scales', 'propose_project_metadata', 'propose_calculation_library'):
@@ -92,20 +92,20 @@ class CompatibilityTests(unittest.TestCase):
         for name in ('create_project', 'link_hardhat_job', 'analyze_plan_page'):
             tools[name] = {'name': name}
         report = audit.inspect_workflows(tools, caps, health, CONTRACT)
-        errors = ' '.join(report['MAS-62']['issues'])
+        errors = ' '.join(report['project-metadata']['issues'])
         for name in ('create_project', 'link_hardhat_job', 'analyze_plan_page'):
             self.assertIn(name, errors)
-        self.assertFalse(report['MAS-62']['interface_ready'])
+        self.assertFalse(report['project-metadata']['interface_ready'])
 
     def test_native_helper_health_and_registry_must_agree(self):
         tools, caps, health = discovery()
         caps['capabilities']['native_plan_analysis']['available'] = True
         report = audit.inspect_workflows(tools, caps, health, CONTRACT)
-        self.assertIn('disagrees', ' '.join(report['MAS-62']['issues']))
+        self.assertIn('disagrees', ' '.join(report['project-metadata']['issues']))
         tools['analyze_plan_page'] = {'name': 'analyze_plan_page'}
         health['capabilities']['native_plan_analysis'] = 'configured_development_helper'
         report = audit.inspect_workflows(tools, caps, health, CONTRACT)
-        self.assertTrue(report['MAS-62']['interface_ready'], report)
+        self.assertTrue(report['project-metadata']['interface_ready'], report)
 
     def test_failed_health_or_incomplete_responses_are_not_success(self):
         result = wire_result(*discovery())

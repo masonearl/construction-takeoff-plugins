@@ -61,7 +61,8 @@ def inspect_workflows(tools, caps, health, requirements):
                 issues.append(f'{name} creates proposal files but is marked read-only')
         reports[ticket] = {'name': workflow['name'], 'interface_ready': not issues, 'issues': issues}
 
-    gates = reports['MAS-62']['issues']
+    availability = 'project-metadata'
+    gates = reports[availability]['issues']
     legacy = sorted({'create_project', 'link_hardhat_job'} & tools.keys())
     if legacy:
         gates.append(f'Plugin advertises disabled legacy tools: {", ".join(legacy)}')
@@ -79,7 +80,7 @@ def inspect_workflows(tools, caps, health, requirements):
     if native_capability and type(native_capability.get('available')) is bool:
         if native_capability['available'] != configured:
             gates.append('Native helper availability disagrees between health and capabilities')
-    reports['MAS-62']['interface_ready'] = not gates
+    reports[availability]['interface_ready'] = not gates
     return reports
 
 
@@ -122,12 +123,12 @@ def audit(plugin, require_expected=False, require_mcp_workflows=False):
             if tools[name].get('annotations', {}).get('readOnlyHint') is not False:
                 errors.append(f'{name} creates files but is marked read-only')
         workflows = inspect_workflows(tools, caps, health, requirements)
-        missing_workflows = [ticket for ticket, report in workflows.items() if not report['interface_ready']]
+        missing_workflows = [name for name, report in workflows.items() if not report['interface_ready']]
         warnings = [f'Companion has incomplete MCP workflows: {", ".join(missing_workflows)}. {UPGRADE}'] if missing_workflows else []
-        enforced = set(workflows) if require_mcp_workflows else {'MAS-59'} if require_expected else set()
-        for ticket in sorted(enforced):
-            if not workflows[ticket]['interface_ready']:
-                errors.append(f'{ticket}: ' + '; '.join(workflows[ticket]['issues']))
+        enforced = set(workflows) if require_mcp_workflows else {'plan-import'} if require_expected else set()
+        for name in sorted(enforced):
+            if not workflows[name]['interface_ready']:
+                errors.append(f'{name}: ' + '; '.join(workflows[name]['issues']))
         return {
             'passed': not errors, 'errors': errors, 'warnings': warnings,
             'companion_version': health.get('helper_version'), 'tool_count': len(tools),
@@ -142,8 +143,8 @@ def audit(plugin, require_expected=False, require_mcp_workflows=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--plugin', type=Path, default=ROOT/'packages/codex')
-    parser.add_argument('--require-plan-import', action='store_true', help='require the reviewed import interface (MAS-59)')
-    parser.add_argument('--require-mcp-workflows', action='store_true', help='release gate: require all six MAS-59–64 interfaces')
+    parser.add_argument('--require-plan-import', action='store_true', help='require the reviewed plan-import interface')
+    parser.add_argument('--require-mcp-workflows', action='store_true', help='release gate: require all six reviewed workflow interfaces')
     options = parser.parse_args()
     try:
         report = audit(options.plugin, options.require_plan_import, options.require_mcp_workflows)

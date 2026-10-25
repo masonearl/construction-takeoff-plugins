@@ -92,6 +92,16 @@ class DistributionTests(unittest.TestCase):
                 self.assertIn(required, names)
             self.assertNotIn('.grok-bot-plugin/plugin.json', names)
 
+    def test_codex_zip_layout_matches_openai_root(self):
+        archive = ROOT / 'dist' / f'construction-takeoff-codex-{VERSION}.zip'
+        with zipfile.ZipFile(archive) as z:
+            names = z.namelist()
+            for required in ('.codex-plugin/plugin.json', '.mcp.json', 'skills/get-started/SKILL.md',
+                             'skills/takeoff-workflow/SKILL.md', 'assets/icon.png', 'LICENSE', 'README.md'):
+                self.assertIn(required, names)
+            self.assertFalse(any(name.startswith('construction-takeoff/') or name.startswith('/') for name in names))
+            self.assertFalse(any('..' in Path(name).parts for name in names))
+
 
 
 class SkillContentTests(unittest.TestCase):

@@ -51,6 +51,17 @@ class CodexSubmissionTests(unittest.TestCase):
         manifest = json.loads((ROOT / 'packages/codex/.codex-plugin/plugin.json').read_text())
         self.assertEqual(manifest['extensions']['com.openai']['review'], review)
 
+    def test_listing_fields_meet_openai_limits(self):
+        manifest = json.loads((ROOT / 'packages/codex/.codex-plugin/plugin.json').read_text())
+        interface = manifest['interface']
+        self.assertLessEqual(len(interface['displayName']), 30)
+        self.assertLessEqual(len(interface['shortDescription']), 30)
+        prompts = interface['defaultPrompt']
+        self.assertIsInstance(prompts, list)
+        self.assertLessEqual(len(prompts), 3)
+        for prompt in prompts:
+            self.assertLessEqual(len(prompt), 128)
+
 
 if __name__ == '__main__':
     unittest.main()

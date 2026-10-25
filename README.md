@@ -20,7 +20,7 @@ Plugin distribution source for construction takeoffs and estimating in Cursor, G
 | Codex | `packages/codex` | From the repository: `codex plugin marketplace add .` then `codex plugin add construction-takeoff@construction-takeoff-plugins`. Public directory submission is blocked on remote MCP or approved local support. |
 | Claude Desktop chat | `dist/construction-takeoff-desktop-0.1.6.mcpb` | Open Desktop Settings → Extensions and install the bundle; set the project directory. Optional local installer only; new Desktop extension directory listings are deprecated. It exposes tools but does not install the Code/Cowork skill. |
 
-Avoid enabling the existing `takeoff-x-local` plugin and this preview simultaneously; both register the same companion. Do not overwrite custom settings during migration.
+Disable any older local plugin that registers the same companion before enabling this package, so tools are not duplicated.
 
 ## Workflow
 
@@ -28,18 +28,18 @@ Load plan PDFs into a new project (`propose_project_import` stages a checksummed
 
 ## Build and verify
 
-Version 0.1.6 adds companion-aware instructions and interface checks for all six
-MCP tickets. The source of the expected interfaces is
+Version 0.1.6 adds companion-aware instructions and interface checks for six
+reviewed workflows. The source of the expected interfaces is
 `shared/companion-requirements.json`, copied into every generated package:
 
-| Ticket | Workflow |
+| Workflow | Description |
 |---|---|
-| MAS-59 | Reviewed multi-PDF project import |
-| MAS-60 | Page-scale evidence, suggestions and reviewed proposals |
-| MAS-61 | Paged sheet/calculation/quantity reads and bounded linework results |
-| MAS-62 | Runtime tool availability and reviewed project metadata |
-| MAS-63 | Layer/style/region gas tracing, rotation and text-gap guidance |
-| MAS-64 | Reviewed natural-gas calculation library |
+| plan-import | Reviewed multi-PDF project import |
+| page-scales | Page-scale evidence, suggestions and reviewed proposals |
+| paged-reads | Paged sheet/calculation/quantity reads and bounded linework results |
+| project-metadata | Runtime tool availability and reviewed project metadata |
+| gas-tracing | Layer/style/region gas tracing, rotation and text-gap guidance |
+| calculation-library | Reviewed natural-gas calculation library |
 
 Tools are discovered from the separately installed companion. Updating this
 repository or plugin does not install new MCP code. Update the app, reinstall its
@@ -53,7 +53,7 @@ Requires Python 3 for packaging/tests; Node 18+ for Desktop launcher tests (the 
 python3 scripts/build.py
 python3 scripts/audit_tools.py                         # connection plus per-ticket compatibility
 python3 scripts/audit_tools.py --require-mcp-workflows  # release interface gate for all six tickets
-python3 scripts/audit_tools.py --require-plan-import    # narrower MAS-59 check, retained for compatibility
+python3 scripts/audit_tools.py --require-plan-import    # narrower plan-import check, retained for compatibility
 python3 -m unittest discover -s tests -v
 python3 scripts/smoke.py  # requires the separately installed companion
 npx --yes @anthropic-ai/mcpb@2.1.2 validate packages/desktop/manifest.json

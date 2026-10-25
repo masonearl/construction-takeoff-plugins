@@ -27,7 +27,7 @@ def package_readme(target):
         requirements += ' The launcher uses Node.js 18 or newer (Claude Desktop supplies Node for extensions).'
     notes = {
         'cursor': 'Install this package through Cursor or copy the folder into ~/.cursor/plugins/local/construction-takeoff. Reload Cursor.',
-        'claude': 'Install the construction-takeoff plugin from the construction-takeoff-plugins marketplace, or upload this ZIP in Claude Customize → Plugins → Add. The tools work only where the session can launch the Mac companion. Claude chat ignores local MCP entries; the optional Desktop extension is available for local chat use. Cowork host access needs verification.',
+        'claude': 'Install the construction-takeoff plugin from the construction-takeoff-plugins marketplace, or upload this ZIP in Claude Customize → Plugins → Add. In Claude Code 2.1.275 or later: `/plugin install construction-takeoff --marketplace masonearl/construction-takeoff-plugins`. The tools work only where the session can launch the Mac companion. Claude chat ignores local MCP entries; the optional Desktop extension is available for local chat use. Cowork host access needs verification.',
         'codex': 'For the downloaded ZIP, unzip it and run `codex plugin marketplace add .` from its folder, then `codex plugin add construction-takeoff@construction-takeoff-download`. Keep that folder for updates. Repository users can install construction-takeoff from the construction-takeoff-plugins marketplace in a local Mac session. Public directory submission still requires a supported remote endpoint or OpenAI approval for local MCP.',
         'grok-bot': 'Install the Construction Takeoff companion first. Then install this Cursor-format plugin from packages/grok-bot or via Cursor Marketplace / Grok Bot Plugins once public. Grok Bot uses .cursor-plugin/plugin.json (no separate grok-only schema). Cloud-only Grok Bot sessions cannot reach the Mac companion without a separately supported bridge.',
         'desktop': 'Install this MCPB from Claude Desktop Settings → Extensions → Advanced settings, then select your saved project directory. This is an optional local installer, not a new directory submission: Anthropic no longer accepts Desktop extension listings.'
@@ -46,13 +46,13 @@ Save your project before asking the AI to inspect it. Start with: “Use Constru
 
 ## Reviewed gas workflows
 
-Guidance covers reviewed PDF import, scale proposals, paged results, project metadata proposals, gas-line tracing and the natural-gas calculation library (MAS-59–64). Availability depends on the tools and argument schemas returned by the installed companion. If a workflow is missing, update the app, reinstall its exported companion, update this plugin and reload the client. `companion-requirements.json` records the expected interfaces for release checks. Native Apply/Undo and plan accuracy require separate testing.
+Guidance covers reviewed PDF import, scale proposals, paged results, project metadata proposals, gas-line tracing and the natural-gas calculation library. Availability depends on the tools and argument schemas returned by the installed companion. If a workflow is missing, update the app, reinstall its exported companion, update this plugin and reload the client. `companion-requirements.json` records the expected interfaces for release checks. Native Apply/Undo and plan accuracy require separate testing.
 
 ## What runs and what is shared
 
 The package starts the separately installed companion. The launcher does not download code, send network requests or collect analytics. MCP results are sent to your chosen AI client and may be processed by its provider. The companion reads saved projects and creates local proposals/outputs. An updated app may additionally advertise local live reads and project-detail changes with approval choice, history and Undo; inspect capabilities first. The launcher disables legacy direct writes. Native app transactions or review own project changes and Undo. See [privacy](PRIVACY.md).
 
-This preview has not been approved by any store. Disable any older takeoff-x-local installation before enabling this package to avoid duplicate tools. Website: {WEBSITE}. Source and release status: {URL}. Contact: hi@masonearl.com. MIT applies to plugin files only; the app and companion remain separately licensed.
+This preview has not been approved by any store. Disable any older local plugin that registers the same companion before enabling this package, so tools are not duplicated. Website: {WEBSITE}. Source and release status: {URL}. Contact: hi@masonearl.com. MIT applies to plugin files only; the app and companion remain separately licensed.
 """
 
 def build():
@@ -123,12 +123,12 @@ def build():
                         'policy': {'installation': 'AVAILABLE', 'authentication': 'ON_INSTALL'}, 'category': 'Productivity'}]
                 })
                 manifest['interface'] = {
-                    'displayName': 'Construction Takeoff', 'shortDescription': 'Construction takeoffs and estimates with native review',
+                    'displayName': 'Construction Takeoff', 'shortDescription': 'Takeoffs with native review',
                     'developerName': 'Mason Earl', 'category': 'Productivity',
                     'capabilities': ['Load plan sets for review', 'Inspect saved takeoffs', 'Trace plan linework', 'Prepare reviewed changes'],
                     'logo': './assets/icon.png', 'composerIcon': './assets/icon.png',
                     'longDescription': DESCRIPTION + ' Changes use native review and Undo. Reads reflect saved project state.',
-                    'defaultPrompt': ['Check my Construction Takeoff connection.', 'Load these plan PDFs into a new takeoff project.', 'Inspect calibration and quantities in my saved takeoff.', 'Prepare a takeoff change for native review.'],
+                    'defaultPrompt': ['Check my Construction Takeoff connection.', 'Load these plan PDFs into a new takeoff project.', 'Inspect calibration and quantities in my saved takeoff.'],
                     'websiteURL': APP_URL,
                     'supportURL': SUPPORT, 'privacyPolicyURL': PRIVACY, 'termsOfServiceURL': TERMS
                 }

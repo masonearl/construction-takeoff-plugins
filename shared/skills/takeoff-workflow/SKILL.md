@@ -92,8 +92,8 @@ AI scale proposal…**. After Apply and Save, reread the pages to verify ratios 
 For authorized name, client or job-number edits, inspect the project and obtain a
 fresh saved revision, then use `propose_project_metadata` when available. Follow
 the returned native review instructions. Job linking changes project metadata;
-it does not create or update a Hardhat bid. Never use `link_hardhat_job` or enable
-legacy writes as a fallback.
+it does not create or update a bid in old estimating software and old systems.
+Never use `link_hardhat_job` or enable legacy writes as a fallback.
 
 ## Read large plan sets and quantities
 
