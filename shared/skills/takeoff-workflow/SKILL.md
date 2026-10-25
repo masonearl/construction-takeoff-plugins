@@ -100,7 +100,7 @@ When the user asks to load, import or start a takeoff from plan PDFs:
    review off, a saved or empty target window, and PyMuPDF in the companion.
 4. If those tools are missing or unavailable, ask the user to open the PDF in the
    app (**File → New Document…**, ⌘N) and save the project, or update the companion
-   from **AI → Connect your AI tools → Export AI setup**. Do not enable legacy writes.
+   from **AI → Connect your AI tools → Export AI setup**. Never enable legacy writes.
 5. After the user saves, `list_projects` → `list_sheets`. Imported pages start
    uncalibrated: confirm each sheet's scale against its graphic scale bar before
    reporting lengths. Title-block notes can disagree with the bar and with each
@@ -286,7 +286,7 @@ calibration, coverage gaps and revision alongside material quantity conclusions.
 
 Proposal creation is not application. Return the proposal path or preview result,
 summarize intended changes, and identify the native review action. App review owns
-validation, persistence and Undo. Do not enable legacy writes or modify open
+validation, persistence and Undo. Never enable legacy writes or modify open
 project packages. After application/save, reread to verify when requested. Never
 describe a staged proposal, checklist flag or exported CSV as an applied change
 or submitted bid.

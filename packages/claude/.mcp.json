@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "construction-takeoff": {
+    "takeoff.bid": {
       "command": "${CLAUDE_PLUGIN_ROOT}/server/start.sh",
       "args": [],
       "env": {

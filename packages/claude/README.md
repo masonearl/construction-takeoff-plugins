@@ -1,14 +1,14 @@
-# Construction Takeoff
+# takeoff.bid
 
-Load plan PDFs into new projects through native review, inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside Construction Takeoff with Undo. Proposal creation does not submit a bid or modify the saved project.
+Load plan PDFs into new projects through native review, inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside takeoff.bid with Undo. Proposal creation does not submit a bid or modify the saved project.
 
 ## Setup
 
-Construction Takeoff for macOS and its separately installed MCP companion are required. In Construction Takeoff, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. [Get Construction Takeoff for Mac](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12) · [Documentation](https://www.masonearl.com/pages/documentation.html#construction-takeoff). Plugin workflows require a build that includes AI setup/companion export; compatibility with the current App Store release has not yet been verified.
+takeoff.bid for macOS and its separately installed MCP companion are required. In takeoff.bid, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. [Get takeoff.bid for Mac](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12) · [Documentation](https://www.masonearl.com/pages/documentation.html#construction-takeoff). Plugin workflows require a build that includes AI setup/companion export; compatibility with the current App Store release has not yet been verified.
 
-Install the construction-takeoff plugin from the construction-takeoff-plugins marketplace, or upload this ZIP in Claude Customize → Plugins → Add. In Claude Code 2.1.275 or later: `/plugin install construction-takeoff --marketplace masonearl/construction-takeoff-plugins`. The tools work only where the session can launch the Mac companion. Claude chat ignores local MCP entries; the optional Desktop extension is available for local chat use. Cowork host access needs verification.
+Install the takeoff-bid plugin from the takeoff-bid-plugins marketplace, or upload this ZIP in Claude Customize → Plugins → Add. In Claude Code 2.1.275 or later: `/plugin install takeoff-bid --marketplace masonearl/construction-takeoff-plugins`. The tools work only where the session can launch the Mac companion. Claude chat ignores local MCP entries; the optional Desktop extension is available for local chat use. Cowork host access needs verification.
 
-Save your project before asking the AI to inspect it. Start with: “Use Construction Takeoff health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
+Save your project before asking the AI to inspect it. Start with: “Use takeoff.bid health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
 
 ## Reviewed gas workflows
 

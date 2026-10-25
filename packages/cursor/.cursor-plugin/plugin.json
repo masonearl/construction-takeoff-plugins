@@ -1,7 +1,7 @@
 {
-  "name": "construction-takeoff",
-  "version": "0.1.6",
-  "description": "Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
+  "name": "takeoff.bid",
+  "version": "0.1.7",
+  "description": "Load plan sets, inspect takeoff.bid projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion.",
   "author": {
     "name": "Mason Earl",
     "email": "hi@masonearl.com"
@@ -16,5 +16,6 @@
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
+  "displayName": "takeoff.bid",
   "logo": "assets/icon.png"
 }

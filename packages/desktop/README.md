@@ -1,14 +1,14 @@
-# Construction Takeoff
+# takeoff.bid
 
-Load plan PDFs into new projects through native review, inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside Construction Takeoff with Undo. Proposal creation does not submit a bid or modify the saved project.
+Load plan PDFs into new projects through native review, inspect saved construction projects, review quantities and calibration, trace plan linework, and prepare model, calculation and estimate proposals. Supported changes are reviewed and applied inside takeoff.bid with Undo. Proposal creation does not submit a bid or modify the saved project.
 
 ## Setup
 
-Construction Takeoff for macOS and its separately installed MCP companion are required. The launcher uses Node.js 18 or newer (Claude Desktop supplies Node for extensions). In Construction Takeoff, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. [Get Construction Takeoff for Mac](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12) · [Documentation](https://www.masonearl.com/pages/documentation.html#construction-takeoff). Plugin workflows require a build that includes AI setup/companion export; compatibility with the current App Store release has not yet been verified.
+takeoff.bid for macOS and its separately installed MCP companion are required. The launcher uses Node.js 18 or newer (Claude Desktop supplies Node for extensions). In takeoff.bid, open 3D Model → AI tools, export AI setup and follow its companion instructions. The expected executable is ~/.local/bin/takeoff-mcp. [Get takeoff.bid for Mac](https://apps.apple.com/us/app/construction-takeoff/id6751007895?mt=12) · [Documentation](https://www.masonearl.com/pages/documentation.html#construction-takeoff). Plugin workflows require a build that includes AI setup/companion export; compatibility with the current App Store release has not yet been verified.
 
 Install this MCPB from Claude Desktop Settings → Extensions → Advanced settings, then select your saved project directory. This is an optional local installer, not a new directory submission: Anthropic no longer accepts Desktop extension listings.
 
-Save your project before asking the AI to inspect it. Start with: “Use Construction Takeoff health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
+Save your project before asking the AI to inspect it. Start with: “Use takeoff.bid health and capabilities, then list my saved projects. Do not make changes.” Prefer native quantity exports and report calibration, source revisions and coverage gaps.
 
 ## Reviewed gas workflows
 
