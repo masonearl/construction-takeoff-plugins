@@ -1,5 +1,9 @@
 # Release candidate validation, October 7, 2026
 
+## 0.1.7 listing rename and companion contract
+
+Packages rebuilt as takeoff.bid. Claude and Codex machine ids are takeoff-bid because those validators reject dots. Cursor, Grok Bot, and the desktop MCPB name use takeoff.bid. Archives use the takeoff-bid- prefix. The companion executable remains ~/.local/bin/takeoff-mcp. Minimum companion version is 0.9.1-dev. Public site pages still describe the older listing; see docs/SITE-FOLLOWUPS.md.
+
 ## 0.1.6 source merge validation
 
 The completed local companion (`0.9.1-dev`, 40 tools) now passes the strict
@@ -54,7 +58,7 @@ they do not override the current compatibility result.
 
 - Claude Code strict plugin and marketplace validation passed.
 - Anthropic MCPB 2.1.2 manifest validation passed. Icon accepted; validator emitted a recommended-size notice.
-- Codex CLI installed and enabled construction-takeoff@construction-takeoff-plugins using an isolated temporary configuration; existing user installation unchanged.
+- Codex CLI installed and enabled construction-takeoff@construction-takeoff-plugins using an isolated temporary configuration; existing user installation unchanged. 0.1.7 uses takeoff-bid@takeoff-bid-plugins.
 - All four generated launchers completed MCP initialize and tools/list against the installed companion: 32 tools. Temporary empty project root remained unchanged.
 - Three distribution tests passed, covering all four launchers' missing-companion diagnostics, stdio forwarding, forced legacy-write disablement, paths with spaces, exit-code propagation, archive integrity and reproducible builds.
 - Workflow skill validator passed. Shared AI guidance library refresh indexed active sources with no conflicts; repository workflow instruction content is unchanged from the previously installed Construction Takeoff skill.

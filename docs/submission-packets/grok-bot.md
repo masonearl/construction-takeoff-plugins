@@ -4,14 +4,16 @@ Grok Bot installs Cursor-format plugins. There is no separate grok-only schema f
 
 Do not submit from this packet. Mason must complete portal login, publisher identity and the x.ai form.
 
-Version in the package: 0.1.6.
+Version in the package: 0.1.7.
+
+Cursor and Grok Bot accept a dotted plugin id. `.cursor-plugin/plugin.json` `name` and `displayName` are both takeoff.bid.
 
 ## Listing fields
 
 Name:
 
 ```
-Construction Takeoff
+takeoff.bid
 ```
 
 Short description (27 characters):
@@ -23,7 +25,7 @@ Takeoffs with native review
 Long description:
 
 ```
-Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion. Changes use native review and Undo. Reads reflect saved project state. Cloud-only Grok Bot sessions cannot reach the Mac companion.
+Load plan sets, inspect takeoff.bid projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion. Changes use native review and Undo. Reads reflect saved project state. Cloud-only Grok Bot sessions cannot reach the Mac companion.
 ```
 
 Category:
@@ -149,7 +151,7 @@ MASON: the live form may use checkboxes. Pick Grok Bot and Cursor. Do not claim 
 1.
 
 ```
-Use Construction Takeoff health and capabilities, then list my saved projects. Do not make changes.
+Use takeoff.bid health and capabilities, then list my saved projects. Do not make changes.
 ```
 
 2.
@@ -161,13 +163,13 @@ Load the Willow Creek Canal Crossing 25-100002 plan PDFs into a new takeoff proj
 3.
 
 ```
-Inspect calibration and quantities in Construction Takeoff Reviewer Demo, then prepare one reviewed change. Do not apply it.
+Inspect calibration and quantities in takeoff.bid Reviewer Demo, then prepare one reviewed change. Do not apply it.
 ```
 
 ## Release notes
 
 ```
-0.1.6 ships a Cursor-format Construction Takeoff plugin for local Grok Bot and Cursor sessions. Requires the separately installed macOS companion. Cloud Grok Bot sessions are not supported.
+0.1.7 ships a Cursor-format takeoff.bid plugin for local Grok Bot and Cursor sessions. Requires the separately installed macOS companion 0.9.1-dev or later. Cloud Grok Bot sessions are not supported.
 ```
 
 ## Reviewer test instructions
@@ -176,14 +178,15 @@ Use only fictional sample data.
 
 Sample data:
 
-- Saved project: Construction Takeoff Reviewer Demo
+- Saved project: takeoff.bid Reviewer Demo
 - Demo plan set A: Cedar Ridge Pump Station 25-100001
 - Demo plan set B: Willow Creek Canal Crossing 25-100002
 - Companion: `~/.local/bin/takeoff-mcp` on the review Mac
+- Minimum companion version: 0.9.1-dev
 
 Steps:
 
-1. Install Construction Takeoff for Mac, export AI setup and save Construction Takeoff Reviewer Demo.
+1. Install takeoff.bid for Mac, export AI setup and save takeoff.bid Reviewer Demo.
 2. Install `packages/grok-bot` (or `packages/cursor`) as a local Cursor-format plugin. Reload.
 3. In a local Grok Bot or Cursor session on that Mac, run prompt 1. Confirm health, capabilities and the demo project.
 4. Stage an import of Willow Creek Canal Crossing. Confirm a proposal bundle only. Apply in File, Review AI Project Import, then save.
@@ -195,8 +198,8 @@ Cursor publisher terms to keep true in the listing: the plugin is free, MIT (per
 
 ## Demo video script outline
 
-1. Title card: Construction Takeoff on Grok Bot / Cursor, local Mac only, fictional demo project.
-2. Show companion install and Construction Takeoff Reviewer Demo.
+1. Title card: takeoff.bid on Grok Bot / Cursor, local Mac only, fictional demo project.
+2. Show companion install and takeoff.bid Reviewer Demo.
 3. Show `packages/grok-bot/.cursor-plugin/plugin.json` and the 512 x 512 logo.
 4. Install the plugin and run health plus list projects.
 5. Import Willow Creek Canal Crossing through native review.

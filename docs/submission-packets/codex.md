@@ -2,16 +2,18 @@
 
 Copy these values into https://platform.openai.com/plugins. Do not upload or submit from this packet. Mason must complete identity checks and the local MCP allowlist request first.
 
-Version in the package: 0.1.6. ZIP: `dist/construction-takeoff-codex-0.1.6.zip`. Layout: files at the ZIP root (`.codex-plugin/plugin.json`, `.mcp.json`, `skills/`, `assets/`, `LICENSE`). No wrapping folder.
+Version in the package: 0.1.7. ZIP: `dist/takeoff-bid-codex-0.1.7.zip`. Layout: files at the ZIP root (`.codex-plugin/plugin.json`, `.mcp.json`, `skills/`, `assets/`, `LICENSE`). No wrapping folder.
+
+The listing name is takeoff.bid (`interface.displayName`, 11 characters, under the 30-character limit). The machine id `name` is takeoff-bid because OpenAI `plugin_name_format` allows only ASCII letters, digits, `_`, or `-`.
 
 This package is local stdio. Public directory MCP setup expects a hosted HTTPS endpoint unless OpenAI allowlists the organization for desktop-only local MCP. Do not submit as skills-only. That would hide the companion.
 
 ## Listing fields
 
-Name (displayName, 20 characters):
+Name (displayName, 11 characters):
 
 ```
-Construction Takeoff
+takeoff.bid
 ```
 
 Short description (30 characters or fewer, 27 characters):
@@ -23,7 +25,7 @@ Takeoffs with native review
 Long description:
 
 ```
-Load plan sets, inspect Construction Takeoff projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion. Changes use native review and Undo. Reads reflect saved project state.
+Load plan sets, inspect takeoff.bid projects and prepare reviewed takeoff and estimating changes. Requires the separately installed macOS app and MCP companion. Changes use native review and Undo. Reads reflect saved project state.
 ```
 
 Developer name:
@@ -83,7 +85,7 @@ Logo and composer icon (square PNG, 512 x 512):
 Starter prompts (3):
 
 ```
-Check my Construction Takeoff connection.
+Check my takeoff.bid connection.
 ```
 
 ```
@@ -101,7 +103,7 @@ These are already in `shared/codex/review.json` and the generated Codex manifest
 1. Verify a local Mac connection
 
 ```
-Check my Construction Takeoff connection without changing anything.
+Check my takeoff.bid connection without changing anything.
 ```
 
 Tools: `health, get_capabilities`
@@ -111,7 +113,7 @@ Expected: Report actual connectivity, saved-state semantics and capability gaps.
 2. Find a saved synthetic project
 
 ```
-Find the Construction Takeoff Reviewer Demo project and list its sheets.
+Find the takeoff.bid Reviewer Demo project and list its sheets.
 ```
 
 Tools: `health, get_capabilities, list_projects, list_sheets`
@@ -131,7 +133,7 @@ Expected: Report calibration, candidate linework and coverage limitations. Do no
 4. Prepare a reviewed model edit
 
 ```
-In Construction Takeoff Reviewer Demo, propose changing the demo wall height to 10 feet.
+In takeoff.bid Reviewer Demo, propose changing the demo wall height to 10 feet.
 ```
 
 Tools: `get_model_context, search_model_elements, get_model_element, propose_model_edit`
@@ -141,7 +143,7 @@ Expected: Inspect the element and revision, stage an explicit-unit proposal, and
 5. Read authoritative quantities
 
 ```
-Summarize the native quantity export from Construction Takeoff Reviewer Demo, including units and omissions.
+Summarize the native quantity export from takeoff.bid Reviewer Demo, including units and omissions.
 ```
 
 Tools: `read_native_quantity_export`
@@ -171,7 +173,7 @@ Submit this bid to the owner and tell them it is final.
 ## Release notes
 
 ```
-Adds guided Codex connection setup and review scenarios. Local macOS companion required.
+Renames the listing to takeoff.bid and documents local versus remote tools. Local macOS companion 0.9.1-dev or later required.
 ```
 
 ## Reviewer test instructions
@@ -180,27 +182,28 @@ Use only fictional sample data. Reviewer credentials stay in the OpenAI portal, 
 
 Sample data:
 
-- Saved project: Construction Takeoff Reviewer Demo
+- Saved project: takeoff.bid Reviewer Demo
 - Demo wall used in case 4: height change to 10 feet
 - Demo plan set A: Cedar Ridge Pump Station 25-100001
 - Demo plan set B: Willow Creek Canal Crossing 25-100002
 - Companion: `~/.local/bin/takeoff-mcp` on the review Mac
-- Install from the unzipped package: `codex plugin marketplace add .` then `codex plugin add construction-takeoff@construction-takeoff-download`
+- Minimum companion version: 0.9.1-dev
+- Install from the unzipped package: `codex plugin marketplace add .` then `codex plugin add takeoff-bid@takeoff-bid-download`
 
 Steps:
 
-1. Install Construction Takeoff for Mac and export AI setup so the companion is present.
-2. Save Construction Takeoff Reviewer Demo. Confirm the library path.
-3. Install the unzipped 0.1.6 Codex package in a local Codex desktop session.
+1. Install takeoff.bid for Mac and export AI setup so the companion is present.
+2. Save takeoff.bid Reviewer Demo. Confirm the library path.
+3. Install the unzipped 0.1.7 Codex package in a local Codex desktop session.
 4. Run all five positive cases. Record the tools used and that saved files do not change until native review.
 5. Run all three negative cases. The plugin should refuse, clarify or fall back safely.
-6. For a proposal case, apply and Undo in Construction Takeoff, save, reread, then retry a stale revision and confirm rejection.
+6. For a proposal case, apply and Undo in takeoff.bid, save, reread, then retry a stale revision and confirm rejection.
 7. Confirm the plugin does not write bids into old estimating software and old systems and does not submit a bid externally.
 
 ## Demo video script outline
 
-1. Title card: Construction Takeoff Codex plugin, desktop-only local MCP, fictional reviewer project.
-2. Show companion install and Construction Takeoff Reviewer Demo saved.
+1. Title card: takeoff.bid Codex plugin, desktop-only local MCP, fictional reviewer project.
+2. Show companion install and takeoff.bid Reviewer Demo saved.
 3. Unzip the package. Show root layout: `.codex-plugin/plugin.json`, `.mcp.json`, `skills/`, `assets/icon.png`.
 4. Install through Codex desktop and start a local thread.
 5. Walk the five positive cases in order.

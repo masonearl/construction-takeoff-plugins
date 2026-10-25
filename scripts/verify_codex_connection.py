@@ -10,7 +10,8 @@ from audit_tools import audit
 
 
 def verify(plugin):
-    config=json.loads((plugin/'.mcp.json').read_text())['mcpServers']['construction-takeoff']
+    servers=json.loads((plugin/'.mcp.json').read_text())['mcpServers']
+    config=servers.get('takeoff.bid') or next(iter(servers.values()))
     with tempfile.TemporaryDirectory(prefix='takeoff-plugin-check-') as temporary:
         requests=[
             {'jsonrpc':'2.0','id':1,'method':'initialize','params':{'protocolVersion':'2025-06-18','capabilities':{},'clientInfo':{'name':'plugin-verifier','version':'1.0'}}},
